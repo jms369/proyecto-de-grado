@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel Administrador</title>
+  <link rel="stylesheet" href="stylePanelAdmin.css">
+</head>
+<body>
+  <div class="panel-container">
+    <header>
+      <h1>Panel Administrador</h1>
+    </header>
+
+    <main>
+      <!-- Columna izquierda -->
+      <section class="columna-izquierda">
+        <div class="seccion">
+          <button id="editarWebBtn" class="btn-turquesa">Editar web tienda</button>
+        </div>
+
+        <div class="seccion">
+          <h2>Mis datos:</h2>
+          <form id="formDatos">
+            <input type="text" id="nombres" placeholder="Nombres">
+            <input type="text" id="apellidos" placeholder="Apellidos">
+            <input type="text" id="sexo" placeholder="Sexo">
+            <input type="text" id="celular" placeholder="Celular">
+            <input type="text" id="carnet" placeholder="Carnet identidad">
+            <input type="text" id="direccion" placeholder="Dirección">
+            <input type="date" id="fechaNacimiento" placeholder="Fecha nacimiento">
+            <button type="submit" class="btn-verde">Aceptar</button>
+          </form>
+        </div>
+
+        <div class="seccion vacia"></div>
+      </section>
+
+      <!-- Columna derecha -->
+      <section class="columna-derecha">
+        <div class="seccion">
+          <button id="cerrarSesionBtn" class="btn-rojo">Cerrar sesión</button>
+        </div>
+
+        <div class="seccion">
+          <h2>Agregar Gmail de recuperación</h2>
+          <div id="listaGmails">
+            <input type="email" value="admin@gmail.com" readonly>
+          </div>
+          <div class="botones-gmail">
+            <button id="agregarGmailBtn" class="btn-verde">Agregar Gmail</button>
+            <button id="confirmarCambiosBtn" class="btn-verde">Confirmar cambios</button>
+          </div>
+        </div>
+
+        <div class="seccion">
+          <button id="crearAdminBtn" class="btn-verde">Crear nuevo administrador</button>
+        </div>
+
+        <div class="seccion">
+          <button id="cambiarPassBtn" class="btn-turquesa">Cambiar contraseña</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Popup para crear nuevo administrador -->
+  <div id="popupAdmin" class="popup">
+    <div class="popup-content">
+      <h2>Crear nuevo administrador</h2>
+      <form id="formNuevoAdmin">
+        <input type="text" placeholder="Nombres" required>
+        <input type="text" placeholder="Apellidos" required>
+        <input type="text" placeholder="Sexo" required>
+        <input type="text" placeholder="Celular" required>
+        <input type="text" placeholder="Carnet identidad" required>
+        <input type="text" placeholder="Dirección" required>
+        <input type="date" placeholder="Fecha nacimiento" required>
+        <input type="email" placeholder="Correo electrónico" required>
+        <input type="password" placeholder="Contraseña" required>
+        <div class="popup-buttons">
+          <button type="submit" class="btn-verde">Crear</button>
+          <button type="button" id="cancelarPopup" class="btn-rojo">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="logicaPanelAdmin.js"></script>
+</body>
+</html>

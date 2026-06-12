@@ -1,0 +1,61 @@
+/* Fondo negro y estilo general */
+body {
+  background-color: #000;
+  color: #e0e0e0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+/* Contenedor del login */
+.login-container {
+  background-color: #111;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+  text-align: center;
+  width: 300px;
+}
+
+/* Campos de entrada */
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  background-color: #222;
+  color: #fff;
+}
+
+/* Botón */
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #00bcd4;
+  border: none;
+  border-radius: 5px;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #00e5ff;
+}
+
+/* Enlace de recuperación */
+.forgot-link {
+  display: block;
+  margin-top: 10px;
+  color: turquoise;
+  text-decoration: none;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
