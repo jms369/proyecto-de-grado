@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ingreso de Código - Admin</title>
+  <link rel="stylesheet" href="../panelAdministrador/stylePanelAdmin.css">
+  <link rel="stylesheet" href="styleReseteoContrasena.css">
+</head>
+<body>
+  <div class="contenedor-reset">
+    <h2>Ingrese el código de reseteo</h2>
+    <p class="texto-secundario">El código fue enviado a su correo Gmail</p>
+    <input type="text" id="codigoReseteo" placeholder="Ingrese el código aquí" required>
+    <div class="botones-reset">
+
+      <button id="btnContinuar" class="btn-turquesa">Continuar</button>
+      <a href="reseteoContrasenaAdmin.html">
+      <button id="btnAtras" class="btn-rojo">Atrás</button>
+      </a>
+
+    </div>
+  </div>
+
+  <script src="logicaReseteoContrasena.js"></script>
+</body>
+</html>

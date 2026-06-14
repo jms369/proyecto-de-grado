@@ -1,0 +1,74 @@
+body {
+  background-color: #0b0b0b; /* mismo fondo oscuro del panel */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* misma fuente del panel */
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.contenedor-reset {
+  background-color: rgba(20, 20, 20, 0.9);
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px 2px rgba(64, 224, 208, 0.6); /* sombra turquesa suave */
+  width: 350px;
+  text-align: center;
+}
+
+.contenedor-reset h2 {
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.contenedor-reset input {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 25px;
+  font-size: 16px;
+}
+
+.botones-reset {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-turquesa {
+  background-color: #40E0D0; /* mismo turquesa del styleAdmin */
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-rojo {
+  background-color: #b30000; /* rojo del stylePanelAdmin */
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-turquesa:hover {
+  background-color: #48f0e0;
+}
+
+.btn-rojo:hover {
+  background-color: #ff1a1a;
+}
+
+.texto-secundario {
+  font-size: 14px;
+  color: #ccc;
+  margin-bottom: 15px;
+  margin: 10px 0;
+}
+
+

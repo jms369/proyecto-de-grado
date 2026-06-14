@@ -1,7 +1,15 @@
-// Cerrar sesión (sin alerta)
-document.getElementById("cerrarSesionBtn").addEventListener("click", () => {
-  window.location.href = "../loginAdmin.html";
+// Cerrar sesión 
+
+document.getElementById("cerrarSesionBtn").addEventListener("click", async () => {
+  try {
+    await fetch("http://backend:5000/api/usuarios/logout", { method: "DELETE" });
+    localStorage.removeItem("token");
+    window.location.href = "../loginAdmin.html";
+  } catch (error) {
+    console.error("Error al cerrar sesión:", error);
+  }
 });
+
 
 // Agregar Gmail
 document.getElementById("agregarGmailBtn").addEventListener("click", () => {

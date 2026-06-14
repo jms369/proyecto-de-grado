@@ -1,0 +1,12 @@
+services:
+  frontend:
+    build: .
+    container_name: frontend-app
+    ports:
+      - "3000:80"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    external: true

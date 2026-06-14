@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nueva Contraseña - Admin</title>
+  <link rel="stylesheet" href="../panelAdministrador/stylePanelAdmin.css">
+  <link rel="stylesheet" href="styleReseteoContrasena.css">
+</head>
+<body>
+  <div class="contenedor-reset">
+    <h2>Escriba su nueva contraseña</h2>
+    
+    <!-- Primer campo -->
+    <input type="password" id="nuevaContrasena" placeholder="Nueva contraseña" required>
+    <p class="texto-secundario">Escriba nuevamente la contraseña para confirmar</p>
+    
+    <!-- Segundo campo -->
+    <input type="password" id="confirmarContrasena" placeholder="Confirmar contraseña" required>
+    
+    <div class="botones-reset">
+      <!--<button id="btnAtras" class="btn-rojo">Atrás</button> -->
+      <button id="btnContinuar" class="btn-turquesa">Continuar</button>
+    </div>
+  </div>
+
+  <script src="logicaReseteoContrasena.js"></script>
+</body>
+</html>
