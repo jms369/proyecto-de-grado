@@ -1,8 +1,13 @@
 // Detectar en qué página estamos
 const paginaActual = window.location.pathname.split("/").pop();
 
-// 🔧 NUEVO: Definir la URL base del backend dentro de Docker
-const API_URL = "http://backend:5000/api/usuarios";
+// 🔧 NUEVO: Definir la URL base del backend dinámicamente
+// Antes estaba fijo en "http://backend:5000/api/usuarios"
+// Ahora se detecta si estamos en localhost o en Docker/EC2.
+// Esto permite que funcione tanto en local como en la instancia.
+const API_URL = window.location.hostname === "localhost"
+  ? "http://localhost:5000"
+  : "http://backend:5000";
 
 // --- 1. Validar Gmail ---
 if (paginaActual === "reseteoContrasenaAdmin.html") {
@@ -10,8 +15,10 @@ if (paginaActual === "reseteoContrasenaAdmin.html") {
     const correo_gmail = document.getElementById("correoRecuperacion").value;
 
     try {
-      // 🔧 CAMBIO: URL y nombre del campo
-      const respuesta = await fetch(`${API_URL}/validar-gmail`, {
+      // 🔧 CAMBIO: Se usa API_URL dinámico y se añade el endpoint completo
+      // Antes: `${API_URL}/validar-gmail` con API_URL fijo a /api/usuarios
+      // Ahora: `${API_URL}/api/usuarios/validar-gmail`
+      const respuesta = await fetch(`${API_URL}/api/usuarios/validar-gmail`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ correo_gmail })
@@ -37,8 +44,8 @@ if (paginaActual === "ingresaCodigoGmailAdmin.html") {
     const codigo_reseteo = document.getElementById("codigoReseteo").value;
 
     try {
-      // 🔧 CAMBIO: URL y nombre del campo
-      const respuesta = await fetch(`${API_URL}/validar-codigo`, {
+      // 🔧 CAMBIO: Se usa API_URL dinámico y endpoint completo
+      const respuesta = await fetch(`${API_URL}/api/usuarios/validar-codigo`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ codigo_reseteo })
@@ -47,6 +54,8 @@ if (paginaActual === "ingresaCodigoGmailAdmin.html") {
       const data = await respuesta.json();
 
       if (respuesta.ok) {
+        // 🔧 Guardar correo en localStorage
+        localStorage.setItem("correo_gmail", data.correo_gmail);
         window.location.href = "nuevaContrasenaAdmin.html";
       } else {
         alert(data.error || "El código ingresado no es válido.");
@@ -71,8 +80,8 @@ if (paginaActual === "nuevaContrasenaAdmin.html") {
     }
 
     try {
-      // 🔧 CAMBIO: URL y campos
-      const respuesta = await fetch(`${API_URL}/nueva-contrasena`, {
+      // 🔧 CAMBIO: Se usa API_URL dinámico y endpoint completo
+      const respuesta = await fetch(`${API_URL}/api/usuarios/nueva-contrasena`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ correo_gmail, nueva_contrasena, confirmar_contrasena })
@@ -82,7 +91,7 @@ if (paginaActual === "nuevaContrasenaAdmin.html") {
 
       if (respuesta.ok) {
         alert("Contraseña actualizada correctamente.");
-        window.location.href = "loginAdmin.html";
+        window.location.href = "../loginAdmin.html";
       } else {
         alert(data.error || "No se pudo actualizar la contraseña.");
       }
@@ -92,3 +101,4 @@ if (paginaActual === "nuevaContrasenaAdmin.html") {
     }
   });
 }
+

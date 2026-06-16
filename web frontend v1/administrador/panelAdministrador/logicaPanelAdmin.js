@@ -1,15 +1,21 @@
 // Cerrar sesión 
-
 document.getElementById("cerrarSesionBtn").addEventListener("click", async () => {
   try {
-    await fetch("http://backend:5000/api/usuarios/logout", { method: "DELETE" });
+    // 🔧 CAMBIO: Se usa API_URL dinámico en lugar de URL fija
+    // Antes: fetch("http://backend:5000/api/usuarios/logout", { ... })
+    // Ahora: detecta si estamos en localhost o Docker/EC2
+    const API_URL = window.location.hostname === "localhost"
+      ? "http://localhost:5000"
+      : "http://backend:5000";
+
+    await fetch(`${API_URL}/api/usuarios/logout`, { method: "DELETE" });
+
     localStorage.removeItem("token");
     window.location.href = "../loginAdmin.html";
   } catch (error) {
     console.error("Error al cerrar sesión:", error);
   }
 });
-
 
 // Agregar Gmail
 document.getElementById("agregarGmailBtn").addEventListener("click", () => {

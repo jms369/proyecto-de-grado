@@ -55,11 +55,12 @@ exports.login = async (req, res) => {
       );
 
       // 🔧 MODIFICACIÓN: desde aquí
-      res.json({ login: true, mensaje: "Login exitoso", token });
+      return res.json({ login: true, mensaje: "Login exitoso", token });
+       // 🔧 evita que el código siga y mande otra respuesta
       // 🔧 MODIFICACIÓN: hasta aquí
+      
 
-      // Respuesta final con token
-      res.json({ mensaje: "Login exitoso", token });
+      
     });
   } catch (error) {
     console.error(error);
@@ -91,7 +92,7 @@ exports.validarGmail = (req, res) => {
 
     
     // 🔧 MODIFICACIÓN: desde aquí
-    res.json({ existe: true, mensaje: "Correo válido, se envió el código de recuperación." });
+    return res.json({ existe: true, mensaje: "Correo válido, se envió el código de recuperación." });
     // 🔧 MODIFICACIÓN: hasta aquí
   });
 };
@@ -166,7 +167,7 @@ exports.nuevaContrasena = async (req, res) => {
     );
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Error interno del servidor." });
+    return res.status(500).json({ error: "Error interno del servidor." });
   }
 };
 
@@ -243,7 +244,7 @@ exports.registro = async (req, res) => {
     );
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error interno del servidor." });
+    return res.status(500).json({ message: "Error interno del servidor." });
   }
 };
 
@@ -257,7 +258,7 @@ exports.logout = (req, res) => {
     // 🔧 MODIFICACIÓN: hasta aquí
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Error al cerrar sesión." });
+    return res.status(500).json({ error: "Error al cerrar sesión." });
   }
 };
 
