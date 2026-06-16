@@ -42,3 +42,40 @@ body {
   from { text-shadow: 0 0 10px #00ffff, 0 0 20px #00c6ff; }
   to { text-shadow: 0 0 20px #00ffff, 0 0 40px #0072ff; }
 }
+
+/* 🔹 BOTÓN DE WHATSAPP */
+.whatsapp-chat {
+  position: fixed; /* Fijo en pantalla */
+  bottom: 25px; /* Distancia desde la parte inferior */
+  right: 25px; /* Distancia desde el costado derecho */
+  text-align: center;
+  text-decoration: none;
+  z-index: 1000; /* Encima del contenido */
+}
+
+/* Icono más pequeño */
+.chat-icon {
+  width: 60px; /* 🔧 tamaño ajustado */
+  height: 60px;
+  transition: transform 0.2s ease;
+}
+
+.chat-icon:hover {
+  transform: scale(1.1);
+}
+
+/* Cajón de texto debajo del icono */
+.chat-box {
+  margin-top: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 2px solid turquoise;
+  border-radius: 10px;
+  padding: 8px 15px;
+  width: 180px;
+  color: turquoise;
+  font-size: 0.9em;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+}
+
+
