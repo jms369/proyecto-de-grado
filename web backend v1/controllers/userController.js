@@ -1,5 +1,4 @@
-// Aquí irá la lógica de usuarios (login, reseteo, etc.)
-// Por ahora dejamos la estructura vacía
+
 
 exports.testController = (req, res) => {
   res.json({ mensaje: "Controlador funcionando correctamente" });
@@ -47,17 +46,16 @@ exports.login = async (req, res) => {
         return res.status(401).json({ error: "Contraseña incorrecta." });
       }
 
-      // 🔑 Generar token JWT (MODIFICACIÓN AQUÍ)
+      //  Generar token JWT 
       const token = jwt.sign(
         { id: usuario.id_usuario, correo: usuario.correo_gmail },
         process.env.JWT_SECRET,
         { expiresIn: "1h" }
       );
 
-      // 🔧 MODIFICACIÓN: desde aquí
+      
       return res.json({ login: true, mensaje: "Login exitoso", token });
-       // 🔧 evita que el código siga y mande otra respuesta
-      // 🔧 MODIFICACIÓN: hasta aquí
+       
       
 
       
@@ -81,7 +79,7 @@ exports.validarGmail = (req, res) => {
     if (err) return res.status(500).json({ error: "Error en el servidor." });
     if (results.length === 0) return res.status(404).json({ error: "Correo no encontrado." });
 
-    // 🔑 Generar código aleatorio
+    //  Generar código aleatorio
     const codigo = crypto.randomBytes(3).toString("hex").toUpperCase();
 
     // Guardar el código en la BD
@@ -91,9 +89,9 @@ exports.validarGmail = (req, res) => {
     enviarCodigo(correo_gmail, codigo);
 
     
-    // 🔧 MODIFICACIÓN: desde aquí
+    
     return res.json({ existe: true, mensaje: "Correo válido, se envió el código de recuperación." });
-    // 🔧 MODIFICACIÓN: hasta aquí
+    
   });
 };
 
@@ -120,7 +118,7 @@ exports.validarCodigo = (req, res) => {
         return res.status(400).json({ error: "Código inválido." });
       }
 
-      // 🔑 Aquí devolvemos el correo asociado al código
+      // devolver el correo asociado al código
       res.json({ valido: true, correo_gmail: results[0].correo_gmail });
     }
   );
@@ -160,9 +158,9 @@ exports.nuevaContrasena = async (req, res) => {
           return res.status(404).json({ error: "Usuario no encontrado." });
         }
 
-        // 🔧 MODIFICACIÓN: desde aquí
+        
         res.json({ establecida: true, mensaje: "Contraseña actualizada correctamente." });
-        // 🔧 MODIFICACIÓN: hasta aquí
+       
       }
     );
   } catch (error) {
@@ -174,7 +172,7 @@ exports.nuevaContrasena = async (req, res) => {
 
 
 
-// 🧾 REGISTRO DE USUARIO ADMIN
+//  REGISTRO DE USUARIO ADMIN
 exports.registro = async (req, res) => {
   try {
     const {
@@ -237,9 +235,9 @@ exports.registro = async (req, res) => {
           console.log(err);
           return res.status(500).json({ message: "Error al registrar usuario." });
         }
-        // 🔧 MODIFICACIÓN: desde aquí
+        
       res.json({ registrado: true, mensaje: "Usuario registrado correctamente." });
-      // 🔧 MODIFICACIÓN: hasta aquí
+      
       }
     );
   } catch (error) {
@@ -251,11 +249,11 @@ exports.registro = async (req, res) => {
 // LOGOUT
 exports.logout = (req, res) => {
   try {
-    // Aquí no hay mucho que hacer porque el JWT se maneja en el cliente.
     
-    // 🔧 MODIFICACIÓN: desde aquí
+    
+    
     res.json({ logout: true, mensaje: "Sesión cerrada correctamente." });
-    // 🔧 MODIFICACIÓN: hasta aquí
+    
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Error al cerrar sesión." });

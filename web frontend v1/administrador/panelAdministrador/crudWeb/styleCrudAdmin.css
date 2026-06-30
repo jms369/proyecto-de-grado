@@ -1,0 +1,73 @@
+/* Fondo general y tipografía */
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background-color: #1b1e27; /* tono oscuro */
+  color: #fff;
+}
+
+/* Botón principal */
+#btnNuevo {
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  background-color: #0099ad; /* turquesa */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+#btnNuevo:hover {
+  background-color: #2c48c2;
+}
+
+/* Contenedor de tarjetas */
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+}
+
+/* Tarjetas */
+.card {
+  background-color: #fff;
+  color: #000;
+  border-radius: 8px;
+  padding: 15px;
+  width: 22%;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+/* Inputs dentro de las tarjetas */
+.card input {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Botones dentro de las tarjetas */
+.card button {
+  margin-right: 10px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+  transition: opacity 0.3s ease;
+}
+
+/* Colores específicos */
+.card button:nth-of-type(1) { background-color: #28a745; } /* Guardar */
+.card button:nth-of-type(2) { background-color: #dc3545; } /* Eliminar */
+.card button:nth-of-type(3) { background-color: #fd7e14; } /* Editar */
+
+.card button:hover {
+  opacity: 0.8;
+}

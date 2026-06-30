@@ -5,7 +5,8 @@ const router = express.Router();
 const userRoutes = require("./userRoutes");
 router.use("/usuarios", userRoutes);
 
-// Aquí se importarán las rutas específicas
-// Ejemplo: router.use("/usuarios", require("./userRoutes"));
+// Importar rutas de CRUD productos
+const crudRoutes = require("./crudRoutes");
+router.use("/crud", crudRoutes);
 
 module.exports = router;

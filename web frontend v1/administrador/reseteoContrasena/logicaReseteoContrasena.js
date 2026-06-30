@@ -1,10 +1,7 @@
-// Detectar en qué página estamos
+
 const paginaActual = window.location.pathname.split("/").pop();
 
-// 🔧 NUEVO: Definir la URL base del backend dinámicamente
-// Antes estaba fijo en "http://backend:5000/api/usuarios"
-// Ahora se detecta si estamos en localhost o en Docker/EC2.
-// Esto permite que funcione tanto en local como en la instancia.
+
 const API_URL = window.location.hostname === "localhost"
   ? "http://localhost:5000"
   : "http://backend:5000";
@@ -15,9 +12,7 @@ if (paginaActual === "reseteoContrasenaAdmin.html") {
     const correo_gmail = document.getElementById("correoRecuperacion").value;
 
     try {
-      // 🔧 CAMBIO: Se usa API_URL dinámico y se añade el endpoint completo
-      // Antes: `${API_URL}/validar-gmail` con API_URL fijo a /api/usuarios
-      // Ahora: `${API_URL}/api/usuarios/validar-gmail`
+      
       const respuesta = await fetch(`${API_URL}/api/usuarios/validar-gmail`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -44,7 +39,7 @@ if (paginaActual === "ingresaCodigoGmailAdmin.html") {
     const codigo_reseteo = document.getElementById("codigoReseteo").value;
 
     try {
-      // 🔧 CAMBIO: Se usa API_URL dinámico y endpoint completo
+      
       const respuesta = await fetch(`${API_URL}/api/usuarios/validar-codigo`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -54,7 +49,7 @@ if (paginaActual === "ingresaCodigoGmailAdmin.html") {
       const data = await respuesta.json();
 
       if (respuesta.ok) {
-        // 🔧 Guardar correo en localStorage
+        
         localStorage.setItem("correo_gmail", data.correo_gmail);
         window.location.href = "nuevaContrasenaAdmin.html";
       } else {
@@ -70,7 +65,7 @@ if (paginaActual === "ingresaCodigoGmailAdmin.html") {
 // --- 3. Establecer Nueva Contraseña ---
 if (paginaActual === "nuevaContrasenaAdmin.html") {
   document.getElementById("btnContinuar").addEventListener("click", async () => {
-    const correo_gmail = localStorage.getItem("correo_gmail"); // 🔧 NUEVO: recuperar correo si lo guardaste antes
+    const correo_gmail = localStorage.getItem("correo_gmail"); 
     const nueva_contrasena = document.getElementById("nuevaContrasena").value;
     const confirmar_contrasena = document.getElementById("confirmarContrasena").value;
 
@@ -80,7 +75,7 @@ if (paginaActual === "nuevaContrasenaAdmin.html") {
     }
 
     try {
-      // 🔧 CAMBIO: Se usa API_URL dinámico y endpoint completo
+      
       const respuesta = await fetch(`${API_URL}/api/usuarios/nueva-contrasena`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

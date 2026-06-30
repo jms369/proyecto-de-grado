@@ -1,6 +1,6 @@
 body {
-  background-color: #0b0b0b; /* mismo fondo oscuro del panel */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* misma fuente del panel */
+  background-color: #0b0b0b; 
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
   color: #fff;
   display: flex;
   justify-content: center;
@@ -12,7 +12,7 @@ body {
   background-color: rgba(20, 20, 20, 0.9);
   padding: 30px;
   border-radius: 10px;
-  box-shadow: 0 0 15px 2px rgba(64, 224, 208, 0.6); /* sombra turquesa suave */
+  box-shadow: 0 0 15px 2px rgba(64, 224, 208, 0.6); 
   width: 350px;
   text-align: center;
 }
@@ -37,7 +37,7 @@ body {
 }
 
 .btn-turquesa {
-  background-color: #40E0D0; /* mismo turquesa del styleAdmin */
+  background-color: #40E0D0; 
   color: #000;
   border: none;
   padding: 10px 20px;
@@ -47,7 +47,7 @@ body {
 }
 
 .btn-rojo {
-  background-color: #b30000; /* rojo del stylePanelAdmin */
+  background-color: #b30000; 
   color: #fff;
   border: none;
   padding: 10px 20px;

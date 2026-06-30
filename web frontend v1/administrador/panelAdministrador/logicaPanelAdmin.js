@@ -1,9 +1,7 @@
 // Cerrar sesión 
 document.getElementById("cerrarSesionBtn").addEventListener("click", async () => {
   try {
-    // 🔧 CAMBIO: Se usa API_URL dinámico en lugar de URL fija
-    // Antes: fetch("http://backend:5000/api/usuarios/logout", { ... })
-    // Ahora: detecta si estamos en localhost o Docker/EC2
+    
     const API_URL = window.location.hostname === "localhost"
       ? "http://localhost:5000"
       : "http://backend:5000";
@@ -64,4 +62,9 @@ document.getElementById("formNuevoAdmin").addEventListener("submit", (e) => {
 // Cambiar contraseña
 document.getElementById("cambiarPassBtn").addEventListener("click", () => {
   window.location.href = "panelAdmin.html";
+});
+
+// Redirigir a CRUD de productos
+document.getElementById("editarWebBtn").addEventListener("click", () => {
+  window.location.href = "crudWeb/crudAdmin.html";
 });

@@ -16,3 +16,4 @@ CREATE TABLE UsuarioAdmin (
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     estado_usuario ENUM('activo','inactivo') DEFAULT 'activo'
 );
+

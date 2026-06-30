@@ -43,19 +43,19 @@ body {
   to { text-shadow: 0 0 20px #00ffff, 0 0 40px #0072ff; }
 }
 
-/* 🔹 BOTÓN DE WHATSAPP */
+/*  BOTÓN DE WHATSAPP */
 .whatsapp-chat {
-  position: fixed; /* Fijo en pantalla */
-  bottom: 25px; /* Distancia desde la parte inferior */
-  right: 25px; /* Distancia desde el costado derecho */
+  position: fixed; 
+  bottom: 25px; 
+  right: 25px; 
   text-align: center;
   text-decoration: none;
-  z-index: 1000; /* Encima del contenido */
+  z-index: 1000; 
 }
 
-/* Icono más pequeño */
+/* Icono de wasap */
 .chat-icon {
-  width: 60px; /* 🔧 tamaño ajustado */
+  width: 60px; 
   height: 60px;
   transition: transform 0.2s ease;
 }
