@@ -1,0 +1,18 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copiar definicion de dependencias
+COPY package*.json ./
+
+# Instalar dependencias
+RUN npm install
+
+# Copiar el codigo fuente
+COPY . .
+
+# Exponer el puerto configurado en Vite
+EXPOSE 3000
+
+# Comando de desarrollo
+CMD ["npm", "run", "dev"]

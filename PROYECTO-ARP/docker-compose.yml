@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./Frontend-web-v1
+      dockerfile: Dockerfile.dev
+    container_name: frontend_solid
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./Frontend-web-v1:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - red-interna-arp
+
+# Red interna para conectar el backend y la BD más adelante
+networks:
+  red-interna-arp:
+    driver: bridge
