@@ -1,5 +1,5 @@
-/* Contenedor principal */
-.login-body {
+/* Contenedor principal sin degradado de overlay */
+.gmail-recup-body {
   margin: 0;
   padding: 0;
   display: flex;
@@ -12,43 +12,25 @@
   overflow: hidden;
 }
 
-/* Transición diagonal con la escala de degradado completa (Blanco -> Gris -> Negro) */
-.login-submit-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(
-    135deg,
-    #ffffff 0%,
-    #ffffff 10%,
-    #666666 30%,
-    #222222 50%,
-    #000000 100%
-  );
-  opacity: 0;
-  pointer-events: none;
-  z-index: 10;
-  transition: opacity 0.6s ease-in-out;
-}
-
-.login-submit-overlay.active {
-  opacity: 1;
-}
-
-/* Transición vertical */
-.login-wrapper {
+/* Transición del contenedor principal */
+.gmail-recup-wrapper {
   transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
 }
 
-.login-wrapper.slide-up-exit {
-  transform: translateY(-100vh);
+/* Animación de salida deslizándose hacia la izquierda */
+.gmail-recup-wrapper.slide-left-exit {
+  transform: translateX(-100vw);
   opacity: 0;
 }
 
-/* Tarjeta contenedora con resplandor azul */
-.login-card {
+/* Animación de salida al presionar ATRAS */
+.gmail-recup-wrapper.slide-down-exit {
+  transform: translateY(100vh);
+  opacity: 0;
+}
+
+/* Tarjeta contenedora con estilo idéntico al login (resplandor azul) */
+.gmail-recup-card {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -63,13 +45,16 @@
   z-index: 2;
 }
 
-.login-card p.title {
+/* Título de dos líneas: INGRESAR GMAIL */
+.gmail-recup-card p.title {
   padding-bottom: 15px;
-  font-size: 26px;
+  font-size: 24px;
   font-weight: bold;
   letter-spacing: 0.5px;
   color: #ffffff;
   margin: 0;
+  text-align: center;
+  line-height: 1.2;
 }
 
 /* Inputs flotantes */
@@ -114,25 +99,7 @@
   color: #0163e0;
 }
 
-/* Botón ver/ocultar contraseña */
-.password-toggle-btn {
-  position: absolute;
-  right: 5px;
-  top: 8px;
-  background: transparent;
-  border: none;
-  color: #888888;
-  cursor: pointer;
-  padding: 0;
-  display: flex;
-  align-items: center;
-}
-
-.password-toggle-btn:hover {
-  color: #ffffff;
-}
-
-/* Botón Iniciar Sesión (SING IN) */
+/* Botón RECUPERAR */
 .button-submit {
   width: 100%;
   height: 48px;
@@ -162,30 +129,30 @@
   transform: scale(0.98);
 }
 
-/* Botón Olvidaste tu contraseña: 30% más angosto + Efecto rellenado vertical */
-.forgot-password-button {
-  width: 70%; /* 30% más angosto respecto al ancho total */
+/* Botón ATRAS: 30% más angosto (70% del ancho) con animación de subida de fondo */
+.back-button {
+  width: 70%;
   height: 38px;
   margin-top: 15px;
   background: transparent;
   color: #ffffff;
-  border: 2px solid  #0163e0;
+  border: 2px solid #0163e0;
   border-radius: 20px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
   cursor: pointer;
   transition: ease-out 0.5s;
-  box-shadow: inset 0 0 0 0 #01e0e0;
+  box-shadow: inset 0 0 0 0 #0163e0;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.forgot-password-button:hover {
+.back-button:hover {
   color: #ffffff;
   box-shadow: inset 0 -100px 0 0 #0163e0;
 }
 
-.forgot-password-button:active {
+.back-button:active {
   transform: scale(0.92);
 }
