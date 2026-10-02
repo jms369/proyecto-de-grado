@@ -1,0 +1,169 @@
+/* Contenedor principal */
+.codigo-recup-body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #000000;
+  font-family: 'Jost', system-ui, -apple-system, sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Transición del contenedor principal */
+.codigo-recup-wrapper {
+  transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+}
+
+/* Animación al presionar SIGUIENTE: Deslizamiento a la izquierda */
+.codigo-recup-wrapper.slide-left-exit {
+  transform: translateX(-100vw);
+  opacity: 0;
+}
+
+/* Animación al presionar ATRÁS: Deslizamiento a la derecha */
+.codigo-recup-wrapper.slide-right-exit {
+  transform: translateX(100vw);
+  opacity: 0;
+}
+
+/* Tarjeta contenedora con estilo resplandor azul */
+.codigo-recup-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #0d0d0d;
+  border: 1px solid #0163e0;
+  border-radius: 20px;
+  padding: 40px 35px;
+  width: 360px;
+  box-shadow: 0px 0px 25px rgba(1, 99, 224, 0.4), 0px 20px 50px rgba(0, 0, 0, 0.9);
+  position: relative;
+  z-index: 2;
+}
+
+/* Título de la tarjeta */
+.codigo-recup-card p.title {
+  padding-bottom: 10px;
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+  margin: 0;
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* Subtítulo explicativo debajo del título */
+.codigo-recup-card p.subtitle {
+  font-size: 13px;
+  color: #aaaaaa;
+  margin: 0 0 10px 0;
+  text-align: center;
+  line-height: 1.4;
+  padding: 0 5px;
+}
+
+/* Inputs flotantes */
+.group {
+  position: relative;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.main-input {
+  font-size: 16px;
+  padding: 10px 35px 10px 5px;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 1px solid #444444;
+  background: transparent;
+  color: #ffffff;
+  letter-spacing: 2px;
+}
+
+.main-input:focus {
+  outline: none;
+  border-bottom-color: #0163e0;
+}
+
+.lebal-code {
+  color: #888888;
+  font-size: 16px;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 5px;
+  top: 10px;
+  transition: 0.2s ease all;
+}
+
+.main-input:focus ~ .lebal-code,
+.main-input:valid ~ .lebal-code {
+  top: -18px;
+  font-size: 13px;
+  color: #0163e0;
+}
+
+/* Botón SIGUIENTE */
+.button-submit {
+  width: 100%;
+  height: 48px;
+  margin-top: 30px;
+  background-color: #022fd3;
+  color: #ffffff;
+  border: 2px solid #022df3;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-submit:hover {
+  background-color: #000000;
+  color: #0163e0;
+  border-color: #0163e0;
+  box-shadow: 0 0 15px rgba(1, 99, 224, 0.4);
+}
+
+.button-submit:active {
+  transform: scale(0.98);
+}
+
+/* Botón ATRÁS (70% de ancho con animación de llenado) */
+.back-button {
+  width: 70%;
+  height: 38px;
+  margin-top: 15px;
+  background: transparent;
+  color: #ffffff;
+  border: 2px solid #0163e0;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: ease-out 0.5s;
+  box-shadow: inset 0 0 0 0 #0163e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-button:hover {
+  color: #ffffff;
+  box-shadow: inset 0 -100px 0 0 #0163e0;
+}
+
+.back-button:active {
+  transform: scale(0.92);
+}

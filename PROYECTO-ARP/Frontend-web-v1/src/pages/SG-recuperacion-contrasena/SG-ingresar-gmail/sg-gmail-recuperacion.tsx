@@ -30,13 +30,14 @@ export const SGGmailRecuperacion: Component<SGGmailRecuperacionProps> = (props) 
             handleRecoverySubmit(
               e,
               formData(),
+              navigate, // <-- AÑADE 'navigate' AQUÍ COMO TERCER ARGUMENTO
               props.onRecoverySuccess || fallbackRecoverySuccess
             )
           }
         >
           {/* Título */}
           <p class="title">
-            INGRESAR<br />GMAIL
+            INGRESAR<br />SU CORREO GMAIL
           </p>
 
           {/* Campo de escritura GMAIL */}
@@ -50,7 +51,7 @@ export const SGGmailRecuperacion: Component<SGGmailRecuperacionProps> = (props) 
               onInput={handleInputChange}
             />
             <span class="highlight-span" />
-            <label class="lebal-email">GMAIL</label>
+            <label class="lebal-email">Escribir aquí el CORREO GMAIL</label>
           </div>
 
           {/* Botón RECUPERAR */}
