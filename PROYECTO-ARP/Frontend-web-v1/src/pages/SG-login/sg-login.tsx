@@ -35,7 +35,8 @@ export const SGLogin: Component<SGLoginProps> = (props) => {
             handleLoginSubmit(
               e,
               formData(),
-              props.onLoginSuccess || fallbackLoginSuccess
+              props.onLoginSuccess || fallbackLoginSuccess,
+              navigate // <-- Pasar navigate como 4to argumento
             )
           }
         >

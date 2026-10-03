@@ -5,13 +5,15 @@ import { triggerSubmitAnimation, triggerForgotPasswordAnimation } from './sg-log
 export const handleLoginSubmit = (
   e: SubmitEvent,
   formData: MappedLoginData,
-  onLoginSuccess: (payload: LoginRequest) => void
+  onLoginSuccess: (payload: LoginRequest) => void,
+  navigate: (to: string) => void // <-- 1. Agregar parámetro navigate
 ): void => {
   e.preventDefault();
   const payload = mapFrontendToBackendLogin(formData);
 
   triggerSubmitAnimation(() => {
     onLoginSuccess(payload);
+    navigate('/dashboard'); // <-- 2. Ejecutar la navegación hacia el dashboard
   });
 };
 

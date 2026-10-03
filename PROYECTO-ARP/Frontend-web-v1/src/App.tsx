@@ -8,6 +8,8 @@ import SGGmailRecuperacion from './pages/SG-recuperacion-contrasena/SG-ingresar-
 import SGCodigoRecuperacion from './pages/SG-recuperacion-contrasena/SG-ingresar-codigo/sg-codigo-recuperacion';
 // 2. Importar la página de nueva contraseña
 import SGNuevaContrasena from './pages/SG-recuperacion-contrasena/SG-reestablecer-contrasena/sg-nueva-contrasena';
+// Importación del nuevo módulo Dashboard
+import SGDashboard from './pages/SG-dashboard/sg-dashboard';
 
 const App: Component = () => {
   return (
@@ -23,6 +25,9 @@ const App: Component = () => {
 
       {/* 2. Nueva ruta para reestablecer la contraseña */}
       <Route path="/reestablecer-contrasena" component={SGNuevaContrasena} />
+
+      {/* Ruta "/dashboard" → Dashboard principal */}
+      <Route path="/dashboard" component={SGDashboard} />
     </Router>
   );
 };
