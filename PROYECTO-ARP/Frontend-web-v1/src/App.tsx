@@ -10,6 +10,10 @@ import SGCodigoRecuperacion from './pages/SG-recuperacion-contrasena/SG-ingresar
 import SGNuevaContrasena from './pages/SG-recuperacion-contrasena/SG-reestablecer-contrasena/sg-nueva-contrasena';
 // Importación del nuevo módulo Dashboard
 import SGDashboard from './pages/SG-dashboard/sg-dashboard';
+// Importación del nuevo módulo Crear Usuario
+import SGCrearUsuario from './pages/SG-crear-usuario/sg-crear-usuario';
+// Importación del nuevo módulo Editar Productos
+import SGEditarProductos from './pages/SG-editar-productos/sg-editar-productos';
 
 const App: Component = () => {
   return (
@@ -28,6 +32,12 @@ const App: Component = () => {
 
       {/* Ruta "/dashboard" → Dashboard principal */}
       <Route path="/dashboard" component={SGDashboard} />
+
+      {/* Ruta "/crear-usuario" → Crear Usuario */}
+      <Route path="/crear-usuario" component={SGCrearUsuario} />
+
+      {/* Ruta "/editar-productos" → Editar Productos */}
+      <Route path="/editar-productos" component={SGEditarProductos} />
     </Router>
   );
 };

@@ -15,6 +15,7 @@
   flex: 1;
   padding: 2rem;
   gap: 2rem;
+  align-items: flex-start; /* ← AGREGAR ESTA LÍNEA para alinear todo arriba */
 }
 
 @media (max-width: 900px) {
@@ -172,6 +173,7 @@
   width: 320px;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start; /* ← AGREGAR ESTA LÍNEA para empaquetar arriba */
   gap: 1.5rem;
 }
 

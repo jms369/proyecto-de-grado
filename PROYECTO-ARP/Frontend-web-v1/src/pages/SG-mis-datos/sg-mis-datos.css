@@ -1,0 +1,225 @@
+/* CAPA OSCURA DE FONDO (BACKDROP) */
+.sg-misdatos-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+/* CONTENEDOR MODAL */
+.sg-misdatos-modal-container {
+  position: relative;
+  background-color: #0d0d0d;
+  border: 1px solid #0163e0;
+  box-shadow: 0 0 25px rgba(1, 99, 224, 0.5);
+  border-radius: 12px;
+  padding: 30px 24px 24px;
+  width: 100%;
+  max-width: 480px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* BOTÓN CERRAR X */
+.sg-misdatos-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  color: #888888;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.sg-misdatos-close-btn:hover {
+  color: #ff4d4d;
+}
+
+.sg-misdatos-title {
+  color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.sg-misdatos-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow: hidden;
+}
+
+/* ÁREA CON SCROLL VIRTUAL INTERNO PARA MÚLTIPLES CAMPOS */
+.sg-misdatos-scroll-area {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+  padding-right: 6px;
+  max-height: 55vh;
+}
+
+.sg-misdatos-scroll-area::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sg-misdatos-scroll-area::-webkit-scrollbar-thumb {
+  background-color: #0163e0;
+  border-radius: 4px;
+}
+
+/* FLOATING LABELS & INPUTS */
+.input-box-group {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-box {
+  width: 100%;
+  background: transparent;
+  border: 1px solid #333333;
+  border-radius: 6px;
+  padding: 12px 10px;
+  color: #ffffff;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+}
+
+.input-box:focus {
+  border-color: #0163e0;
+  box-shadow: 0 0 8px rgba(1, 99, 224, 0.5);
+}
+
+.input-box.input-error {
+  border-color: #ff4d4d;
+  box-shadow: 0 0 8px rgba(255, 77, 77, 0.4);
+}
+
+.input-box.input-readonly {
+  background-color: #151518;
+  border-color: #262626;
+  color: #888888;
+  cursor: not-allowed;
+}
+
+.floating-label {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888888;
+  font-size: 0.8rem;
+  pointer-events: none;
+  transition: 0.2s ease all;
+  background-color: #0d0d0d;
+  padding: 0 4px;
+}
+
+.input-box:focus ~ .floating-label,
+.input-box:not(:placeholder-shown) ~ .floating-label {
+  top: 0;
+  font-size: 0.7rem;
+  color: #0163e0;
+}
+
+.floating-label.label-readonly {
+  color: #666666;
+}
+
+.floating-label.label-always-top {
+  top: 0;
+  font-size: 0.7rem;
+  color: #0163e0;
+}
+
+.date-input::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+}
+
+.field-error-text {
+  color: #ff4d4d;
+  font-size: 0.75rem;
+  margin-top: 4px;
+}
+
+.success-msg-box {
+  background-color: rgba(40, 167, 69, 0.15);
+  border: 1px solid #28a745;
+  color: #28a745;
+  padding: 8px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+/* BOTONES DUO (VERDE / ROJO) */
+/* CONTENEDOR DE BOTONES (Garantiza igual proporción) */
+.sg-misdatos-modal-container .actions-group-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  width: 100%;
+  align-items: center; /* Alinea verticalmente */
+}
+
+/* ESTILO BASE COMPARTIDO PARA AMBOS BOTONES */
+.sg-misdatos-modal-container .btn-save-green,
+.sg-misdatos-modal-container .btn-cancel-red {
+  flex: 1 1 50%;           /* Ocupan exactamente el 50% cada uno */
+  height: 48px;             /* ALTURA FIJA IDÉNTICA PARA AMBOS */
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase; /* Opcional: convierte "Cancelar" a mayúsculas para igualar la estética */
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  box-sizing: border-box;   /* Incluye el borde en el cálculo de ancho/alto */
+  transition: all 0.3s ease;
+}
+
+/* BOTÓN GUARDAR (Verde base -> Verde neón al hover) */
+.sg-misdatos-modal-container .btn-save-green {
+  background-color: #1daf41;
+  color: #ffffff;
+  border: 1px solid #1daf41;
+}
+
+.sg-misdatos-modal-container .btn-save-green:hover {
+  background-color: #00ff66;
+  color: #000000;
+  border-color: #00ff66;
+  box-shadow: 0 0 15px #00ff66, 0 0 30px rgba(0, 255, 102, 0.6);
+}
+
+/* BOTÓN CANCELAR (Fondo negro + Borde rojo -> Rojo brillante al hover) */
+.sg-misdatos-modal-container .btn-cancel-red {
+  background-color: #000000;
+  color: #ff3333;
+  border: 1px solid #ff0000;
+  box-shadow: 0 0 6px rgba(255, 0, 0, 0.2);
+}
+
+.sg-misdatos-modal-container .btn-cancel-red:hover {
+  background-color: #ff0000;
+  color: #ffffff;
+  border-color: #ff0000;
+  box-shadow: 0 0 15px #ff0000, 0 0 30px rgba(255, 0, 0, 0.6);
+}

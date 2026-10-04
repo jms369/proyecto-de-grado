@@ -6,10 +6,12 @@ import { useDashboardLogic } from './sg-dashboard-logico';
 // Importación de Header y Footer reutilizables
 import SGHeader from '../../componentesR/SG-header/sg-header';
 import SGFooter from '../../componentesR/SG-footer/sg-footer';
-
 // Importación de los Módulos Independientes
-//import AgregarGmailRecuperacion from '../sg-agregar-gmail/sg-agregar-gmail';
-//import MisDatosModal from '../sg-mis-datos/sg-mis-datos-modal';
+import SGGmailsRecuperacion from '../SG-gmails-recuperacion/sg-gmails-recuperacion';
+import SGMisDatos from '../SG-mis-datos/sg-mis-datos';
+
+
+
 
 const SGDashboard: Component = () => {
   const navigate = useNavigate();
@@ -106,7 +108,7 @@ const SGDashboard: Component = () => {
         {/* SIDEBAR DERECHO */}
         <aside class="sg-dashboard-sidebar">
           {/* MÓDULO INDEPENDIENTE: AGREGAR GMAIL DE RECUPERACIÓN */}
-          
+          <SGGmailsRecuperacion />
 
           {/* NAVEGACIÓN SECUNDARIA */}
           <div class="sidebar-navigation-actions">
@@ -119,9 +121,11 @@ const SGDashboard: Component = () => {
           </div>
         </aside>
       </div>
+      <SGMisDatos 
+        isOpen={isMisDatosOpen()} 
+        onClose={() => setIsMisDatosOpen(false)} />
 
       
-
       {/* FOOTER REUTILIZABLE */}
       <SGFooter />
     </div>

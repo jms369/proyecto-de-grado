@@ -1,0 +1,151 @@
+.sg-recup-layout {
+  
+  width: 100%;
+  min-height: auto; /* ← CAMBIAR de '100vh' a 'auto' */
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  color: #ffffff;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.sg-recup-body {
+  
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  padding: 0; /* ← CAMBIAR de '20px' a '0' */
+}
+
+/* Card Contenedora Principal con borde azul neón */
+.sg-recup-card {
+  width: 100%;
+  max-width: 480px;
+  background-color: #0d0d0d;
+  border: 1.5px solid #0066ff;
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 0 20px rgba(0, 102, 255, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.sg-recup-card .sg-recup-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-align: center;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin: 0 0 2rem 0;
+  line-height: 1.3;
+  letter-spacing: 0.5px;
+}
+
+.sg-recup-card .sg-recup-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Input Box Estilizado */
+.sg-recup-card .input-box-group {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.sg-recup-card .input-box {
+  width: 100%;
+  height: 52px;
+  background-color: transparent;
+  border: 1.5px solid #0066ff;
+  border-radius: 10px;
+  padding: 0 1rem;
+  font-size: 0.95rem;
+  color: #ffffff;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sg-recup-card .input-box:focus {
+  border-color: #00d2ff;
+  box-shadow: 0 0 10px rgba(0, 210, 255, 0.4);
+}
+
+.sg-recup-card .input-box.input-error {
+  border-color: #ff3366;
+  box-shadow: 0 0 10px rgba(255, 51, 102, 0.3);
+}
+
+/* Float Label Effect */
+.sg-recup-card .floating-label {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888888;
+  font-size: 0.9rem;
+  pointer-events: none;
+  transition: all 0.25s ease;
+  background-color: #0d0d0d;
+  padding: 0 4px;
+}
+
+.sg-recup-card .input-box:focus ~ .floating-label,
+.sg-recup-card .input-box:not(:placeholder-shown) ~ .floating-label {
+  top: 0px;
+  font-size: 0.75rem;
+  color: #00d2ff;
+}
+
+.sg-recup-card .field-error-text {
+  color: #ff3366;
+  font-size: 0.75rem;
+  margin-top: 4px;
+  padding-left: 4px;
+}
+
+/* Mensajes Globales */
+.sg-recup-card .success-msg-box {
+  color: #00ff88;
+  font-size: 0.85rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Botón Verde Guardar Cambios */
+.sg-recup-card .btn-save-green {
+  width: 100%;
+  height: 50px;
+  background-color: #00b359;
+  border: 1.5px solid #00ff73;
+  border-radius: 25px;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  outline: none;
+  margin-top: 0.5rem;
+  box-shadow: 0 0 15px rgba(0, 255, 115, 0.3);
+  transition: all 0.3s ease;
+}
+
+.sg-recup-card .btn-save-green:hover,
+.sg-recup-card .btn-save-green:focus-visible {
+  background-color: #00e673;
+  border-color: #00ff88;
+  box-shadow: 0 0 25px rgba(0, 255, 136, 0.6);
+  transform: translateY(-1px);
+}
+
+.sg-recup-card .btn-save-green:active {
+  transform: scale(0.98);
+}
