@@ -14,6 +14,8 @@ import SGDashboard from './pages/SG-dashboard/sg-dashboard';
 import SGCrearUsuario from './pages/SG-crear-usuario/sg-crear-usuario';
 // Importación del nuevo módulo Editar Productos
 import SGEditarProductos from './pages/SG-editar-productos/sg-editar-productos';
+// Importación del nuevo módulo Ver Productos
+import SGVerProductos from './pages/SG-ver-productos/sg-ver-productos';
 
 const App: Component = () => {
   return (
@@ -38,6 +40,9 @@ const App: Component = () => {
 
       {/* Ruta "/editar-productos" → Editar Productos */}
       <Route path="/editar-productos" component={SGEditarProductos} />
+
+      {/* Ruta "/ver-productos" → Ver Productos */}
+      <Route path="/ver-productos" component={SGVerProductos} />
     </Router>
   );
 };

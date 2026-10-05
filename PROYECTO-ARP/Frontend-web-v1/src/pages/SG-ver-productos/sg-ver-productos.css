@@ -1,0 +1,190 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&display=swap');
+
+/* ============================================================================
+   ENCAPSULAMIENTO ESTRICTO: Todo prefijado con .sg-ver-productos-container
+   ============================================================================ */
+
+.sg-ver-productos-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #000000;
+  color: #ffffff;
+  font-family: 'Montserrat', sans-serif;
+  box-sizing: border-box;
+}
+
+.sg-ver-productos-container *,
+.sg-ver-productos-container *::before,
+.sg-ver-productos-container *::after {
+  box-sizing: border-box;
+}
+
+.sg-ver-productos-container .sg-main-content {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Títulos Superiores */
+.sg-ver-productos-container .sg-header-section {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.sg-ver-productos-container .sg-title {
+  color: #00e5ff;
+  font-weight: 900;
+  font-size: 2.2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
+}
+
+.sg-ver-productos-container .sg-subtitle {
+  color: #a0aec0;
+  font-size: 1rem;
+  font-weight: 400;
+  margin: 0;
+}
+
+/* Grid de Productos */
+.sg-ver-productos-container .sg-productos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 2rem;
+}
+
+/* Tarjeta Principal */
+.sg-ver-productos-container .sg-card-producto {
+  background: #1c2541;
+  border-radius: 12px;
+  border: 1px solid #3a506b;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sg-ver-productos-container .sg-card-producto:hover {
+  transform: translateY(-4px);
+  border-color: #5bc0be;
+  box-shadow: 0 10px 30px rgba(91, 192, 190, 0.2);
+}
+
+.sg-ver-productos-container .sg-card-disabled {
+  opacity: 0.55;
+  filter: grayscale(0.6);
+}
+
+/* Contenedor de Imagen (Fijo) */
+.sg-ver-productos-container .sg-card-image-box {
+  width: 100%;
+  height: 220px;
+  background-color: #0b132b;
+  border: 1px solid #3a506b;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sg-ver-productos-container .sg-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sg-ver-productos-container .sg-image-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: #5bc0be;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Filas de Información */
+.sg-ver-productos-container .sg-card-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.sg-ver-productos-container .sg-field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.6rem;
+  background: rgba(11, 19, 43, 0.5);
+  border-radius: 6px;
+  border-left: 2px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.sg-ver-productos-container .sg-field-row:hover {
+  border-left: 2px solid #00e5ff;
+  background: rgba(11, 19, 43, 0.8);
+}
+
+.sg-ver-productos-container .sg-span-2 {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.sg-ver-productos-container .sg-field-label {
+  font-size: 0.82rem;
+  color: #a0aec0;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.sg-ver-productos-container .sg-field-val {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffffff;
+  word-break: break-word;
+  text-align: right;
+}
+
+.sg-ver-productos-container .sg-span-2 .sg-field-val {
+  text-align: left;
+  margin-top: 0.4rem;
+  font-weight: 400;
+  color: #e2e8f0;
+  line-height: 1.4;
+}
+
+/* Badges de Estado */
+.sg-ver-productos-container .sg-field-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  width: fit-content;
+  margin-left: auto;
+}
+
+.sg-ver-productos-container .sg-badge-active {
+  background: rgba(0, 230, 118, 0.2);
+  color: #00e676;
+  border: 1px solid rgba(0, 230, 118, 0.4);
+}
+
+.sg-ver-productos-container .sg-badge-inactive {
+  background: rgba(255, 23, 68, 0.2);
+  color: #ff1744;
+  border: 1px solid rgba(255, 23, 68, 0.4);
+}
