@@ -16,6 +16,8 @@ import SGCrearUsuario from './pages/SG-crear-usuario/sg-crear-usuario';
 import SGEditarProductos from './pages/SG-editar-productos/sg-editar-productos';
 // Importación del nuevo módulo Ver Productos
 import SGVerProductos from './pages/SG-ver-productos/sg-ver-productos';
+// Importacion del nuevo módulo Editar Web
+import SGEditarWeb from './pages/SG-editar-web/sg-editar-web';
 
 const App: Component = () => {
   return (
@@ -43,6 +45,9 @@ const App: Component = () => {
 
       {/* Ruta "/ver-productos" → Ver Productos */}
       <Route path="/ver-productos" component={SGVerProductos} />
+
+      {/* Ruta "/editar-web" → Editar Web */}
+      <Route path="/editar-web" component={SGEditarWeb} />
     </Router>
   );
 };
