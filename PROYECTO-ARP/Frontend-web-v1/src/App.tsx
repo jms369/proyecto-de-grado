@@ -19,6 +19,18 @@ import SGVerProductos from './pages/SG-ver-productos/sg-ver-productos';
 // Importacion del nuevo módulo Editar Web
 import SGEditarWeb from './pages/SG-editar-web/sg-editar-web';
 
+// PAGINAS DEL SITIO WEB
+import SWHome from './sitioWeb/SW-home/sw-home';
+import SWPoliticaEnvios from './sitioWeb/SW-politica-envios/sw-politica-envios';
+import SWTerminosCondiciones from './sitioWeb/SW-terminos-y-c/sw-terminos-y-c';
+import SWPoliticasVentas from './sitioWeb/SW-politica-ventas/sw-politica-ventas';
+//import SWProductos from './sitioWeb/SW-productos/sw-productos';
+//import SWAsistente from './sitioWeb/SW-asistente/sw-asistente';
+//import SWProductos from './sitioWeb/SW-productos/sw-productos';
+//import SWAsistente from './sitioWeb/SW-asistente/sw-asistente';
+
+
+
 const App: Component = () => {
   return (
     <Router>
@@ -48,6 +60,20 @@ const App: Component = () => {
 
       {/* Ruta "/editar-web" → Editar Web */}
       <Route path="/editar-web" component={SGEditarWeb} />
+
+
+      {/* Rutas del Sitio Web */}
+      {/* Ruta "/home" → Página de Inicio del Sitio Web */}
+      <Route path="/home" component={SWHome} />
+
+      {/* Ruta "/politicas-envios" → Política de Envíos */}
+      <Route path="/politicas-envios" component={SWPoliticaEnvios} />
+
+      {/* Ruta "/terminos-y-condiciones" → Términos y Condiciones */}
+      <Route path="/terminos-y-condiciones" component={SWTerminosCondiciones} />
+
+      {/* Ruta "/politicas-ventas" → Políticas de Ventas */}
+      <Route path="/politicas-ventas" component={SWPoliticasVentas} />
     </Router>
   );
 };

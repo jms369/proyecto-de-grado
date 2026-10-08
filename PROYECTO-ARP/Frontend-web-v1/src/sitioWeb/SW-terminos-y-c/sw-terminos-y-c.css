@@ -1,0 +1,64 @@
+/* src/sitioWeb/SW-terminos-y-c/sw-terminos-y-c.css */
+
+.sw-terminos-container {
+  background-color: #0d0d0d;
+  color: #e0e0e0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.sw-terminos-container .legal-content {
+  flex: 1;
+  max-width: 900px;
+  width: 90%;
+  margin: 3rem auto;
+  padding: 2.5rem;
+  background-color: #121212;
+  border: 1px solid #0163e0;
+  border-radius: 12px;
+  box-shadow: 0 0 25px rgba(1, 99, 224, 0.2);
+}
+
+.sw-terminos-container .title {
+  color: #0163e0;
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(1, 99, 224, 0.4);
+}
+
+.sw-terminos-container .update-date {
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #2a2a2a;
+  padding-bottom: 1rem;
+}
+
+.sw-terminos-container .section-block {
+  margin-bottom: 1.8rem;
+}
+
+.sw-terminos-container .section-title {
+  color: #d9b0ff;
+  font-size: 1.3rem;
+  margin-bottom: 0.6rem;
+}
+
+.sw-terminos-container p, 
+.sw-terminos-container li {
+  line-height: 1.7;
+  color: #cccccc;
+  font-size: 1rem;
+}
+
+.sw-terminos-container ul {
+  padding-left: 1.2rem;
+  margin-top: 0.5rem;
+}
+
+.sw-terminos-container li {
+  margin-bottom: 0.4rem;
+}

@@ -1,0 +1,85 @@
+/* ============================================================================ */
+/* INICIO MODIFICACIÓN: Estilos encapsulados con diseño responsivo y Neón       */
+/* ============================================================================ */
+.sw-header-container {
+  width: 100%;
+  background-color: #0d0d0d;
+  border-bottom: 2px solid #0163e0;
+  box-shadow: 0 4px 15px rgba(1, 99, 224, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 1.5rem 1rem;
+}
+
+/* Primera mitad: Logo */
+.sw-header-container .logo-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(1, 99, 224, 0.2);
+  margin-bottom: 1rem;
+}
+
+.sw-header-container .logo-image {
+  max-width: 250px;
+  height: auto;
+  /* Efecto resplandor en el logo si tiene fondo transparente */
+  filter: drop-shadow(0 0 10px rgba(1, 99, 224, 0.6));
+  transition: transform 0.3s ease;
+}
+
+.sw-header-container .logo-image:hover {
+  transform: scale(1.05);
+}
+
+/* Segunda mitad: Navegación */
+.sw-header-container .nav-section {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.sw-header-container .nav-link {
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid #0163e0;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 5px rgba(1, 99, 224, 0.2);
+}
+
+.sw-header-container .nav-link:hover {
+  background-color: rgba(1, 99, 224, 0.15);
+  box-shadow: 0 0 15px rgba(1, 99, 224, 0.8), inset 0 0 10px rgba(1, 99, 224, 0.5);
+  text-shadow: 0 0 8px #ffffff;
+  border-color: #0284ff;
+}
+
+/* Media Query para pantallas pequeñas (Ej. Galaxy S8) */
+@media (max-width: 768px) {
+  .sw-header-container .nav-section {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .sw-header-container .nav-link {
+    width: 100%;
+    text-align: center;
+  }
+}
+/* ============================================================================ */
+/* FIN MODIFICACIÓN                                                             */
+/* ============================================================================ */

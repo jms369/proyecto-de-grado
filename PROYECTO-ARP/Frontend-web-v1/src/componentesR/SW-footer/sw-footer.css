@@ -1,0 +1,185 @@
+/* ============================================================================ */
+/* INICIO MODIFICACIÓN: Encapsulamiento del CSS proporcionado e integración Neón */
+/* ============================================================================ */
+.sw-footer-container {
+  width: 100%;
+  background-color: #0d0d0d;
+  border-top: 2px solid #0163e0;
+  box-shadow: 0 -4px 15px rgba(1, 99, 224, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 1rem 1rem 1rem;
+  font-family: sans-serif;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.sw-footer-container.footer-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Primera parte: Redes Sociales (Código adaptado) --- */
+.sw-footer-container .social-section {
+  margin-bottom: 2rem;
+}
+
+.sw-footer-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sw-footer-container .example-2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sw-footer-container .example-2 .icon-content {
+  margin: 0 15px;
+  position: relative;
+}
+
+.sw-footer-container .example-2 .icon-content .tooltip {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 5px;
+  opacity: 0;
+  visibility: hidden;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.sw-footer-container .example-2 .icon-content:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+  top: -45px;
+}
+
+.sw-footer-container .example-2 .icon-content a {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  color: #4d4d4d;
+  background-color: #ffffff;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.sw-footer-container .example-2 .icon-content a:hover {
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+  color: white;
+}
+
+.sw-footer-container .example-2 .icon-content a svg {
+  position: relative;
+  z-index: 1;
+  width: 28px;
+  height: 28px;
+}
+
+.sw-footer-container .example-2 .icon-content a .filled {
+  position: absolute;
+  top: auto;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background-color: #000;
+  transition: all 0.3s ease-in-out;
+}
+
+.sw-footer-container .example-2 .icon-content a:hover .filled {
+  height: 100%;
+}
+
+/* Colores específicos por red social */
+.sw-footer-container .example-2 .icon-content a[data-social="facebook"] .filled,
+.sw-footer-container .example-2 .icon-content a[data-social="facebook"] ~ .tooltip {
+  background-color: #1877F2;
+}
+
+.sw-footer-container .example-2 .icon-content a[data-social="instagram"] .filled,
+.sw-footer-container .example-2 .icon-content a[data-social="instagram"] ~ .tooltip {
+  background: linear-gradient(45deg, #405de6, #5b51db, #b33ab4, #c135b4, #e1306c, #fd1f1f);
+}
+
+.sw-footer-container .example-2 .icon-content a[data-social="tiktok"] .filled,
+.sw-footer-container .example-2 .icon-content a[data-social="tiktok"] ~ .tooltip {
+  background-color: #ff0050; 
+}
+
+/* --- Segunda parte: Footer Profesional (Derechos y Legales) --- */
+.sw-footer-container .legal-section {
+  width: 100%;
+  max-width: 1200px;
+  border-top: 1px solid rgba(1, 99, 224, 0.3);
+  padding-top: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.sw-footer-container .copyright-text {
+  color: #888888;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.sw-footer-container .copyright-text span {
+  color: #0163e0;
+  text-shadow: 0 0 5px rgba(1, 99, 224, 0.5);
+}
+
+.sw-footer-container .legal-links-list {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.sw-footer-container .legal-link-btn {
+  background: none;
+  border: none;
+  color: #aaaaaa;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+  padding: 0;
+}
+
+.sw-footer-container .legal-link-btn:hover {
+  color: #ffffff;
+  text-shadow: 0 0 8px #0163e0;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .sw-footer-container .legal-section {
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+  }
+  
+  .sw-footer-container .legal-links-list {
+    justify-content: center;
+  }
+}
+/* ============================================================================ */
+/* FIN MODIFICACIÓN                                                             */
+/* ============================================================================ */
