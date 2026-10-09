@@ -41,7 +41,7 @@ export const useHomeLogic = (navigate: (to: string) => void) => {
   };
 
   const handleVerProductos = () => {
-    navigate('/productos');
+    navigate('/catalogo-productos');
   };
 
   const handleAsistente = () => {

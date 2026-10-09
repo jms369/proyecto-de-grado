@@ -1,0 +1,192 @@
+/* ============================================================================ */
+/* INICIO MODIFICACIÓN: Estilos encapsulados para catálogo y tarjetas           */
+/* ============================================================================ */
+.sw-catalogo-container {
+  min-height: 100vh;
+  background-color: #0d0d0d;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.sw-catalogo-container .catalogo-content {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sw-catalogo-container .title-wrapper {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-top: 1rem;
+}
+
+.sw-catalogo-container .title-wrapper h1 {
+  font-size: 2.5rem;
+  color: #ffffff;
+  margin: 0;
+  text-shadow: 0 0 10px rgba(1, 99, 224, 0.5);
+  letter-spacing: 2px;
+}
+
+/* Grid dinámico responsivo */
+.sw-catalogo-container .cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+  justify-content: center;
+  align-items: start;
+}
+
+/* Tarjeta individual */
+.sw-catalogo-container .producto-card {
+  background-color: #000000;
+  border: 1px solid #0163e0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 0 15px rgba(1, 99, 224, 0.15);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sw-catalogo-container .producto-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px rgba(1, 99, 224, 0.4);
+}
+
+/* Contenedor de la Imagen: Tamaño fijo, no se distorsiona */
+.sw-catalogo-container .image-box {
+  width: 100%;
+  height: 250px; /* Tamaño fijo solicitado */
+  background-color: #050505;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid #333;
+}
+
+.sw-catalogo-container .image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* La imagen se adapta al contenedor sin expandirse ni deformarse */
+}
+
+/* Filas de Información */
+.sw-catalogo-container .info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #333;
+}
+
+.sw-catalogo-container .info-label {
+  font-weight: bold;
+  color: #aaaaaa;
+  font-size: 0.95rem;
+}
+
+.sw-catalogo-container .info-value {
+  color: #ffffff;
+  font-size: 0.95rem;
+  text-align: right;
+  max-width: 60%;
+  word-wrap: break-word;
+}
+
+/* Información Adicional que adapta su altura verticalmente */
+.sw-catalogo-container .mas-info-box {
+  margin-top: 1rem;
+  background-color: #111;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #333;
+}
+
+.sw-catalogo-container .mas-info-text {
+  color: #dddddd;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  white-space: pre-wrap; /* Respeta los saltos de línea y se adapta al contenedor */
+}
+
+/* Contenedor del Precio */
+.sw-catalogo-container .price-box {
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.sw-catalogo-container .price-label {
+  color: #aaaaaa;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.sw-catalogo-container .price-value {
+  color: #ffffff;
+  font-size: 2.2rem;
+  font-weight: bold;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+/* Botón de WhatsApp */
+.sw-catalogo-container .btn-whatsapp {
+  width: 100%;
+  padding: 12px;
+  background-color: transparent;
+  color: #25D366;
+  border: 2px solid #25D366;
+  border-radius: 25px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.sw-catalogo-container .btn-whatsapp:hover {
+  background-color: #000000;
+  color: #25D366;
+  box-shadow: 0 0 15px #25D366, inset 0 0 10px #25D366;
+}
+
+.sw-catalogo-container .btn-whatsapp svg {
+  fill: currentColor;
+  width: 24px;
+  height: 24px;
+}
+
+/* Toggle Ver Más / Ver Menos */
+.sw-catalogo-container .btn-toggle {
+  background: none;
+  border: none;
+  color: #15d4ff;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: auto;
+  padding-top: 1rem;
+  text-align: center;
+  transition: color 0.3s ease;
+}
+
+.sw-catalogo-container .btn-toggle:hover {
+  color: #4da3ff;
+  text-shadow: 0 0 8px rgba(1, 99, 224, 0.8);
+}
+/* ============================================================================ */
+/* FIN MODIFICACIÓN                                                             */
+/* ============================================================================ */
