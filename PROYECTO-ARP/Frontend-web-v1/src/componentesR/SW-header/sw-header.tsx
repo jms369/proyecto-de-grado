@@ -18,7 +18,7 @@ const SWHeader: Component = () => {
         {/* Sustituye la ruta del src por la ubicación real de tu logo en /public o importado */}
         <img 
           /*src="/assets/logo-empresa.png" */
-          src="https://images-platform.99static.com/q0ZnEPaMI6sdJYxhpr6m36HxQ84=/369x164:1232x1027/500x500/top/smart/99designs-contests-attachments/60/60900/attachment_60900817"
+          src= "https://images-platform.99static.com/q0ZnEPaMI6sdJYxhpr6m36HxQ84=/369x164:1232x1027/500x500/top/smart/99designs-contests-attachments/60/60900/attachment_60900817"
           alt="Logo de la Empresa" 
           class="logo-image" 
         />

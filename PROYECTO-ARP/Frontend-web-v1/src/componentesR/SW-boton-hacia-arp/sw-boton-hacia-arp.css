@@ -1,0 +1,192 @@
+/* ============================================================================ */
+/* INICIO MODIFICACIÓN: Estilos, encapsulamiento y lógica de parpadeo (5s/1s)   */
+/* ============================================================================ */
+
+/* 1. Posicionamiento Global */
+.sw-boton-hacia-arp-container {
+  position: fixed;
+  /* Lo ubicamos en 100px para que flote justo por encima del botón de WhatsApp (que está en 25px) */
+  bottom: 100px; 
+  right: 25px;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transform: translateZ(0); 
+}
+
+/* 2. Etiqueta Multilínea con Animación de Parpadeo */
+.sw-boton-hacia-arp-container .sw-arp-label {
+  background-color: #0d1b2a;
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-family: inherit;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+  border: 1px solid #0163e0; /* Borde neón característico de tu proyecto */
+  display: flex;
+  flex-direction: column; /* Apila el texto en dos líneas */
+  align-items: center;
+  white-space: nowrap;
+  transform-origin: right center;
+  
+  /* Animación Total = 6 segundos infinitos */
+  animation: sw-arp-blinking 6s infinite;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.sw-boton-hacia-arp-container .sw-arp-text-line1 {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #cccccc;
+}
+
+.sw-boton-hacia-arp-container .sw-arp-text-line2 {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+/* 3. Círculo del Robot (Modo Pasivo) */
+.sw-boton-hacia-arp-container .sw-arp-btn-circle {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 55px;
+  height: 55px;
+  border: none;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  transition-duration: 0.3s;
+  background-color: #0163e0; /* Color Tech/Azul para diferenciarlo de WhatsApp */
+  animation: sw-arp-pulse-wave 2s infinite;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.sw-boton-hacia-arp-container .sw-arp-sign {
+  width: 100%;
+  transition-duration: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sw-boton-hacia-arp-container .sw-arp-sign svg {
+  width: 34px;
+}
+
+.sw-boton-hacia-arp-container .sw-arp-sign svg path {
+  fill: white;
+}
+
+/* Texto Oculto "vamos" */
+.sw-boton-hacia-arp-container .sw-arp-hover-text {
+  position: absolute;
+  right: 0%;
+  width: 0%;
+  opacity: 0;
+  color: white;
+  font-size: 1.1em;
+  font-weight: 700;
+  text-transform: uppercase;
+  transition-duration: 0.3s;
+}
+
+/* -------------------------------------------------- */
+/* 4. EFECTOS HOVER (Expansión e Interacción)         */
+/* -------------------------------------------------- */
+
+/* Al pasar el cursor, ocultamos la etiqueta y detenemos su animación */
+.sw-boton-hacia-arp-container:hover .sw-arp-label {
+  opacity: 0 !important;
+  transform: translateX(20px) scale(0.9);
+  pointer-events: none;
+  width: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+  animation: none; /* Frenamos el parpadeo */
+}
+
+/* Expandimos el botón principal */
+.sw-boton-hacia-arp-container:hover .sw-arp-btn-circle {
+  width: 145px;
+  border-radius: 40px;
+  transition-duration: 0.3s;
+  animation: none;
+}
+
+.sw-boton-hacia-arp-container:hover .sw-arp-sign {
+  width: 35%;
+  transition-duration: 0.3s;
+  padding-left: 15px;
+}
+
+.sw-boton-hacia-arp-container:hover .sw-arp-hover-text {
+  opacity: 1;
+  width: 65%;
+  transition-duration: 0.3s;
+  padding-right: 15px;
+  text-align: center;
+}
+
+.sw-boton-hacia-arp-container:active .sw-arp-btn-circle {
+  transform: translate(2px, 2px);
+}
+
+/* -------------------------------------------------- */
+/* 5. ANIMACIONES (Keyframes de Parpadeo y Latido)    */
+/* -------------------------------------------------- */
+
+/* Cálculo Matemático: 5s visible (83.33%), 1s invisible (16.67%) en ciclo de 6s */
+@keyframes sw-arp-blinking {
+  0% { opacity: 1; }
+  82% { opacity: 1; }      /* Se mantiene visible casi 5 seg exactos */
+  83.33% { opacity: 0; }   /* Desaparece abruptamente al entrar al seg 5 */
+  99% { opacity: 0; }      /* Se mantiene invisible 1 seg exacto */
+  100% { opacity: 1; }     /* Reaparece al iniciar el ciclo */
+}
+
+/* Latido y Onda expansiva en color azul tech (#0163e0) */
+@keyframes sw-arp-pulse-wave {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(1, 99, 224, 0.7);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 15px rgba(1, 99, 224, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(1, 99, 224, 0);
+  }
+}
+
+/* -------------------------------------------------- */
+/* 6. RESPONSIVE DESIGN                               */
+/* -------------------------------------------------- */
+@media (max-width: 768px) {
+  .sw-boton-hacia-arp-container {
+    bottom: 85px; /* Ajuste móvil para que no estorbe */
+    right: 20px;
+    gap: 10px;
+  }
+  .sw-boton-hacia-arp-container .sw-arp-text-line1 { font-size: 0.75rem; }
+  .sw-boton-hacia-arp-container .sw-arp-text-line2 { font-size: 0.9rem; }
+  .sw-boton-hacia-arp-container .sw-arp-btn-circle {
+    width: 50px;
+    height: 50px;
+  }
+  .sw-boton-hacia-arp-container .sw-arp-sign svg { width: 22px; }
+  .sw-boton-hacia-arp-container:hover .sw-arp-btn-circle { width: 130px; }
+}
+/* ============================================================================ */
+/* FIN MODIFICACIÓN                                                             */
+/* ============================================================================ */

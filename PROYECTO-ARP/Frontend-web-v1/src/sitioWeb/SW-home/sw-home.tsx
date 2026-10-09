@@ -10,6 +10,11 @@ import './sw-home.css';
 import SWHeader from '../../componentesR/SW-header/sw-header';
 import SWFooter from '../../componentesR/SW-footer/sw-footer';
 
+import SWBotonWhatsapp from '../../componentesR/SW-boton-whatsapp/sw-boton-whatsapp';
+
+//para probar el boton de asistente ARP
+import SWBotonHaciaArp from '../../componentesR/SW-boton-hacia-arp/sw-boton-hacia-arp';
+
 const SWHome: Component = () => {
   const navigate = useNavigate();
   const {
@@ -92,6 +97,15 @@ const SWHome: Component = () => {
       {/* ============================================================================ */}
 
       <SWFooter />
+      {/*Renderizado de boton de WhatsApp con número y mensaje predefinidos*/}
+      <SWBotonWhatsapp 
+        phone="59178008122" 
+        message="Hola, quisiera obtener más información." 
+      />
+
+      {/* Botón del Asistente ARP (Se ubicará por encima de WhatsApp, a 100px) */}
+      <SWBotonHaciaArp />
+
     </div>
   );
 };
