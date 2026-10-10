@@ -25,6 +25,7 @@ import SWPoliticaEnvios from './sitioWeb/SW-politica-envios/sw-politica-envios';
 import SWTerminosCondiciones from './sitioWeb/SW-terminos-y-c/sw-terminos-y-c';
 import SWPoliticasVentas from './sitioWeb/SW-politica-ventas/sw-politica-ventas';
 import SWCatalogoProductos from './sitioWeb/SW-catalogo-productos/sw-catalogo-productos';
+import SWAsistente from './sitioWeb/SW-asistente-recomendacion/sw-asistente-rec';
 //import SWProductos from './sitioWeb/SW-productos/sw-productos';
 //import SWAsistente from './sitioWeb/SW-asistente/sw-asistente';
 //import SWProductos from './sitioWeb/SW-productos/sw-productos';
@@ -78,6 +79,9 @@ const App: Component = () => {
 
       {/* Ruta "/catalogo-productos" → Catálogo de Productos */}
       <Route path="/catalogo-productos" component={SWCatalogoProductos} />
+
+      {/* Ruta "/asistente" → Asistente de Recomendación */}
+      <Route path="/asistente" component={SWAsistente} />
     </Router>
   );
 };

@@ -13,6 +13,7 @@ import SWFooter from '../../componentesR/SW-footer/sw-footer';
 import SWBotonWhatsapp from '../../componentesR/SW-boton-whatsapp/sw-boton-whatsapp';
 
 
+
 const SWHome: Component = () => {
   const navigate = useNavigate();
   const {
@@ -103,6 +104,8 @@ const SWHome: Component = () => {
 
 
     </div>
+
+
   );
 };
 

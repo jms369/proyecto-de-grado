@@ -8,7 +8,7 @@ export interface SWBotonHaciaArpProps {
 
 export const handleArpNavigation = (
   navigate: (to: string) => void,
-  rutaDestino: string = '/asistente-arp'
+  rutaDestino: string = '/asistente'
 ): void => {
   // Al ser una ruta interna, utilizamos el enrutador de Solid.js
   navigate(rutaDestino);
