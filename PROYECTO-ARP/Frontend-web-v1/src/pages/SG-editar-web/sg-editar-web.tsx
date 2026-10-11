@@ -5,12 +5,17 @@ import type { Component } from 'solid-js';
 import { Show, For } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
 import { useEditarWebLogic } from './sg-editar-web-logico';
-import { sanitizeUrlInput } from '../../types/sg-editar-web-i-m';
+
 import './sg-editar-web.css';
 
 // Componentes Reutilizables Simulados (Ajustar rutas según tu proyecto)
 import Header from '../../componentesR/SG-header/sg-header';
 import Footer from '../../componentesR/SG-footer/sg-footer';
+
+// INICIO MODIFICACIÓN: Importación de sanitizeWhatsappInput y restricción del input de WhatsApp
+// ============================================================================
+import { sanitizeUrlInput, sanitizeWhatsappInput } from '../../types/sg-editar-web-i-m';
+
 
 const SGEditarWeb: Component = () => {
   const navigate = useNavigate();
@@ -77,8 +82,8 @@ const SGEditarWeb: Component = () => {
             
           <div class="input-group">
             <input type="text" id="enlace-wa" class="input-field" placeholder=" " 
-              value={logic.links().whatsapp} onInput={(e) => logic.setLinks({...logic.links(), whatsapp: sanitizeUrlInput(e.currentTarget.value)})} />
-            <label for="enlace-wa" class="floating-label">Número o URL de WhatsApp</label>
+              value={logic.links().whatsapp} onInput={(e) => logic.setLinks({...logic.links(), whatsapp: sanitizeWhatsappInput(e.currentTarget.value)})} />
+            <label for="enlace-wa" class="floating-label">Número WhatsApp, ejemplo: 591XXXXXXXX</label>
           </div>
             
           <div class="input-group">

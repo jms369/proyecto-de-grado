@@ -325,20 +325,26 @@ export const SGEditarProductos: Component = () => {
                         when={isEditing()}
                         fallback={<span class="sg-field-val">{producto.pantalla}</span>}
                       >
-                        <input
-                          type="text"
+                        <select
                           class="sg-input-edit"
                           value={currentData().pantalla}
-                          onInput={(e) =>
+                          onChange={(e) =>
                             handleUpdateTempField(
                               producto.id,
                               'pantalla',
                               e.currentTarget.value
                             )
                           }
-                        />
+                        >
+                          <option value="AMOLED">AMOLED</option>
+                          <option value="OLED">OLED</option>
+                          <option value="IPS LCD">IPS LCD</option>
+                          <option value="LCD">LCD</option>
+                        </select>
                       </Show>
                     </div>
+
+                    
 
                     {/* Cámara Principal */}
                     <div class="sg-field-row">
@@ -530,6 +536,8 @@ export const SGEditarProductos: Component = () => {
         </div>
       </main>
 
+
+
       {/* POP-UP / MODAL DE NUEVO PRODUCTO */}
       <Show when={isModalOpen()}>
         <div class="sg-modal-overlay">
@@ -678,16 +686,20 @@ export const SGEditarProductos: Component = () => {
 
                 <div class="sg-form-group">
                   <label>Pantalla</label>
-                  <input
-                    type="text"
+                  <select
                     value={nuevoProductoForm().pantalla}
-                    onInput={(e) =>
+                    onChange={(e) =>
                       setNuevoProductoForm((p) => ({
                         ...p,
                         pantalla: e.currentTarget.value,
                       }))
                     }
-                  />
+                  >
+                    <option value="AMOLED">AMOLED</option>
+                    <option value="OLED">OLED</option>
+                    <option value="IPS LCD">IPS LCD</option>
+                    <option value="LCD">LCD</option>
+                  </select>
                 </div>
 
                 <div class="sg-form-group">

@@ -42,6 +42,13 @@ export const validateImageFile = (file: File): string | null => {
 export const sanitizeUrlInput = (url: string): string => {
   return url.replace(/\s+/g, '');
 };
+
+// ============================================================================
+// INICIO MODIFICACIÓN: Adición de función de saneamiento para permitir solo números en WhatsApp
+// ============================================================================
+export const sanitizeWhatsappInput = (value: string): string => {
+  return value.replace(/\D/g, '');
+};
 // ============================================================================
 // FIN MODIFICACIÓN
 // ============================================================================

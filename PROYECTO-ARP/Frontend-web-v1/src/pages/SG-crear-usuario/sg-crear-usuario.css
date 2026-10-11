@@ -440,8 +440,12 @@
 }
 
 /* Distribución elástica y del mismo ancho para Habilitar, Suspender y Guardar Cambios */
+/* ============================================================================ */
+/* INICIO MODIFICACIÓN: Estilos base para pantallas grandes (En fila y flexibles) */
+/* ============================================================================ */
 .sg-crear-usuario-container .sg-user-card-actions {
   display: flex;
+  flex-direction: row; /* En pantallas grandes van en fila horizontal */
   align-items: center;
   gap: 1rem;
   width: 100%;
@@ -451,11 +455,33 @@
 
 .sg-crear-usuario-container .sg-user-card-actions .btn,
 .sg-crear-usuario-container .sg-user-card-actions .btn-save-cloud {
-  flex: 1;
-  min-width: 140px;
+  flex: 1;           /* Se reparten el espacio equitativamente en escritorio */
+  min-width: 140px;  /* Evita que se reduzcan demasiado en pantallas medianas */
   height: 44px;
   box-sizing: border-box;
 }
+
+/* ============================================================================ */
+/* INICIO MODIFICACIÓN: Estilos exclusivos para celulares (Apilados y ancho 100%) */
+/* ============================================================================ */
+@media (max-width: 768px) {
+  .sg-crear-usuario-container .sg-user-card-actions {
+    
+    flex-direction: column; /* Cambia a columna SOLO en celulares */
+    gap: 1rem;             /* Espacio vertical entre cada botón */
+  }
+
+  .sg-crear-usuario-container .sg-user-card-actions .btn,
+  .sg-crear-usuario-container .sg-user-card-actions .btn-save-cloud {
+    width: 100%;      /* Ocupan todo el ancho disponible en la tarjeta */
+    min-width: unset; /* Elimina la restricción mínima en móvil */
+    flex: initial;     /*  Evita que flex deforme la altura en modo columna */
+    height: 44px;      /*  Restaura la altura original perfecta */
+  }
+}
+/* ============================================================================ */
+/* FIN MODIFICACIÓN                                                             */
+/* ============================================================================ */
 
 /* ============================================================================ */
 /* MODAL POP-UP Y OJO DE CONTRASEÑA                                             */

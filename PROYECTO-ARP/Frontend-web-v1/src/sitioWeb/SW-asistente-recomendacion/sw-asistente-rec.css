@@ -24,7 +24,7 @@
   text-align: center;
   font-size: 1.8rem;
   font-weight: 700;
-  color: #fff;
+  color: #0163e0;
   text-shadow: 0 0 10px #0163e0;
   margin-bottom: 8px;
 }
@@ -32,7 +32,7 @@
 .sw-asistente-rec-subtitle {
   text-align: center;
   font-size: 0.95rem;
-  color: #b0b0b0;
+  color: #ffffff;
   margin-bottom: 32px;
 }
 
@@ -47,7 +47,7 @@
 
 .sw-section-heading {
   font-size: 1.4rem;
-  color: #fff;
+  color: #1fd7e8;
   margin-bottom: 16px;
 }
 
@@ -67,7 +67,7 @@
 
 .sw-avanzado-nota {
   font-size: 0.85rem;
-  color: #888;
+  color: #ffffff;
   margin-bottom: 16px;
   font-style: italic;
 }
@@ -415,9 +415,10 @@
 }
 
 .sw-btn-whatsapp-card:hover {
-  background-color: #1ebe5d;
+  background-color: #000000;
   transform: scale(1.05);
-  box-shadow: 0 0 12px rgba(37, 211, 102, 0.6);
+  box-shadow: 0 0 12px rgba(39, 224, 107, 0.912);
+  color: #25d366;
 }
 
 .sw-whatsapp-general-container {
@@ -439,9 +440,10 @@
 }
 
 .sw-btn-whatsapp-general:hover {
-  background-color: #1ebe5d;
+  background-color: #000000;
   transform: scale(1.05);
-  box-shadow: 0 0 25px rgba(37, 211, 102, 0.7);
+  box-shadow: 0 0 25px rgba(39, 224, 107, 0.912);
+  color: #25d366;
 }
 
 /* ============================================================================

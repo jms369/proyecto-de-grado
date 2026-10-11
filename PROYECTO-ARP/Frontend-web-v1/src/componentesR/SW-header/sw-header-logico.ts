@@ -1,12 +1,14 @@
 // ============================================================================
-// INICIO MODIFICACIÓN: Controlador de navegación aislando la vista
+// INICIO MODIFICACIÓN: Controlador de navegación y transacciones de redirección
 // ============================================================================
 export const handleNavigation = (
   navigate: (to: string) => void,
-  path: string
+  path: string,
+  onNavigated?: () => void
 ): void => {
-  // Aquí se pueden agregar validaciones, analytics o limpieza de estado global
-  // antes de realizar la redirección.
+  if (onNavigated) {
+    onNavigated();
+  }
   navigate(path);
 };
 // ============================================================================
