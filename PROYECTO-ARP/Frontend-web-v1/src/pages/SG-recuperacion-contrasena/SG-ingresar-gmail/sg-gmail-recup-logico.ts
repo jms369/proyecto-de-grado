@@ -24,7 +24,7 @@ export const handleBackClick = (
 ): void => {
   e.preventDefault();
   triggerBackAnimation(() => {
-    navigate('/');
+    navigate('/inicioSG');
   });
 };
 

@@ -29,6 +29,6 @@ export const handleResetPasswordSubmit = (
   // 3. Ejecutar animación de salida y redirigir
   triggerSlideLeftExitAnimation(() => {
     onSuccess(payload);
-    navigate('/'); // Redirige al login o a la página deseada
+    navigate('/inicioSG'); // Redirige al login o a la página deseada
   });
 };

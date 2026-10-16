@@ -17,7 +17,7 @@ export const handleLogoutSubmit = (
 
   // Redirección por defecto al Login si se proporciona la función navigate
   if (navigate) {
-    navigate('/');
+    navigate('/inicioSG');
   }
 };
 

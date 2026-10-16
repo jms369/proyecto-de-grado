@@ -8,7 +8,7 @@ export interface SWHeaderLink {
 }
 
 export const headerLinks: SWHeaderLink[] = [
-  { id: 'link-home', label: 'Home', path: '/home' },
+  { id: 'link-home', label: 'Home', path: '/' },
   { id: 'link-productos', label: 'Productos', path: '/catalogo-productos' },
   { id: 'link-terminos', label: 'Terminos y Condiciones', path: '/terminos-y-condiciones' },
   { id: 'link-ventas', label: 'Políticas de Ventas', path: '/politicas-ventas' },

@@ -7,11 +7,11 @@ import { handleLoginSubmit, handleForgotPasswordClick } from './sg-login-logico'
 import { togglePasswordVisibility } from './sg-login-estilo';
 
 interface SGLoginProps {
-  onLoginSuccess?: (payload: LoginRequest) => void;
+  onLoginSuccess?: (payload: LoginRequest, rol: string) => void;
 }
 
 export const SGLogin: Component<SGLoginProps> = (props) => {
-  const fallbackLoginSuccess = () => {};
+  const fallbackLoginSuccess = (_payload: LoginRequest, _rol: string) => {};
   const navigate = useNavigate();
 
   const [formData, setFormData] = createSignal<MappedLoginData>({ email: '', password: '' });

@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile.dev
     container_name: frontend_solid
     ports:
-      - "3000:3000"
+      - "5000:3000"
     volumes:
       - ./Frontend-web-v1:/app
       - /app/node_modules
@@ -16,7 +16,52 @@ services:
     networks:
       - red-interna-arp
 
-# Red interna para conectar el backend y la BD más adelante
+  backend_express:
+    build: ./Backend-web-v1
+    container_name: backend_express
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - DB_HOST=mysql_arp_db
+      - DB_USER=root
+      - DB_PASSWORD=rootpassword
+      - DB_NAME=CELLPHONE_STORE_DB
+    volumes:
+      - ./Backend-web-v1:/app
+      - /app/node_modules
+      - uploads_data:/app/Uploads
+    depends_on:
+      mysql_arp_db:
+        condition: service_healthy  # <--- Aquí le decimos que espere a que MySQL esté saludable
+    networks:
+      - red-interna-arp
+
+  mysql_arp_db:
+    image: mysql:8.0
+    container_name: mysql_arp_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: CELLPHONE_STORE_DB
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./Backend-web-v1/database.sql:/docker-entrypoint-initdb.d/database.sql  # <--- Esto le dice a MySQL que ejecute tu script al arrancar
+    networks:
+      - red-interna-arp
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  mysql_data:
+  uploads_data:
+
 networks:
   red-interna-arp:
     driver: bridge

@@ -36,8 +36,8 @@ import SWAsistente from './sitioWeb/SW-asistente-recomendacion/sw-asistente-rec'
 const App: Component = () => {
   return (
     <Router>
-      {/* Ruta inicial "/" → Página de Login */}
-      <Route path="/" component={SGLogin} />
+      {/* Ruta inicial "/inicioSG" → Página de Login */}
+      <Route path="/inicioSG" component={SGLogin} />
 
       {/* Ruta "/gmail-recuperacion" → Ingresar Gmail */}
       <Route path="/gmail-recuperacion" component={SGGmailRecuperacion} />
@@ -65,8 +65,8 @@ const App: Component = () => {
 
 
       {/* Rutas del Sitio Web */}
-      {/* Ruta "/home" → Página de Inicio del Sitio Web */}
-      <Route path="/home" component={SWHome} />
+      {/* Ruta "/" → Página de Inicio del Sitio Web */}
+      <Route path="/" component={SWHome} />
 
       {/* Ruta "/politicas-envios" → Política de Envíos */}
       <Route path="/politicas-envios" component={SWPoliticaEnvios} />
