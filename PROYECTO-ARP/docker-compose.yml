@@ -31,7 +31,7 @@ services:
     volumes:
       - ./Backend-web-v1:/app
       - /app/node_modules
-      - uploads_data:/app/Uploads
+      - ./Backend-web-v1/Uploads:/app/Uploads # CAMBIO: Conectamos la carpeta física de Windows con el contenedor
     depends_on:
       mysql_arp_db:
         condition: service_healthy  # <--- Aquí le decimos que espere a que MySQL esté saludable
@@ -60,7 +60,7 @@ services:
 
 volumes:
   mysql_data:
-  uploads_data:
+  
 
 networks:
   red-interna-arp:

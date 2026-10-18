@@ -1,198 +1,145 @@
-import { createSignal } from 'solid-js';
+
+
+
+
+// src/lógico.ts
+import { createSignal, createResource } from 'solid-js';
 import type {
   UsuarioModel,
   BusquedaUsuarioFiltro,
-  UsuarioBackendDTO,
   UsuarioErrors
 } from '../../types/sg-crear-usuario-i-m';
 
 import {
   mapBackendToFrontendUsuario,
-  mapFrontendToBackendUsuario,
+  mapTablaToBackend,
+  mapTarjetaToBackend,
   validateUsuarioForm
 } from '../../types/sg-crear-usuario-i-m';
 
-// Estado inicial para la creación de usuarios en el modal
+import { 
+  apiListarUsuariosTabla, 
+  apiCrearUsuario, 
+  apiActualizarUsuarioTabla, 
+  apiActualizarUsuarioTarjeta,
+  apiBuscarUsuario
+} from '../../services/apis_SG/crear_usuario_api';
+
 export const initialNewUser: UsuarioModel = {
-  nombre1: '',
-  nombre2: '',
-  apellido1: '',
-  apellido2: '',
-  gmailUsuario: '',
-  carnetIdentidad: '',
-  complemento: '',
-  numeroCelular: '',
-  direccion: '',
-  fechaNacimiento: '',
-  grupoSanguineo: '',
-  contrasena: '',
-  rol: 'trabajador',
-  estado: true
+  nombre1: '', nombre2: '', apellido1: '', apellido2: '',
+  gmailUsuario: '', carnetIdentidad: '', complemento: '',
+  numeroCelular: '', direccion: '', fechaNacimiento: '',
+  grupoSanguineo: '', contrasena: '', rol: 'trabajador', estado: true
 };
 
-// Estado inicial para los filtros de búsqueda
 export const initialSearchFilter: BusquedaUsuarioFiltro = {
-  nombre1: '',
-  nombre2: '',
-  apellido1: '',
-  apellido2: ''
+  nombre1: '', nombre2: '', apellido1: '', apellido2: ''
 };
-
-// Datos simulados de prueba provenientes del Backend (DTOs)
-const mockBackendUsers: UsuarioBackendDTO[] = [
-  {
-    id: '1',
-    first_name: 'Carlos',
-    second_name: 'Alberto',
-    first_surname: 'Gomez',
-    second_surname: 'Perez',
-    user_email: 'carlos.gomez@gmail.com',
-    ci_number: '12345678',
-    ci_complement: '1A',
-    phone_number: '71234567',
-    address: 'Av. Heroinas #123',
-    birth_date: '1990-05-15',
-    blood_type: 'O+',
-    role: 'administrador',
-    is_active: true
-  },
-  {
-    id: '2',
-    first_name: 'Maria',
-    second_name: 'Elena',
-    first_surname: 'Rojas',
-    second_surname: 'Suarez',
-    user_email: 'maria.rojas@gmail.com',
-    ci_number: '87654321',
-    ci_complement: '',
-    phone_number: '79876543',
-    address: 'Calle Espana #456',
-    birth_date: '1995-10-20',
-    blood_type: 'A+',
-    role: 'trabajador',
-    is_active: true
-  }
-];
 
 export function useUsuarioController() {
-  // Lista principal de usuarios cargados
-  const [usuariosList, setUsuariosList] = createSignal<UsuarioModel[]>(
-    mockBackendUsers.map(mapBackendToFrontendUsuario)
-  );
+  // 1. Carga Inicial (Tabla)
+  const [usuariosData, { refetch, mutate }] = createResource(async () => {
+    try {
+      const dtos = await apiListarUsuariosTabla();
+      return dtos.map(mapBackendToFrontendUsuario);
+    } catch (error) {
+      console.error("Error cargando usuarios:", error);
+      return [];
+    }
+  });
 
-  // Resultado de la búsqueda por filtros horizontales
+  const usuariosList = () => usuariosData() || [];
+  
+  // 2. Estados de Búsqueda y Modales
   const [busquedaResult, setBusquedaResult] = createSignal<UsuarioModel[]>([]);
-
-  // Control de apertura y errores del modal de registro
   const [isModalOpen, setIsModalOpen] = createSignal<boolean>(false);
   const [modalErrors, setModalErrors] = createSignal<UsuarioErrors>({});
 
-  // 1. Registrar Nuevo Usuario desde el Modal
-  const handleRegisterUser = (newUserForm: UsuarioModel, onSuccessCloseModal: () => void) => {
+  // 3. Registrar Nuevo Usuario (Modal) - SÍ usa validación completa
+  const handleRegisterUser = async (newUserForm: UsuarioModel, onSuccessCloseModal: () => void) => {
     const errors = validateUsuarioForm(newUserForm, true);
     setModalErrors(errors);
+    if (Object.keys(errors).length > 0) return;
 
-    if (Object.keys(errors).length > 0) {
-      return;
-    }
-
-    const newId = (Date.now() % 100000).toString();
-    const createdUser: UsuarioModel = {
-      ...newUserForm,
-      id: newId
-    };
-
-    // Agregar nuevo usuario a la lista local
-    setUsuariosList((prev) => [createdUser, ...prev]);
-
-    // Mapear a DTO para consumo o envío simulado
-    const dtoToBackend: UsuarioBackendDTO = mapFrontendToBackendUsuario(createdUser);
-    console.log('DTO preparado para envío al servidor (Crear):', dtoToBackend);
-
-    alert(`Usuario ${createdUser.nombre1} ${createdUser.apellido1} creado con éxito.`);
-    onSuccessCloseModal();
-  };
-
-  // 2. Cambiar Estado (Habilitar / Suspender)
-  const handleToggleEstado = (id: string, nuevoEstado: boolean, updateSearchResult: boolean = false) => {
-    setUsuariosList((prev) =>
-      prev.map((u) => (u.id === id ? { ...u, estado: nuevoEstado } : u))
-    );
-
-    if (updateSearchResult) {
-      setBusquedaResult((prev) =>
-        prev.map((u) => (u.id === id ? { ...u, estado: nuevoEstado } : u))
-      );
+    try {
+      const payload = mapTarjetaToBackend(newUserForm);
+      await apiCrearUsuario(payload);
+      await refetch();
+      onSuccessCloseModal();
+    } catch (error) {
+      console.error("Error al crear usuario:", error);
+      alert("No se pudo crear el usuario.");
     }
   };
 
-  // 3. Actualizar campos directamente en la tabla o tarjeta
-  const handleUpdateRowField = (id: string, field: keyof UsuarioModel, value: any, updateSearchResult: boolean = false) => {
-    setUsuariosList((prev) =>
-      prev.map((u) => (u.id === id ? { ...u, [field]: value } : u))
-    );
+  // 4. Cambiar Estado (Habilitar/Suspender)
+  const handleToggleEstado = async (id: string, nuevoEstado: boolean, isFromCard: boolean = false) => {
+    const usuario = usuariosList().find(u => u.id === id) || busquedaResult().find(u => u.id === id);
+    if (!usuario) return;
 
-    if (updateSearchResult) {
-      setBusquedaResult((prev) =>
-        prev.map((u) => (u.id === id ? { ...u, [field]: value } : u))
-      );
+    try {
+      const payload = mapTablaToBackend({ ...usuario, estado: nuevoEstado });
+      await apiActualizarUsuarioTabla(id, payload);
+      
+      mutate((prev) => prev?.map(u => u.id === id ? { ...u, estado: nuevoEstado } : u));
+      setBusquedaResult((prev) => prev.map(u => u.id === id ? { ...u, estado: nuevoEstado } : u));
+
+    } catch (error) {
+      console.error("Error al cambiar estado:", error);
+      alert("No se pudo cambiar el estado.");
     }
   };
 
-  // 4. Guardar Cambios de un usuario (acepta el borrador enviado desde el .tsx o busca en el estado actual)
-  const handleSaveChanges = (updatedUser?: UsuarioModel | string) => {
-    let userToSave: UsuarioModel | undefined;
+  // 5. Guardar Cambios desde la TABLA (Ligero)
+  const handleSaveTabla = async (usuario: UsuarioModel) => {
+    // ⚠️ CORRECCIÓN: Eliminamos la validación completa aquí.
+    // Solo validamos que el nombre y apellido no estén vacíos, ya que son los únicos obligatorios en la tabla.
+    if (!usuario.nombre1.trim()) return alert('El primer nombre es obligatorio.');
+    if (!usuario.apellido1.trim()) return alert('El primer apellido es obligatorio.');
 
-    if (typeof updatedUser === 'object' && updatedUser !== null) {
-      userToSave = updatedUser;
-    } else if (typeof updatedUser === 'string') {
-      userToSave = usuariosList().find((u) => u.id === updatedUser);
+    try {
+      const payload = mapTablaToBackend(usuario);
+      await apiActualizarUsuarioTabla(usuario.id!, payload);
+      
+      mutate((prev) => prev?.map(u => u.id === usuario.id ? { ...usuario } : u));
+      alert(`Tabla: Cambios guardados para ${usuario.nombre1}`);
+    } catch (error) {
+      console.error("Error al guardar desde tabla:", error);
+      alert("No se pudo guardar. Revisa la consola.");
     }
-
-    if (!userToSave) {
-      alert('No se encontró la información del usuario a guardar.');
-      return;
-    }
-
-    const errors = validateUsuarioForm(userToSave, false);
-    if (Object.keys(errors).length > 0) {
-      const firstError = Object.values(errors)[0];
-      alert(`Error al guardar cambios de ${userToSave.nombre1 || 'Usuario'}: ${firstError}`);
-      return;
-    }
-
-    // Actualizar las listas reactivas locales con la fila guardada
-    setUsuariosList((prev) => prev.map((u) => (u.id === userToSave!.id ? { ...userToSave! } : u)));
-    setBusquedaResult((prev) => prev.map((u) => (u.id === userToSave!.id ? { ...userToSave! } : u)));
-
-    const dto: UsuarioBackendDTO = mapFrontendToBackendUsuario(userToSave);
-    console.log('Guardando cambios del usuario en Backend (DTO):', dto);
-
-    alert(`Cambios guardados con éxito para ${userToSave.nombre1} ${userToSave.apellido1}`);
   };
 
-  // 5. Buscar Usuarios con los filtros aplicados
-  const handleSearchUsers = (filtros: BusquedaUsuarioFiltro) => {
-    const n1 = filtros.nombre1.trim().toLowerCase();
-    const n2 = filtros.nombre2.trim().toLowerCase();
-    const a1 = filtros.apellido1.trim().toLowerCase();
-    const a2 = filtros.apellido2.trim().toLowerCase();
+  // 6. Guardar Cambios desde la TARJETA (Completo) - SÍ usa validación completa
+  const handleSaveTarjeta = async (usuario: UsuarioModel) => {
+    const errors = validateUsuarioForm(usuario, false);
+    if (Object.keys(errors).length > 0) return alert(Object.values(errors)[0]);
 
-    const filtered = usuariosList().filter((u) => {
-      const matchN1 = !n1 || u.nombre1.toLowerCase().includes(n1);
-      const matchN2 = !n2 || u.nombre2.toLowerCase().includes(n2);
-      const matchA1 = !a1 || u.apellido1.toLowerCase().includes(a1);
-      const matchA2 = !a2 || u.apellido2.toLowerCase().includes(a2);
+    try {
+      const payload = mapTarjetaToBackend(usuario);
+      await apiActualizarUsuarioTarjeta(usuario.id!, payload);
+      
+      setBusquedaResult((prev) => prev.map(u => u.id === usuario.id ? { ...usuario } : u));
+      alert(`Tarjeta: Cambios guardados para ${usuario.nombre1}`);
+    } catch (error) {
+      console.error("Error al guardar desde tarjeta:", error);
+      alert("No se pudo guardar. Revisa la consola.");
+    }
+  };
 
-      return matchN1 && matchN2 && matchA1 && matchA2;
-    });
-
-    setBusquedaResult(filtered);
+  // 7. Buscar Usuarios (Hacia el backend)
+  const handleSearchUsers = async (filtros: BusquedaUsuarioFiltro) => {
+    try {
+      const dtos = await apiBuscarUsuario(filtros);
+      const resultados = dtos.map(mapBackendToFrontendUsuario);
+      setBusquedaResult(resultados);
+    } catch (error) {
+      console.error("Error en la búsqueda:", error);
+    }
   };
 
   return {
     usuariosList,
-    setUsuariosList,
+    setUsuariosList: mutate,
     busquedaResult,
     setBusquedaResult,
     isModalOpen,
@@ -201,8 +148,8 @@ export function useUsuarioController() {
     setModalErrors,
     handleRegisterUser,
     handleToggleEstado,
-    handleUpdateRowField,
-    handleSaveChanges,
+    handleSaveTabla,
+    handleSaveTarjeta,
     handleSearchUsers
   };
 }

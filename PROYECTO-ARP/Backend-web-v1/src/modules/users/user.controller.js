@@ -97,12 +97,23 @@ async function crearUsuario(req, res) {
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
+  // ⚠️ CORRECCIÓN: Usamos ?? '' para que al crear se guarden vacíos si no hay datos,
+  // ya que en el INSERT sí queremos que todos los campos tengan un valor inicial.
   const [result] = await pool.query(query, [
-    sanitizeLettersOnly(nombre1), sanitizeLettersOnly(nombre2),
-    sanitizeLettersOnly(apellido1), sanitizeLettersOnly(apellido2),
-    rol, sanitizeNumbersOnly(carnetIdentidad), sanitizeAlphanumericNoSpaces(complemento),
-    sanitizePhone(numeroCelular), direccion, fechaNacimiento || null,
-    sanitizeBloodType(grupoSanguineo), hash, gmailUsuario.toLowerCase(), estado
+    sanitizeLettersOnly(nombre1) ?? '', 
+    sanitizeLettersOnly(nombre2) ?? '',
+    sanitizeLettersOnly(apellido1) ?? '', 
+    sanitizeLettersOnly(apellido2) ?? '',
+    rol, 
+    sanitizeNumbersOnly(carnetIdentidad) ?? '', 
+    sanitizeAlphanumericNoSpaces(complemento) ?? '',
+    sanitizePhone(numeroCelular) ?? '', 
+    direccion ?? '', 
+    fechaNacimiento || null,
+    sanitizeBloodType(grupoSanguineo) ?? '', 
+    hash, 
+    gmailUsuario.toLowerCase(), 
+    estado
   ]);
 
   return res.status(201).json({ mensaje: 'Usuario creado exitosamente', id: result.insertId });
@@ -143,20 +154,41 @@ async function actualizarUsuarioPorAdmin(req, res) {
     numeroCelular, direccion, fechaNacimiento, grupoSanguineo, estado
   } = req.body;
 
+  // ⚠️ CORRECCIÓN CRÍTICA: Usamos COALESCE para mantener el valor anterior si llega null.
+  // Si llega un string vacío "" (borrado intencional), COALESCE lo reemplaza porque "" no es null.
   const query = `
     UPDATE USUARIOS_SG
-    SET primer_nombre_sg = ?, segundo_nombre_sg = ?, primer_apellido_sg = ?, segundo_apellido_sg = ?,
-        gmail1_sg = ?, rol_sg = ?, carneti_sg = ?, complementoci_sg = ?, numero_celular_sg = ?,
-        direccion_sg = ?, fecha_nac_sg = ?, grupo_sang_sg = ?, estado_usuario_sg = ?
+    SET primer_nombre_sg = COALESCE(?, primer_nombre_sg), 
+        segundo_nombre_sg = COALESCE(?, segundo_nombre_sg), 
+        primer_apellido_sg = COALESCE(?, primer_apellido_sg), 
+        segundo_apellido_sg = COALESCE(?, segundo_apellido_sg),
+        gmail1_sg = COALESCE(?, gmail1_sg), 
+        rol_sg = COALESCE(?, rol_sg), 
+        carneti_sg = COALESCE(?, carneti_sg), 
+        complementoci_sg = COALESCE(?, complementoci_sg), 
+        numero_celular_sg = COALESCE(?, numero_celular_sg),
+        direccion_sg = COALESCE(?, direccion_sg), 
+        fecha_nac_sg = COALESCE(?, fecha_nac_sg), 
+        grupo_sang_sg = COALESCE(?, grupo_sang_sg), 
+        estado_usuario_sg = COALESCE(?, estado_usuario_sg)
     WHERE id_usuario_sg = ? AND rol_sg <> 'SUPERADMIN'
   `;
 
   const [result] = await pool.query(query, [
-    sanitizeLettersOnly(nombre1), sanitizeLettersOnly(nombre2),
-    sanitizeLettersOnly(apellido1), sanitizeLettersOnly(apellido2),
-    gmailUsuario, rol, sanitizeNumbersOnly(carnetIdentidad), sanitizeAlphanumericNoSpaces(complemento),
-    sanitizePhone(numeroCelular), direccion, fechaNacimiento || null,
-    sanitizeBloodType(grupoSanguineo), estado, id
+    sanitizeLettersOnly(nombre1), 
+    sanitizeLettersOnly(nombre2),
+    sanitizeLettersOnly(apellido1), 
+    sanitizeLettersOnly(apellido2),
+    gmailUsuario ? gmailUsuario.toLowerCase() : null, 
+    rol, 
+    sanitizeNumbersOnly(carnetIdentidad), 
+    sanitizeAlphanumericNoSpaces(complemento),
+    sanitizePhone(numeroCelular), 
+    direccion, 
+    fechaNacimiento || null,
+    sanitizeBloodType(grupoSanguineo), 
+    estado, 
+    id
   ]);
 
   if (result.affectedRows === 0) return res.status(404).json({ error: 'Usuario no encontrado o protegido.' });

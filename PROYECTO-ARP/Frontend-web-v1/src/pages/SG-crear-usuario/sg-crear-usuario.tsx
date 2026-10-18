@@ -15,6 +15,7 @@ import {
   sanitizePassword
 } from '../../types/sg-crear-usuario-i-m';
 
+// ⚠️ CAMBIO 1: Importamos las funciones correctas desde la lógica
 import {
   useUsuarioController,
   initialNewUser,
@@ -26,6 +27,7 @@ import { triggerModalFadeIn, triggerModalFadeOut } from './sg-crear-usuario-esti
 const SGCrearUsuario: Component = () => {
   let modalRef!: HTMLDivElement;
 
+  // ⚠️ CAMBIO 2: Extraemos handleSaveTabla y handleSaveTarjeta en lugar de handleSaveChanges
   const {
     usuariosList,
     busquedaResult,
@@ -35,7 +37,8 @@ const SGCrearUsuario: Component = () => {
     setModalErrors,
     handleRegisterUser,
     handleToggleEstado,
-    handleSaveChanges,
+    handleSaveTabla,    // <-- Nueva función
+    handleSaveTarjeta,  // <-- Nueva función
     handleSearchUsers
   } = useUsuarioController();
 
@@ -65,17 +68,6 @@ const SGCrearUsuario: Component = () => {
     });
   };
 
-  // Confirma los cambios locales guardando la fila
-  const saveRow = (original: UsuarioModel) => {
-    const draft = getDraft(original);
-    handleSaveChanges(draft);
-    
-    // Limpia el borrador local tras confirmar el guardado
-    const updatedEdits = { ...localEdits() };
-    delete updatedEdits[original.id!];
-    setLocalEdits(updatedEdits);
-  };
-
   const openModal = () => {
     setNewUserForm({ ...initialNewUser });
     setModalErrors({});
@@ -93,6 +85,13 @@ const SGCrearUsuario: Component = () => {
     } else {
       setIsModalOpen(false);
     }
+  };
+
+  // Helper para limpiar el borrador después de guardar
+  const clearDraft = (id: string) => {
+    const updatedEdits = { ...localEdits() };
+    delete updatedEdits[id];
+    setLocalEdits(updatedEdits);
   };
 
   return (
@@ -177,8 +176,8 @@ const SGCrearUsuario: Component = () => {
                             value={draft().rol}
                             onChange={(e) => updateDraftField(usr.id!, usr, 'rol', e.currentTarget.value)}
                           >
-                            <option value="administrador">Administrador</option>
-                            <option value="trabajador">Trabajador</option>
+                            <option value="ADMINISTRADOR">ADMINISTRADOR</option>
+                            <option value="TRABAJADOR">TRABAJADOR</option>
                           </select>
                         </td>
                         <td>
@@ -194,7 +193,15 @@ const SGCrearUsuario: Component = () => {
                             <button class="btn btn-suspend" onClick={() => handleToggleEstado(usr.id!, false)}>
                               Suspender
                             </button>
-                            <button class="btn btn-save-cloud" onClick={() => saveRow(usr)}>
+                            
+                            {/* ⚠️ CAMBIO 3: Corregido el onClick y eliminado el texto "// Por esto:" que rompía el JSX */}
+                            <button 
+                              class="btn btn-save-cloud" 
+                              onClick={() => {
+                                handleSaveTabla(getDraft(usr));
+                                clearDraft(usr.id!); // Limpiamos el borrador tras guardar
+                              }}
+                            >
                               <div class="svg-wrapper-1">
                                 <div class="svg-wrapper">
                                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22">
@@ -393,8 +400,8 @@ const SGCrearUsuario: Component = () => {
                           value={draft().rol}
                           onChange={(e) => updateDraftField(usr.id!, usr, 'rol', e.currentTarget.value)}
                         >
-                          <option value="administrador">Administrador</option>
-                          <option value="trabajador">Trabajador</option>
+                          <option value="ADMINISTRADOR">ADMINISTRADOR</option>
+                          <option value="TRABAJADOR">TRABAJADOR</option>
                         </select>
                       </div>
                     </div>
@@ -406,7 +413,15 @@ const SGCrearUsuario: Component = () => {
                       <button class="btn btn-suspend" onClick={() => handleToggleEstado(usr.id!, false, true)}>
                         Suspender
                       </button>
-                      <button class="btn btn-save-cloud" onClick={() => saveRow(usr)}>
+                      
+                      {/* ⚠️ CAMBIO 4: Corregido el onClick, eliminado el texto "// Por esto:" y añadida limpieza de borrador */}
+                      <button 
+                        class="btn btn-save-cloud" 
+                        onClick={() => {
+                          handleSaveTarjeta(getDraft(usr));
+                          clearDraft(usr.id!); // Limpiamos el borrador tras guardar
+                        }}
+                      >
                         <div class="svg-wrapper-1">
                           <div class="svg-wrapper">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22">
@@ -499,8 +514,8 @@ const SGCrearUsuario: Component = () => {
                   value={newUserForm().rol}
                   onChange={(e) => setNewUserForm({ ...newUserForm(), rol: e.currentTarget.value })}
                 >
-                  <option value="trabajador">Trabajador</option>
-                  <option value="administrador">Administrador</option>
+                  <option value="TRABAJADOR">TRABAJADOR</option>
+                  <option value="ADMINISTRADOR">ADMINISTRADOR</option>
                 </select>
               </div>
 

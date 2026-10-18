@@ -3,23 +3,39 @@
  * Descripción: Funciones de sanitización y normalización de textos, correos, contraseñas y números.
  */
 
-// Elimina números y caracteres especiales, permitiendo letras, tildes, ñ y espacios
-const sanitizeLettersOnly = (val) => (val ? val.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '').trim() : '');
+// ⚠️ CORRECCIÓN: Si el valor es null o undefined, devolvemos null.
+// Esto permite que el COALESCE en SQL mantenga el valor anterior de la BD.
+// Si el valor es un string vacío "", lo mantenemos como "" (para permitir borrar intencionalmente).
 
-// Elimina espacios en blanco
-const sanitizeEmailOrPassword = (val) => (val ? val.replace(/\s+/g, '').trim() : '');
+const sanitizeLettersOnly = (val) => {
+  if (val === null || val === undefined) return null;
+  return String(val).replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '').trim();
+};
 
-// Solo números
-const sanitizeNumbersOnly = (val) => (val ? val.replace(/\D/g, '').trim() : '');
+const sanitizeEmailOrPassword = (val) => {
+  if (val === null || val === undefined) return null;
+  return String(val).replace(/\s+/g, '').trim();
+};
 
-// Alfanumérico sin espacios (para complemento)
-const sanitizeAlphanumericNoSpaces = (val) => (val ? val.replace(/[^a-zA-Z0-9]/g, '').trim() : '');
+const sanitizeNumbersOnly = (val) => {
+  if (val === null || val === undefined) return null;
+  return String(val).replace(/\D/g, '').trim();
+};
 
-// Celular (números y espacios)
-const sanitizePhone = (val) => (val ? val.replace(/[^0-9\s]/g, '').trim() : '');
+const sanitizeAlphanumericNoSpaces = (val) => {
+  if (val === null || val === undefined) return null;
+  return String(val).replace(/[^a-zA-Z0-9]/g, '').trim();
+};
 
-// Grupo sanguíneo (letras y +/-)
-const sanitizeBloodType = (val) => (val ? val.replace(/[^a-zA-Z+\-]/g, '').trim() : '');
+const sanitizePhone = (val) => {
+  if (val === null || val === undefined) return null;
+  return String(val).replace(/[^0-9\s]/g, '').trim();
+};
+
+const sanitizeBloodType = (val) => {
+  if (val === null || val === undefined) return null;
+  return String(val).replace(/[^a-zA-Z+\-]/g, '').trim();
+};
 
 function validarEmail(email) {
   const lower = email.toLowerCase();
