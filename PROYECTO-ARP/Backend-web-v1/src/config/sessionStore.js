@@ -14,13 +14,21 @@ async function crearSesion(usuarioId, gmail, rol, data = null) {
     VALUES (?, ?, ?, ?, ?, ?)
   `;
 
-  await pool.query(query, [cookieSesion, usuarioId, gmail, rol, expiresSesion, JSON.stringify(data)]);
+  await pool.query(query, [
+    cookieSesion,
+    usuarioId,
+    gmail,
+    rol,
+    expiresSesion,
+    JSON.stringify(data),
+  ]);
+
   return { cookieSesion, dataSesion: data, rolSesion: rol };
 }
 
 async function obtenerSesionPorCookie(cookieSesion) {
   const query = `
-    SELECT s.*, u.rol_sg, u.estado_usuario_sg 
+    SELECT s.*, u.rol_sg, u.estado_usuario_sg
     FROM SESIONES s
     JOIN USUARIOS_SG u ON s.usuario_id = u.id_usuario_sg
     WHERE s.cookie_sesion = ? AND s.expires_sesion > NOW()
@@ -38,5 +46,5 @@ async function eliminarSesion(cookieSesion) {
 module.exports = {
   crearSesion,
   obtenerSesionPorCookie,
-  eliminarSesion
+  eliminarSesion,
 };

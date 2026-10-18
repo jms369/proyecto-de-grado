@@ -5,7 +5,7 @@ export interface MappedGmailRecoveryData {
 
 // DTO para la petición de la API de recuperación (Backend)
 export interface RecoveryEmailRequest {
-  correoUsuario: string;
+  email: string;
 }
 
 /**
@@ -15,6 +15,6 @@ export const mapFrontendToBackendRecovery = (
   data: MappedGmailRecoveryData
 ): RecoveryEmailRequest => {
   return {
-    correoUsuario: data.email,
+    email: data.email.trim().toLowerCase(), // Limpieza básica
   };
 };

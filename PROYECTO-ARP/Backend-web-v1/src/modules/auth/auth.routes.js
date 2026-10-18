@@ -17,7 +17,8 @@ const {
   logout,
   solicitarRecuperacion,
   verificarCodigo,
-  reestablecerContrasena
+  reestablecerContrasena,
+  obtenerMiRol,
 } = require('./auth.controller');
 
 router.post('/login', loginRateLimiter, validate(validarLoginSchema), asyncHandler(login));
@@ -25,5 +26,6 @@ router.post('/logout', asyncHandler(logout));
 router.post('/recuperar', validate(validarRecuperacionSchema), asyncHandler(solicitarRecuperacion));
 router.post('/verificar-codigo', asyncHandler(verificarCodigo));
 router.post('/reestablecer', validate(validarReestablecerSchema), asyncHandler(reestablecerContrasena));
+router.get('/me', asyncHandler(obtenerMiRol));
 
 module.exports = router;

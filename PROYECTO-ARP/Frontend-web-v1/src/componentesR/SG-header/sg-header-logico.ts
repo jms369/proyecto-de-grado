@@ -1,21 +1,33 @@
 import type { MappedHeaderData } from './sg-header-i-m';
+import { logoutApi } from '../../services/apis_SG/logout_api';
 
 /**
- * Controlador para la acción de Cerrar Sesión
+ * Controlador para la acción de Cerrar Sesión.
+ * 1. Llama al backend para eliminar la sesión y la cookie.
+ * 2. Ejecuta callback opcional.
+ * 3. Navega al login.
  */
-export const handleLogoutSubmit = (
+export const handleLogoutSubmit = async (
   e: MouseEvent,
   navigate?: (to: string) => void,
   onLogoutCallback?: () => void
-): void => {
+): Promise<void> => {
   e.preventDefault();
 
-  // Si existe un callback personalizado
+  // Llamar al backend (limpia sesión en BD + cookie del navegador)
+  const result = await logoutApi();
+
+  if (!result.ok) {
+    console.warn('Logout backend falló:', result.error);
+    // Aun así continuamos con la salida del usuario
+  }
+
+  // Callback opcional (por si el componente padre quiere limpiar estado)
   if (onLogoutCallback) {
     onLogoutCallback();
   }
 
-  // Redirección por defecto al Login si se proporciona la función navigate
+  // Redirigir al login
   if (navigate) {
     navigate('/inicioSG');
   }

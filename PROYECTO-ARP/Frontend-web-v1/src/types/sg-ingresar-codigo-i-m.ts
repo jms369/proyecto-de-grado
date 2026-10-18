@@ -3,18 +3,24 @@ export interface MappedCodeVerificationData {
   verificationCode: string;
 }
 
-// DTO para la petición a la API backend
+// DTO para la petición a la API backend (Paso 2)
 export interface CodeVerificationRequest {
-  codigoVerificacion: string;
+  email: string;
+  verificationCode: string;
 }
 
 /**
- * Mapea la información del formulario de código hacia la estructura DTO esperada por el backend
+ * Mapea la información del formulario de código hacia la estructura DTO esperada por el backend.
+ * Recupera el email desde el localStorage (guardado en el paso 1).
  */
 export const mapFrontendToBackendCode = (
   data: MappedCodeVerificationData
 ): CodeVerificationRequest => {
+  // Leemos el correo que se guardó en la página anterior
+  const correoGuardado = localStorage.getItem('recuperacion_email') || '';
+
   return {
-    codigoVerificacion: data.verificationCode,
+    email: correoGuardado.trim().toLowerCase(),
+    verificationCode: data.verificationCode.trim(),
   };
 };

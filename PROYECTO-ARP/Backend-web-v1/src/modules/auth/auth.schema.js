@@ -19,9 +19,16 @@ function validarRecuperacionSchema(body) {
 }
 
 function validarReestablecerSchema(body) {
-  const { gmail_usuario, nuevaContrasena } = body;
-  if (!gmail_usuario || !nuevaContrasena) return 'Gmail y nueva contraseña son obligatorios.';
-  if (!validarContrasena(nuevaContrasena)) return 'La contraseña requiere mín. 8 caracteres, 1 mayúscula, 1 minúscula y 1 número.';
+  const { id_recuperacion, nuevaContrasena } = body; // 👈 AHORA ESPERA EL ID
+  
+  if (!id_recuperacion || !nuevaContrasena) {
+    return 'El ID de recuperación y la nueva contraseña son obligatorios.'; // 👈 MENSAJE CORREGIDO
+  }
+  
+  if (!validarContrasena(nuevaContrasena)) {
+    return 'La contraseña requiere mín. 8 caracteres, 1 mayúscula, 1 minúscula y 1 número.';
+  }
+  
   return null;
 }
 
