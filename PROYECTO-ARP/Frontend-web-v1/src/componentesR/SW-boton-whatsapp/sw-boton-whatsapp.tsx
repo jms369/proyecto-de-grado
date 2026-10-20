@@ -1,21 +1,22 @@
+// src/componentesR/SW-boton-whatsapp/sw-boton-whatsapp.tsx
 
-
-// ============================================================================
-// INICIO MODIFICACIÓN: Implementación de <Portal> para escapar del contexto CSS
-// ============================================================================
 import type { Component } from 'solid-js';
-import { Portal } from 'solid-js/web'; // <-- Importamos Portal de solid-js/web
-import type { SWBotonWhatsappProps } from './sw-boton-whatsapp-i-m';
-import { getWhatsAppLink } from './sw-boton-whatsapp-logico';
+import { Portal } from 'solid-js/web';
+import { useWhatsappLogic } from './sw-boton-whatsapp-logico';
 import './sw-boton-whatsapp.css';
 
+// Mantenemos la interfaz por si en el futuro quieres pasar un mensaje personalizado
+interface SWBotonWhatsappProps {
+  message?: string;
+}
+
 const SWBotonWhatsapp: Component<SWBotonWhatsappProps> = (props) => {
+  const { getLink } = useWhatsappLogic();
+
   return (
-    /* El Portal renderiza el contenido directamente en el <body> del HTML, 
-       ignorando cualquier 'transform' o animación de los contenedores padres */
     <Portal>
       <a
-        href={getWhatsAppLink(props.phone, props.message)}
+        href={getLink(props.message || "Hola, quisiera obtener más información.")}
         target="_blank"
         rel="noopener noreferrer"
         class="sw-boton-whatsapp-container"
@@ -26,7 +27,7 @@ const SWBotonWhatsapp: Component<SWBotonWhatsappProps> = (props) => {
           ¡Chatea! con Nosotros!
         </div>
 
-        {/* Círculo verde (basado en el código de hover proporcionado) */}
+        {/* Círculo verde */}
         <div class="sw-btn-circle">
           <div class="sw-sign">
             <svg class="sw-whatsapp-svg" viewBox="0 0 16 16">
@@ -41,6 +42,3 @@ const SWBotonWhatsapp: Component<SWBotonWhatsappProps> = (props) => {
 };
 
 export default SWBotonWhatsapp;
-// ============================================================================
-// FIN MODIFICACIÓN
-// ============================================================================

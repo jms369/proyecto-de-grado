@@ -8,7 +8,7 @@ const bcrypt = require('bcrypt');
 
 async function registrarSuperadmin() {
   try {
-    const passwordPlana = 'JoseMichaelSanchezFlores2026';
+    const passwordPlana = 'JoseMichaelSanchezFlores2026'; //borramos el 2026 y pusimos 1 el 19/10/2026
     const saltRounds = 10;
     
     // Hashear la contraseña exactamente como lo hace el backend

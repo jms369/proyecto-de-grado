@@ -1,64 +1,20 @@
 // ============================================================================
-// INICIO MODIFICACIÓN: Reorganización de elementos para ubicar el precio y WhatsApp al final de la tarjeta desplegada
+// Reorganización de elementos para ubicar el precio y WhatsApp al final de la tarjeta desplegada
 // ============================================================================
-import { type Component, For, onMount } from 'solid-js';
+import { type Component, For } from 'solid-js'; // ⚠️ CAMBIO: Se eliminó onMount
 import Header from '../../componentesR/SW-header/sw-header';
 import Footer from '../../componentesR/SW-footer/sw-footer';
 import { useCatalogoLogico } from './sw-catalogo-produc-logico';
-import type { SGProductoVerModel } from '../../types/SW-types/sw-catalogo-productos-i-m';
 import './sw-catalogo-productos.css';
 
 //importar el boton de asistente ARP
 import SWBotonHaciaArp from '../../componentesR/SW-boton-hacia-arp/sw-boton-hacia-arp';
 
 const SWCatalogoProductos: Component = () => {
-  const { productos, setProductos, toggleExpandir, estaExpandida, handleWhatsAppRedirect } = useCatalogoLogico();
+  // ⚠️ CAMBIO: Se eliminó setProductos de la desestructuración
+  const { productos, toggleExpandir, estaExpandida, handleWhatsAppRedirect } = useCatalogoLogico();
 
-  onMount(() => {
-    const mockData: SGProductoVerModel[] = [
-      {
-        id: '1',
-        marca: 'Samsung',
-        modelo: 'Galaxy S26 Ultra',
-        almacenamiento: 512,
-        precio: 3500,
-        estado: true,
-        procesador: 'Snapdragon 8 Gen 4',
-        ram: 16,
-        bateria: 5500,
-        puntuacionAntutu: 2500000,
-        pantalla: '6.8" AMOLED',
-        camaraPrincipal: 200,
-        certificacionIp: true,
-        cargaRapida: 65,
-        camaraFrontal: 50,
-        tasaRefresco: 144,
-        masInformacion: 'Pantalla curva con Gorilla Glass Armor. Incluye S-Pen integrado.\nResistencia al agua IP68. Cámaras optimizadas por IA. Pantalla curva con Gorilla Glass Armor. Incluye S-Pen integrado Pantalla curva con Gorilla Glass Armor. Incluye S-Pen integrado Pantalla curva con Gorilla Glass Armor. Incluye S-Pen integrado',
-        imagenUrl: 'https://www.tiendaamiga.com.bo/media/catalog/product/cache/deb88dadd509903c96aaa309d3e790dc/c/e/celular_samsung_galaxy_s25_ultra_gristitanio.png'
-      },
-      {
-        id: '2',
-        marca: 'Apple',
-        modelo: 'iPhone 17 Pro Max',
-        almacenamiento: 256,
-        precio: 4200,
-        estado: true,
-        procesador: 'A19 Pro',
-        ram: 8,
-        bateria: 4800,
-        puntuacionAntutu: 2450000,
-        pantalla: '6.9" Super Retina XDR',
-        camaraPrincipal: 48,
-        certificacionIp: true,
-        cargaRapida: 45,
-        camaraFrontal: 24,
-        tasaRefresco: 120,
-        masInformacion: 'Acabado en titanio de grado aeroespacial. Botón de acción personalizable.\nGrabación de video espacial para Apple Vision Pro.',
-        imagenUrl: 'https://nextlevel.com.bo/cdn/shop/files/IPHONE16PROMAX_256_DUAL_530x@2x.jpg?v=1728942846'
-      }
-    ];
-    setProductos(mockData);
-  });
+  // ⚠️ CAMBIO: Se eliminó toda la función onMount con los datos de prueba (mockData)
 
   return (
     <div class="sw-catalogo-container">

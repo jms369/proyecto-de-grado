@@ -1,33 +1,35 @@
-// ============================================================================
-// INICIO MODIFICACIÓN: Estructura JSX respetando la distribución original vertical
-// ============================================================================
+// src/componentesR/SW-header/sw-header.tsx
+
 import type { Component } from 'solid-js';
-import { For } from 'solid-js';
+import { For, Show } from 'solid-js'; // ⚠️ Agregamos Show
 import { useNavigate } from '@solidjs/router';
 import type { SWHeaderLink } from './sw-header-i-m';
 import { headerLinks } from './sw-header-i-m';
-import { handleNavigation } from './sw-header-logico';
+import { handleNavigation, useHeaderLogic } from './sw-header-logico'; // ⚠️ Importamos useHeaderLogic
 import { useHeaderEstilo } from './sw-header-estilo';
 import './sw-header.css';
 
 const SWHeader: Component = () => {
   const navigate = useNavigate();
   const { isMenuOpen, toggleMenu, closeMenu } = useHeaderEstilo();
+  const { logoUrl } = useHeaderLogic(); // ⚠️ Obtenemos el logo de la BD
 
   return (
     <header class="sw-header-container">
-      {/* Mitad superior: Logo institucional centrado (Distribución original) */}
+      {/* Mitad superior: Logo institucional centrado */}
       <div class="logo-section">
-        <img 
-          src="https://upload.wikimedia.org/wikipedia/commons/8/84/Logo_horizontal.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original"
-          alt="Logo de la Empresa" 
-          class="logo-image" 
-        />
+        {/* ⚠️ Solo mostramos el logo si existe en la BD */}
+        <Show when={logoUrl()}>
+          <img 
+            src={logoUrl()!}
+            alt="Logo de la Empresa" 
+            class="logo-image" 
+          />
+        </Show>
       </div>
 
       {/* Mitad inferior: Sección de Navegación y Menú Desplegable */}
       <nav class="nav-section">
-        {/* Botón Burger ubicado en la sección inferior (visible solo en móviles) */}
         <label for="burger-menu-input" class="burger">
           <input 
             id="burger-menu-input" 
@@ -40,7 +42,6 @@ const SWHeader: Component = () => {
           <span></span>
         </label>
 
-        {/* Contenedor de enlaces: barra horizontal en pantallas grandes, lista desplegable en móviles */}
         <div class={`nav-links-wrapper ${isMenuOpen() ? 'mobile-open' : ''}`}>
           <For each={headerLinks}>
             {(link: SWHeaderLink) => (
@@ -62,6 +63,3 @@ const SWHeader: Component = () => {
 };
 
 export default SWHeader;
-// ============================================================================
-// FIN MODIFICACIÓN
-// ============================================================================

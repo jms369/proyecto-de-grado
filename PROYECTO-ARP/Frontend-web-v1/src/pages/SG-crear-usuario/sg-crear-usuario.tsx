@@ -448,7 +448,7 @@ const SGCrearUsuario: Component = () => {
 
             <div class="sg-modal-grid">
               <div class="sg-field-group">
-                <label>Primer Nombre *</label>
+                <label>Primer Nombre (Obligatorio)</label>
                 <input
                   type="text"
                   class="sg-input"
@@ -471,7 +471,7 @@ const SGCrearUsuario: Component = () => {
               </div>
 
               <div class="sg-field-group">
-                <label>Primer Apellido *</label>
+                <label>Primer Apellido (Obligatorio)</label>
                 <input
                   type="text"
                   class="sg-input"
@@ -494,7 +494,7 @@ const SGCrearUsuario: Component = () => {
               </div>
 
               <div class="sg-field-group">
-                <label>Gmail Usuario *</label>
+                <label>Gmail Usuario (Obligatorio)</label>
                 <input
                   type="text"
                   class="sg-input"
@@ -508,7 +508,7 @@ const SGCrearUsuario: Component = () => {
               </div>
 
               <div class="sg-field-group">
-                <label>Rol *</label>
+                <label>Rol (Obligatorio)</label>
                 <select
                   class="sg-input"
                   value={newUserForm().rol}
@@ -520,7 +520,7 @@ const SGCrearUsuario: Component = () => {
               </div>
 
               <div class="sg-field-group">
-                <label>Carnet Identidad *</label>
+                <label>Carnet Identidad (Obligatorio)</label>
                 <input
                   type="text"
                   class="sg-input"
@@ -543,7 +543,7 @@ const SGCrearUsuario: Component = () => {
               </div>
 
               <div class="sg-field-group">
-                <label>Número Celular *</label>
+                <label>Número Celular (Obligatorio)</label>
                 <input
                   type="text"
                   class="sg-input"
@@ -587,7 +587,7 @@ const SGCrearUsuario: Component = () => {
               </div>
 
               <div class="sg-field-group sg-full-width">
-                <label>Contraseña *</label>
+                <label>Contraseña (Obligatorio)</label>
                 <div class="sg-password-wrapper">
                   <input
                     type={showPassword() ? 'text' : 'password'}

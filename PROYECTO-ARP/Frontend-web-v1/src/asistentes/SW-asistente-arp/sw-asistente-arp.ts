@@ -14,15 +14,18 @@ export const ejecutarAsistenteArpLogica = (
   productosJson: SWAstistenteProductoDTO[],
   config: SWAstistenteConfigDTO
 ): SWAstistenteResultadoDTO[] => {
-  // 1. Filtrar productos donde el precio sea menor o igual a precioARP + 300
+
+  // 1. MAPEAR PRIMERO: Convertimos los datos crudos de la BD al modelo procesado.
+  // Esto convierte 'marca_celular' a 'marca', 'precio_celular' a 'precio', etc.
+  let listaProcesada: SwaProductoProcesadoModel[] = productosJson.map(mapBackendToSwaProducto);
+
+  // 2. FILTRAR POR PRECIO: Ahora podemos usar 'prod.precio' sin problemas.
   const precioMaximoPermitido = config.precioARP + 300;
-  const productosFiltrados = productosJson.filter(
+  listaProcesada = listaProcesada.filter(
     (prod) => prod.precio <= precioMaximoPermitido
   );
 
-  // Inicializar lista procesada con contador en 0
-  let listaProcesada: SwaProductoProcesadoModel[] = productosFiltrados.map(mapBackendToSwaProducto);
-
+  // Si no queda ningún producto tras el filtro, devolvemos un array vacío.
   if (listaProcesada.length === 0) {
     return [];
   }
@@ -36,7 +39,7 @@ export const ejecutarAsistenteArpLogica = (
     }
   };
 
-  // 2. Aplicar reordenamiento y puntuación según las banderas true
+  // 3. APLICAR REORDENAMIENTO Y PUNTUACIÓN SEGÚN LAS BANDERAS
   if (config.PrecioARP) {
     puntuarTop10('precio');
   }
@@ -83,10 +86,10 @@ export const ejecutarAsistenteArpLogica = (
     });
   }
 
-  // 3. Reordenar una última vez de mayor a menor según la puntuación acumulada (contador)
+  // 4. REORDENAR UNA ÚLTIMA VEZ por la puntuación acumulada (contador)
   listaProcesada.sort((a, b) => b.contador - a.contador);
 
-  // 4. Seleccionar los 10 primeros resultados, manejando empates en la posición 10
+  // 5. SELECCIONAR LOS 10 PRIMEROS, manejando empates en la posición 10
   const resultadosFinales: SwaProductoProcesadoModel[] = [];
   const limiteBase = 10;
 
@@ -103,6 +106,6 @@ export const ejecutarAsistenteArpLogica = (
     }
   }
 
-  // 5. Devolver exclusivamente marca, modelo, almacenamiento, ram y precio
+  // 6. DEVOLVER EXCLUSIVAMENTE LOS CAMPOS DEL RESULTADO FINAL
   return resultadosFinales.map(mapToResultadoFinal);
 };

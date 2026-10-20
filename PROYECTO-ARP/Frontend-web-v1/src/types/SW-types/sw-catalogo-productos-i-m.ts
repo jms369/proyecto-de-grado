@@ -1,27 +1,33 @@
+// src/types/SW-types/sw-catalogo-productos-i-m.ts
+
 // ============================================================================
-// INICIO MODIFICACIÓN: Creación de tipos y mapeos para el catálogo
+// 1. DTO: Representa exactamente lo que viene de la Base de Datos (Snake_case)
 // ============================================================================
 export interface SGProductoVerDTO {
-  id_producto: string;
-  marca: string;
-  modelo: string;
-  precio: number;
-  estado: boolean;
-  procesador: string;
-  almacenamiento: number;
-  ram: number;
-  bateria: number;
-  puntuacion_antutu: number;
-  pantalla: string;
-  camara_principal: number;
-  certificacion_ip: boolean;
-  carga_rapida: number;
-  camara_frontal: number;
-  tasa_refresco: number;
-  mas_informacion: string;
-  imagen_url: string;
+  id_producto: number;              // int
+  url_imagen: string;               // varchar(500) -> CORREGIDO (antes decía url_imagen)
+  marca_celular: string;            // varchar(100)
+  modelo_celular: string;           // varchar(100)
+  precio_celular: number;           // int
+  estado_celular: number | boolean; // tinyint(1)
+  procesador_celular: string;       // varchar(100)
+  almacenamiento_celular: number;   // int
+  ram_celular: number;              // int
+  bateria_celular: number;          // int
+  puntuacion_celular: number;       // int
+  pantalla_celular: string;         // varchar(100)
+  cam_principal_cel: number;        // int
+  certificacionip_celular: number | boolean; // tinyint(1)
+  carga_rapida_cel: number;         // int
+  cam_frontal_cel: number;          // int
+  tasa_refresco_cel: number;        // int
+  mas_info_celular: string;         // text
+  // Las columnas registro_ac_gmail y creado_en no las necesitamos en el catálogo público
 }
 
+// ============================================================================
+// 2. MODELO: Representa los datos en el Frontend (CamelCase)
+// ============================================================================
 export interface SGProductoVerModel {
   id: string;
   marca: string;
@@ -43,28 +49,28 @@ export interface SGProductoVerModel {
   imagenUrl: string;
 }
 
+// ============================================================================
+// 3. MAPEADOR (Backend -> Frontend)
+// ============================================================================
 export const mapBackendToFrontendProductoVer = (dto: SGProductoVerDTO): SGProductoVerModel => {
   return {
-    id: dto.id_producto,
-    marca: dto.marca ?? '',
-    modelo: dto.modelo ?? '',
-    precio: dto.precio ?? 0,
-    estado: Boolean(dto.estado),
-    procesador: dto.procesador ?? '',
-    almacenamiento: dto.almacenamiento ?? 0,
-    ram: dto.ram ?? 0,
-    bateria: dto.bateria ?? 0,
-    puntuacionAntutu: dto.puntuacion_antutu ?? 0,
-    pantalla: dto.pantalla ?? '',
-    camaraPrincipal: dto.camara_principal ?? 0,
-    certificacionIp: Boolean(dto.certificacion_ip),
-    cargaRapida: dto.carga_rapida ?? 0,
-    camaraFrontal: dto.camara_frontal ?? 0,
-    tasaRefresco: dto.tasa_refresco ?? 0,
-    masInformacion: dto.mas_informacion ?? '',
-    imagenUrl: dto.imagen_url || '',
+    id: String(dto.id_producto),
+    marca: dto.marca_celular ?? '',
+    modelo: dto.modelo_celular ?? '',
+    precio: Number(dto.precio_celular) || 0,
+    estado: Boolean(dto.estado_celular),
+    procesador: dto.procesador_celular ?? '',
+    almacenamiento: Number(dto.almacenamiento_celular) || 0,
+    ram: Number(dto.ram_celular) || 0,
+    bateria: Number(dto.bateria_celular) || 0,
+    puntuacionAntutu: Number(dto.puntuacion_celular) || 0,
+    pantalla: dto.pantalla_celular ?? '',
+    camaraPrincipal: Number(dto.cam_principal_cel) || 0,
+    certificacionIp: Boolean(dto.certificacionip_celular),
+    cargaRapida: Number(dto.carga_rapida_cel) || 0,
+    camaraFrontal: Number(dto.cam_frontal_cel) || 0,
+    tasaRefresco: Number(dto.tasa_refresco_cel) || 0,
+    masInformacion: dto.mas_info_celular ?? '',
+    imagenUrl: dto.url_imagen || '', // CORREGIDO: url_imagen
   };
 };
-// ============================================================================
-// FIN MODIFICACIÓN
-// ============================================================================

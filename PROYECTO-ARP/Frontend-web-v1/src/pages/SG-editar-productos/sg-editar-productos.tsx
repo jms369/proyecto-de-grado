@@ -166,10 +166,10 @@ export const SGEditarProductos: Component = () => {
 
                     {/* Precio */}
                     <div class="sg-field-row">
-                      <span class="sg-field-label">Precio ($)</span>
+                      <span class="sg-field-label">Precio (Bs)</span>
                       <Show
                         when={isEditing()}
-                        fallback={<span class="sg-field-val">${producto.precio}</span>}
+                        fallback={<span class="sg-field-val">Bs{producto.precio}</span>}
                       >
                         <input
                           type="text"
@@ -576,7 +576,7 @@ export const SGEditarProductos: Component = () => {
               {/* Formulario */}
               <div class="sg-form-grid">
                 <div class="sg-form-group">
-                  <label>Marca</label>
+                  <label>Marca (Obligatorio)</label>
                   <input
                     type="text"
                     required
@@ -588,7 +588,7 @@ export const SGEditarProductos: Component = () => {
                 </div>
 
                 <div class="sg-form-group">
-                  <label>Modelo</label>
+                  <label>Modelo (Obligatorio)</label>
                   <input
                     type="text"
                     required
@@ -600,7 +600,7 @@ export const SGEditarProductos: Component = () => {
                 </div>
 
                 <div class="sg-form-group">
-                  <label>Precio ($)</label>
+                  <label>Precio (Bs) (Obligatorio)</label>
                   <input
                     type="text"
                     required

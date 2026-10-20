@@ -29,9 +29,10 @@ interface WebInfo {
 
 // Validaciones puras
 export const validateImageFile = (file: File): string | null => {
-  const validTypes = ['image/jpeg', 'image/png'];
+  //  CAMBIO: Agregamos webp
+  const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
   if (!validTypes.includes(file.type)) {
-    return 'Solo se permiten archivos JPG o PNG.';
+    return 'Solo se permiten archivos JPG, PNG o WEBP.';
   }
   if (file.size > 5 * 1024 * 1024) {
     return 'La imagen no debe superar los 5MB.';

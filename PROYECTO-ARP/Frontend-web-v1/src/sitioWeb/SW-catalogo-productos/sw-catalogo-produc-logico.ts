@@ -1,17 +1,35 @@
-// ============================================================================
-// INICIO MODIFICACIÓN: Lógica del componente del catálogo y estados
-// ============================================================================
-import { createSignal } from 'solid-js';
-import type { SGProductoVerModel } from '../../types/SW-types/sw-catalogo-productos-i-m';
+// src/lógico.ts
+import { createSignal, createResource } from 'solid-js';
+//import type { SGProductoVerModel } from '../../types/SW-types/sw-catalogo-productos-i-m';
+import { mapBackendToFrontendProductoVer } from '../../types/SW-types/sw-catalogo-productos-i-m';
+import { apiObtenerCatalogoPublico } from '../../services/apis_SW/catalogo_productos_api';
 
 export const useCatalogoLogico = () => {
-  // Estado de los productos (A futuro se llenará mediante un fetch al backend)
-  const [productos, setProductos] = createSignal<SGProductoVerModel[]>([]);
-  
-  // Set para guardar los IDs de las tarjetas que están expandidas
+  // 1. Cargar productos desde el backend
+  const [productosData] = createResource(async () => {
+    try {
+      const dtos = await apiObtenerCatalogoPublico();
+      
+      // Mapeamos y arreglamos la URL de la imagen
+      return dtos.map(dto => {
+        const modelo = mapBackendToFrontendProductoVer(dto);
+        // Si la imagen es una ruta relativa (/uploads/...), le agregamos el host
+        if (modelo.imagenUrl && modelo.imagenUrl.startsWith('/')) {
+          modelo.imagenUrl = `http://localhost:3000${modelo.imagenUrl}`;
+        }
+        return modelo;
+      });
+    } catch (error) {
+      console.error("Error cargando catálogo:", error);
+      return [];
+    }
+  });
+
+  const productos = () => productosData() || [];
+
+  // 2. Estado de las tarjetas expandidas
   const [tarjetasExpandidas, setTarjetasExpandidas] = createSignal<Set<string>>(new Set());
 
-  // Función para alternar el estado "Ver Más" / "Ver Menos"
   const toggleExpandir = (id: string) => {
     setTarjetasExpandidas((prev) => {
       const nuevoSet = new Set(prev);
@@ -26,25 +44,18 @@ export const useCatalogoLogico = () => {
 
   const estaExpandida = (id: string) => tarjetasExpandidas().has(id);
 
-  // Redirección a WhatsApp
+  // 3. Redirección a WhatsApp
   const handleWhatsAppRedirect = (modelo: string) => {
-    // Número base (luego vendrá del backend si es necesario)
     const numeroDestino = '59100000000'; 
     const mensaje = encodeURIComponent(`Hola, estoy interesado en el equipo: ${modelo}. ¿Podrían darme más información?`);
     const url = `https://wa.me/${numeroDestino}?text=${mensaje}`;
-    
-    // Abre WhatsApp en una nueva pestaña (comportamiento de enlace seguro)
     window.open(url, '_blank');
   };
 
   return {
     productos,
-    setProductos,
     toggleExpandir,
     estaExpandida,
     handleWhatsAppRedirect
   };
 };
-// ============================================================================
-// FIN MODIFICACIÓN
-// ============================================================================

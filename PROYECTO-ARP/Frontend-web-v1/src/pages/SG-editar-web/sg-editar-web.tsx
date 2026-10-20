@@ -31,6 +31,7 @@ const SGEditarWeb: Component = () => {
         {/* 1. SECCIÓN LOGOTIPO */}
         <div class="section-card">
           <h2 class="section-title">Logotipo</h2>
+          <p>formato recomendado 21 : 9</p>
           <div class="logo-preview-box">
             <Show when={logic.logoPreview()} fallback={<span>Sin Logo</span>}>
               <img src={logic.logoPreview()!} alt="Previsualización de Logo" />
@@ -38,8 +39,14 @@ const SGEditarWeb: Component = () => {
           </div>
           
           <div class="button-group">
-            {/* Input oculto para subir */}
-            <input type="file" id="logo-upload" accept="image/png, image/jpeg" style="display: none;" onChange={logic.handleLogoUpload} />
+            {/* Input oculto para subir - CORREGIDO: Agregado webp */}
+            <input 
+              type="file" 
+              id="logo-upload" 
+              accept="image/png, image/jpeg, image/webp" 
+              style="display: none;" 
+              onChange={logic.handleLogoUpload} 
+            />
             
             <button class="btn-action btn-blue" onClick={() => document.getElementById('logo-upload')?.click()}>
               <div class="svg-wrapper-1"><div class="svg-wrapper">
@@ -49,7 +56,7 @@ const SGEditarWeb: Component = () => {
             </button>
 
             <button class="btn-delete-prompt noselect" onClick={logic.handleDeleteLogo}>
-              <span class="text">Eliminar Logo</span>
+              <span class="text">Cancelar Subida</span>
               <span class="icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"></path></svg>
               </span>
@@ -142,7 +149,15 @@ const SGEditarWeb: Component = () => {
             </For>
           </div>
           <div class="button-group">
-            <input type="file" id="offer-upload" accept="image/png, image/jpeg" multiple style="display: none;" />
+            {/* CORREGIDO: Agregado webp y onChange */}
+            <input 
+              type="file" 
+              id="offer-upload" 
+              accept="image/png, image/jpeg, image/webp" 
+              multiple 
+              style="display: none;" 
+              onChange={logic.handleOfferUpload} 
+            />
             <button class="btn-action btn-blue" onClick={() => document.getElementById('offer-upload')?.click()}>
               <div class="svg-wrapper-1"><div class="svg-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z"></path></svg></div></div>
               <span>Subir Imágenes</span>
@@ -158,7 +173,7 @@ const SGEditarWeb: Component = () => {
 
         {/* 5. SECCIÓN IMÁGENES (Asociadas a Producto) */}
         <div class="section-card">
-          <h2 class="section-title">Imágenes</h2>
+          <h2 class="section-title">Imágenes de los Productos</h2>
           <div class="gallery-grid">
             <For each={logic.productImages()}>
               {(img) => (
@@ -170,11 +185,19 @@ const SGEditarWeb: Component = () => {
             </For>
           </div>
           <div class="button-group">
-            <input type="file" id="product-upload" accept="image/png, image/jpeg" multiple style="display: none;" />
-            <button class="btn-action btn-blue" onClick={() => document.getElementById('product-upload')?.click()}>
+            {/* CORREGIDO: Agregado webp y onChange */}
+            <input 
+              type="file" 
+              id="product-upload" 
+              accept="image/png, image/jpeg, image/webp" 
+              multiple 
+              style="display: none;" 
+              onChange={logic.handleProductUpload} 
+            />
+            {/*<button class="btn-action btn-blue" onClick={() => document.getElementById('product-upload')?.click()}>
                <div class="svg-wrapper-1"><div class="svg-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z"></path></svg></div></div>
                <span>Subir Imágenes</span>
-            </button>
+            </button>*/}
             <Show when={logic.selectedProductImages().size > 0}>
               <button class="btn-delete-prompt noselect" onClick={() => logic.handleDeleteSelected(true)}>
                 <span class="text">Eliminar Seleccionadas</span>

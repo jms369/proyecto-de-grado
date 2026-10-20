@@ -155,5 +155,6 @@ export const mapTarjetaToBackend = (data: UsuarioModel) => ({
   direccion: data.direccion.trim(),
   fechaNacimiento: data.fechaNacimiento || null,
   grupoSanguineo: data.grupoSanguineo.trim().toUpperCase(),
-  estado: data.estado
+  estado: data.estado,
+  contrasena: data.contrasena // <--- ⚠️ ESTA ES LA LÍNEA QUE FALTA
 });

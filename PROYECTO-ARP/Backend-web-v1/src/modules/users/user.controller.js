@@ -59,7 +59,7 @@ async function editarMisDatos(req, res) {
   return res.json({ mensaje: 'Datos actualizados correctamente.' });
 }
 
-// VER GMAIL DE RECUPERACIÓN
+// VER GMAILS DE RECUPERACIÓN
 async function verGmails(req, res) {
   const usuarioId = req.usuario.id;
   const gmails = await obtenerGmailsRecuperacion(usuarioId);
@@ -67,7 +67,7 @@ async function verGmails(req, res) {
   return res.json(gmails);
 }
 
-// ACTUALIZAR GMAIL DE RECUPERACIÓN
+// ACTUALIZAR GMAILS DE RECUPERACIÓN
 async function editarGmails(req, res) {
   const usuarioId = req.usuario.id;
   const { email1, email2, email3 } = req.body;
@@ -131,17 +131,44 @@ async function listarUsuarios(req, res) {
   return res.json(rows);
 }
 
-// BUSCAR USUARIO POR NOMBRE
+
+// BUSCAR USUARIO POR NOMBRE (Dinámico y exacto)
 async function buscarUsuarioPorNombre(req, res) {
   const { n1, n2, a1, a2 } = req.query;
-  const query = `
+
+  // 1. Empezamos con la condición base (excluir SUPERADMIN)
+  let query = `
     SELECT id_usuario_sg, primer_nombre_sg, segundo_nombre_sg, primer_apellido_sg, segundo_apellido_sg,
            gmail1_sg, rol_sg, estado_usuario_sg, carneti_sg, complementoci_sg, numero_celular_sg,
            direccion_sg, fecha_nac_sg, grupo_sang_sg
     FROM USUARIOS_SG
-    WHERE primer_nombre_sg LIKE ? AND primer_apellido_sg LIKE ? AND rol_sg <> 'SUPERADMIN'
+    WHERE rol_sg <> 'SUPERADMIN'
   `;
-  const [rows] = await pool.query(query, [`%${n1 || ''}%`, `%${a1 || ''}%`]);
+
+  // 2. Array para guardar los valores que reemplazarán a los "?"
+  const params = [];
+
+  // 3. Agregamos condiciones SOLO si el campo no está vacío
+  if (n1 && n1.trim() !== '') {
+    query += ` AND primer_nombre_sg = ?`; // Coincidencia exacta
+    params.push(n1.trim());
+  }
+  if (n2 && n2.trim() !== '') {
+    query += ` AND segundo_nombre_sg = ?`;
+    params.push(n2.trim());
+  }
+  if (a1 && a1.trim() !== '') {
+    query += ` AND primer_apellido_sg = ?`;
+    params.push(a1.trim());
+  }
+  if (a2 && a2.trim() !== '') {
+    query += ` AND segundo_apellido_sg = ?`;
+    params.push(a2.trim());
+  }
+
+  // 4. Ejecutamos la consulta (si no se llenó ningún campo, traerá a todos los no-SUPERADMIN)
+  const [rows] = await pool.query(query, params);
+  
   return res.json(rows);
 }
 

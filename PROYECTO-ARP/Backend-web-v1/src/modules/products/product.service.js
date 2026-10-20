@@ -15,7 +15,7 @@ async function obtenerProductosTodos() {
   // RECIBE DE LA BD: `rows` (un array de objetos con los nombres de columnas en snake_case).
   const [rows] = await pool.query('SELECT * FROM PRODUCTOS_CELULAR');
   
-  // ⚠️ CORRECCIÓN CRÍTICA: Eliminamos el .map(mapearProductoFrontend).
+  //  CORRECCIÓN CRÍTICA: Eliminamos el .map(mapearProductoFrontend).
   // El backend debe devolver los datos tal cual vienen de la BD (snake_case).
   // El Frontend se encarga de traducirlos usando su archivo types.ts.
   return rows; 
@@ -30,7 +30,7 @@ async function obtenerProductosActivos() {
   // ENVÍA A LA BD: Consulta con filtro WHERE estado_celular = 1.
   const [rows] = await pool.query('SELECT * FROM PRODUCTOS_CELULAR WHERE estado_celular = 1');
   
-  // ⚠️ CORRECCIÓN: Igual que arriba, devolvemos los datos crudos.
+  //  CORRECCIÓN: Igual que arriba, devolvemos los datos crudos.
   return rows;
 }
 
@@ -56,24 +56,7 @@ async function obtenerProductosAsistente() {
   return rows;
 }
 
-// ============================================================================
-// 4. FUNCIÓN DE MAPEO (⚠️ ESTA FUNCIÓN DEBE ELIMINARSE O DEJARSE SIN USAR)
-// ============================================================================
-// ¿POR QUÉ? Porque intentaba convertir los datos de la BD (snake_case) al Frontend (camelCase).
-// Pero ahora el Frontend ya tiene su propio archivo `types/sg-editar-productos-i-m.ts` 
-// que hace exactamente esa conversión. Si la dejamos aquí, se duplica el trabajo y se rompe.
-// 
-// Si la usas, el Frontend recibirá "marca", pero espera "marca_celular", y la tarjeta saldrá vacía.
 
-/* 
-function mapearProductoFrontend(p) {
-  return {
-    id: p.id_producto,
-    marca: p.marca_celular,
-    // ... etc
-  };
-}
-*/
 
 // ============================================================================
 // 5. EXPORTACIÓN DE FUNCIONES

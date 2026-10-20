@@ -1,31 +1,30 @@
 // src/sitioWeb/SW-home/sw-home-logico.ts
+
 import { createSignal, onCleanup, onMount } from 'solid-js';
 import type { CarouselImage, HomeInfo } from '../../types/SW-types/sw-home-i-m';
+import { apiObtenerHomeInfo, apiObtenerLogo } from '../../services/apis_SW/home_api';
+import { mapCarouselImagesToFrontend, mapInfoToFrontend } from '../../types/SW-types/sw-home-i-m';
 
 export const useHomeLogic = (navigate: (to: string) => void) => {
-  // Estados simulados recibidos del backend
   const [images, setImages] = createSignal<CarouselImage[]>([]);
   const [homeInfo, setHomeInfo] = createSignal<HomeInfo | null>(null);
+  const [logoUrl, setLogoUrl] = createSignal<string | null>(null);
+  const [ubicacionUrl, setUbicacionUrl] = createSignal<string | null>(null);
   
-  // Lógica del Carrusel
   const [currentSlide, setCurrentSlide] = createSignal(0);
   const [isPaused, setIsPaused] = createSignal(false);
   let intervalId: number | undefined;
 
-  // ============================================================================
-  // INICIO MODIFICACIÓN: Controladores del Carrusel y Navegación
-  // ============================================================================
   const nextSlide = () => {
+    if (images().length === 0) return;
     setCurrentSlide((prev) => (prev === images().length - 1 ? 0 : prev + 1));
   };
 
   const startCarousel = () => {
     if (!intervalId) {
       intervalId = window.setInterval(() => {
-        if (!isPaused()) {
-          nextSlide();
-        }
-      }, 5000); // Cambia cada 5 segundos
+        if (!isPaused()) nextSlide();
+      }, 5000);
     }
   };
 
@@ -36,49 +35,45 @@ export const useHomeLogic = (navigate: (to: string) => void) => {
     }
   };
 
-  const handleCarouselInteraction = (paused: boolean) => {
-    setIsPaused(paused);
-  };
+  const handleCarouselInteraction = (paused: boolean) => setIsPaused(paused);
 
-  const handleVerProductos = () => {
-    navigate('/catalogo-productos');
-  };
+  const handleVerProductos = () => navigate('/catalogo-productos');
+  const handleAsistente = () => navigate('/asistente');
+  const handleUbicacion = () => navigate('/ubicacion');
 
-  const handleAsistente = () => {
-    navigate('/asistente');
-  };
+  onMount(async () => {
+    try {
+      const data = await apiObtenerHomeInfo();
+      
+      if (data.ofertas && data.ofertas.length > 0) {
+        setImages(mapCarouselImagesToFrontend(data.ofertas));
+      }
 
-  const handleUbicacion = () => {
-    navigate('/ubicacion');
-  };
-  // ============================================================================
-  // FIN MODIFICACIÓN
-  // ============================================================================
+      if (data.ubicacion) {
+        setUbicacionUrl(data.ubicacion); 
+      }
 
-  onMount(() => {
-    // Simulación de carga desde el backend
-    setImages([
-      { id: 1, url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMG30CQG9Ob3sgklWuNzSGNZGBSbcMYavfuI-nZRYvUt-Ri60--BtPOTU&s=10', alt: 'Oferta 1' },
-      { id: 2, url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZ-Me3jbqa7OVKwfd6zGNH0_2bQwzWD_Dz4ncfGI5zR3dD2JH05xE_6uZC&s=10', alt: 'Oferta 2' },
-      { id: 3, url: 'https://i.pinimg.com/originals/2e/b1/0b/2eb10bfb266bc7258be7fe10ff183057.png', alt: 'Oferta 3' }
-    ]);
-    
-    setHomeInfo({
-      calle: 'Av. Heroínas esq. Ayacucho',
-      ubicacion: 'Cochabamba, Bolivia',
-      horarios: 'Lunes a Viernes: 08:00 - 18:00 hrs.'
-    });
+      setHomeInfo(mapInfoToFrontend(data));
 
-    startCarousel();
+      const logoData = await apiObtenerLogo();
+      if (logoData && logoData.logo_url_sw) {
+        setLogoUrl(`http://localhost:3000${logoData.logo_url_sw}`);
+      }
+
+      if (images().length > 0) startCarousel();
+
+    } catch (error) {
+      console.error("Error cargando datos del home:", error);
+    }
   });
 
-  onCleanup(() => {
-    stopCarousel();
-  });
+  onCleanup(() => stopCarousel());
 
   return {
     images,
     homeInfo,
+    logoUrl,
+    ubicacionUrl,
     currentSlide,
     handleCarouselInteraction,
     handleVerProductos,
