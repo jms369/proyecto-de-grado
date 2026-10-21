@@ -13,15 +13,15 @@ import type { SWProductoRecomendadoDTO } from '../../types/SW-types/sw-asistente
 import './sw-asistente-rec.css';
 
 const SWAstistenteRecomendacion: Component = () => {
-  const { 
-    isAvanzadoOpen, 
-    toggleAvanzado, 
-    isLoading, 
-    setIsLoading, 
-    formBasico, 
-    actualizarBasico, 
-    formAvanzado, 
-    actualizarAvanzado 
+  const {
+    isAvanzadoOpen,
+    toggleAvanzado,
+    isLoading,
+    setIsLoading,
+    formBasico,
+    actualizarBasico,
+    formAvanzado,
+    actualizarAvanzado
   } = useAsistenteRecEstilo();
 
   const [resultados, setResultados] = createSignal<SWProductoRecomendadoDTO[]>([]);
@@ -58,7 +58,7 @@ const SWAstistenteRecomendacion: Component = () => {
         <section class="sw-form-section">
           <h2 class="sw-section-heading">Básico</h2>
           <form class="sw-form-card" onSubmit={ejecutarBasico}>
-            
+
             <div class="sw-question-group">
               <label>1.- Ingrese el monto de dinero que esta dispuesto a invertir en un teléfono celular:</label>
               <input
@@ -269,7 +269,7 @@ const SWAstistenteRecomendacion: Component = () => {
         <Show when={resultados().length > 0}>
           <section class="sw-resultados-section">
             <h3 class="sw-resultados-heading">LAS MEJORES RECOMENDACIONES SON:</h3>
-            
+
             <div class="sw-cards-vertical-list">
               <For each={resultados()}>
                 {(prod, index) => (
@@ -281,9 +281,12 @@ const SWAstistenteRecomendacion: Component = () => {
                       <span class="sw-card-precio">{prod.precio} BS.</span>
                     </div>
                     <a
-                      href={generarEnlaceWhatsAppIndividual(prod)}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      onClick={async (e) => {
+                        e.preventDefault();
+                        const url = await generarEnlaceWhatsAppIndividual(prod);
+                        window.open(url, '_blank');
+                      }}
+                      style="cursor: pointer;"
                       class="sw-btn-whatsapp-card"
                     >
                       Consíguelo AHORA
@@ -295,9 +298,12 @@ const SWAstistenteRecomendacion: Component = () => {
 
             <div class="sw-whatsapp-general-container">
               <a
-                href={generarEnlaceWhatsAppGeneral(resultados())}
-                target="_blank"
-                rel="noopener noreferrer"
+                onClick={async (e) => {
+                  e.preventDefault();
+                  const url = await generarEnlaceWhatsAppGeneral(resultados());
+                  window.open(url, '_blank');
+                }}
+                style="cursor: pointer;"
                 class="sw-btn-whatsapp-general"
               >
                 Escríbenos AHORA

@@ -1,3 +1,5 @@
+// src/sg-mis-datos.tsx
+
 import type { Component } from 'solid-js';
 import { Show } from 'solid-js';
 import './sg-mis-datos.css';
@@ -15,6 +17,7 @@ const SGMisDatos: Component<SGMisDatosProps> = (props) => {
     formData,
     errors,
     successMsg,
+    isLoading, // ⚠️ NUEVO: Para deshabilitar el botón mientras guarda
     handleInputChange,
     handleSave,
     handleCancel
@@ -46,7 +49,7 @@ const SGMisDatos: Component<SGMisDatosProps> = (props) => {
                   placeholder=" "
                   autocomplete="off"
                 />
-                <label class="floating-label">Primer Nombre *</label>
+                <label class="floating-label">Primer Nombre (OBLIGATORIO)</label>
                 {errors().nombre1 && <span class="field-error-text">{errors().nombre1}</span>}
               </div>
 
@@ -73,7 +76,7 @@ const SGMisDatos: Component<SGMisDatosProps> = (props) => {
                   placeholder=" "
                   autocomplete="off"
                 />
-                <label class="floating-label">Primer Apellido *</label>
+                <label class="floating-label">Primer Apellido (OBLIGATORIO)</label>
                 {errors().apellido1 && <span class="field-error-text">{errors().apellido1}</span>}
               </div>
 
@@ -126,7 +129,7 @@ const SGMisDatos: Component<SGMisDatosProps> = (props) => {
                   placeholder=" "
                   autocomplete="off"
                 />
-                <label class="floating-label">Carnet de Identidad *</label>
+                <label class="floating-label">Carnet de Identidad (OBLIGATORIO)</label>
                 {errors().carnetIdentidad && <span class="field-error-text">{errors().carnetIdentidad}</span>}
               </div>
 
@@ -153,7 +156,7 @@ const SGMisDatos: Component<SGMisDatosProps> = (props) => {
                   placeholder=" "
                   autocomplete="off"
                 />
-                <label class="floating-label">Número Celular *</label>
+                <label class="floating-label">Número Celular (OBLIGATORIO)</label>
                 {errors().numeroCelular && <span class="field-error-text">{errors().numeroCelular}</span>}
               </div>
 
@@ -200,8 +203,12 @@ const SGMisDatos: Component<SGMisDatosProps> = (props) => {
 
             {/* BOTONES DUALES DE ACCIÓN */}
             <div class="actions-group-row">
-              <button type="submit" class="btn-save-green">
-                Guardar cambios
+              <button 
+                type="submit" 
+                class="btn-save-green"
+                disabled={isLoading()} // ⚠️ Deshabilitar mientras guarda
+              >
+                {isLoading() ? 'Guardando...' : 'Guardar cambios'}
               </button>
               <button type="button" class="btn-cancel-red" onClick={handleCancel}>
                 Cancelar

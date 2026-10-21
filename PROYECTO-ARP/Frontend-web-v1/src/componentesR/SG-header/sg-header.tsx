@@ -22,7 +22,7 @@ export const SGHeader: Component<SGHeaderProps> = (props) => {
             class="sg-header-logo-img"
           />
         ) : (
-          <div class="sg-header-logo-placeholder">LOGO</div>
+          <div class="sg-header-logo-placeholder">SGv1</div>
         )}
       </div>
 

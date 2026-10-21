@@ -49,6 +49,13 @@ export interface SGProductoVerModel {
   imagenUrl: string;
 }
 
+
+// NUEVO: Interfaz para la respuesta del WhatsApp
+export interface WhatsappResponseDTO {
+  whatsapp: string | null;
+}
+
+
 // ============================================================================
 // 3. MAPEADOR (Backend -> Frontend)
 // ============================================================================

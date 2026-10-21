@@ -26,3 +26,8 @@ export interface SWProductoRecomendadoDTO {
 // ============================================================================
 // FIN MODIFICACIÓN
 // ============================================================================
+
+// NUEVO: Interfaz para la respuesta del WhatsApp
+export interface WhatsappResponseDTO {
+  whatsapp: string | null;
+}

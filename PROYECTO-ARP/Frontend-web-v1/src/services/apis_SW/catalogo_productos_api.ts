@@ -16,3 +16,18 @@ export const apiObtenerCatalogoPublico = async (): Promise<any[]> => {
 
   return response.json();
 };
+
+
+// 2. NUEVO: Obtener solo el número de WhatsApp
+export const apiObtenerWhatsapp = async (): Promise<{ whatsapp: string | null }> => {
+  const response = await fetch(`${API_BASE_URL}/site/whatsapp`, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+  if (!response.ok) {
+    throw new Error('Error al obtener el número de WhatsApp');
+  }
+
+  return response.json();
+};

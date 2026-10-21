@@ -1,30 +1,36 @@
-import { createSignal } from 'solid-js';
+// src/lógico.ts (o sg-mis-datos-logico.ts)
+
+import { createSignal, onMount } from 'solid-js';
 import type { MisDatosForm, MisDatosErrors } from '../../types/sg-mis-datos-i-m';
 import {
   sanitizeLettersOnly,
   sanitizeAlphanumeric,
   sanitizeNumbersOnly,
-  mapFrontendToBackendMisDatos
+  mapFrontendToBackendMisDatos,
+  mapBackendToFrontendMisDatos
 } from '../../types/sg-mis-datos-i-m';
+import { apiObtenerMisDatos, apiActualizarMisDatos } from '../../services/apis_SG/mis_datos_api';
 
 export const useMisDatosLogic = (onClose?: () => void) => {
   const [formData, setFormData] = createSignal<MisDatosForm>({
-    nombre1: 'Carlos',
-    nombre2: 'Eduardo',
-    apellido1: 'Mendoza',
-    apellido2: 'Pérez',
-    gmailUsuario: 'carlos.mendoza@gmail.com',
-    rol: 'ADMINISTRADOR',
-    carnetIdentidad: '8492019',
-    complemento: '1B',
-    numeroCelular: '71234567',
-    direccion: 'Av. Las Palmas #450',
-    fechaNacimiento: '1995-08-20',
-    grupoSanguineo: 'O+'
+    nombre1: '', nombre2: '', apellido1: '', apellido2: '',
+    gmailUsuario: '', rol: '', carnetIdentidad: '', complemento: '',
+    numeroCelular: '', direccion: '', fechaNacimiento: '', grupoSanguineo: ''
   });
 
   const [errors, setErrors] = createSignal<MisDatosErrors>({});
   const [successMsg, setSuccessMsg] = createSignal<string>('');
+  const [isLoading, setIsLoading] = createSignal<boolean>(false);
+
+  // ✅ GET AUTOMÁTICO AL RENDERIZAR
+  onMount(async () => {
+    try {
+      const data = await apiObtenerMisDatos();
+      setFormData(mapBackendToFrontendMisDatos(data));
+    } catch (error) {
+      console.error('Error al cargar los datos:', error);
+    }
+  });
 
   const handleInputChange = (field: keyof MisDatosForm, value: string) => {
     let sanitizedValue = value;
@@ -44,7 +50,7 @@ export const useMisDatosLogic = (onClose?: () => void) => {
     }
   };
 
-  const handleSave = (e: Event) => {
+  const handleSave = async (e: Event) => {
     e.preventDefault();
     setSuccessMsg('');
     const current = formData();
@@ -60,15 +66,24 @@ export const useMisDatosLogic = (onClose?: () => void) => {
       return;
     }
 
-    const payload = mapFrontendToBackendMisDatos(current);
-    console.log('Payload a enviar:', payload);
+    setIsLoading(true);
 
-    setSuccessMsg('¡Información actualizada con éxito!');
-    
-    // Opcional: cerrar el modal automáticamente tras guardar
-    setTimeout(() => {
-      if (onClose) onClose();
-    }, 1200);
+    try {
+      const payload = mapFrontendToBackendMisDatos(current);
+      await apiActualizarMisDatos(payload);
+
+      setSuccessMsg('¡Información actualizada con éxito!');
+
+      setTimeout(() => {
+        if (onClose) onClose();
+      }, 1200);
+
+    } catch (error) {
+      console.error('Error al guardar:', error);
+      alert('No se pudieron guardar los datos. Revise la consola.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleCancel = () => {
@@ -79,6 +94,7 @@ export const useMisDatosLogic = (onClose?: () => void) => {
     formData,
     errors,
     successMsg,
+    isLoading, // ⚠️ Exportado para el .tsx
     handleInputChange,
     handleSave,
     handleCancel

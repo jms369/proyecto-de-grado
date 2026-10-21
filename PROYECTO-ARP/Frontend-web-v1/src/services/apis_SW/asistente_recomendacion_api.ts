@@ -1,5 +1,7 @@
 // src/services/apis_SW/asistente_recomendacion_api.ts
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+
 // Este archivo actúa como puente entre la página de recomendación
 // y el módulo de procesamiento.
 
@@ -25,4 +27,19 @@ export const ejecutarProcesamientoAsistente = async (
 
   // 4. Devolvemos el Top 10
   return resultados;
+};
+
+
+// 2. NUEVO: Obtener solo el número de WhatsApp
+export const apiObtenerWhatsapp = async (): Promise<{ whatsapp: string | null }> => {
+  const response = await fetch(`${API_BASE_URL}/site/whatsapp`, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+  if (!response.ok) {
+    throw new Error('Error al obtener el número de WhatsApp');
+  }
+
+  return response.json();
 };

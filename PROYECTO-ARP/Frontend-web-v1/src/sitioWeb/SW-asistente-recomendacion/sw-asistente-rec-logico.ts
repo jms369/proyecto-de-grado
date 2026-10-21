@@ -2,7 +2,7 @@
 
 import type { SWAstistenteFormModel, SWProductoRecomendadoDTO } from '../../types/SW-types/sw-asistente-recomendacion-i-m';
 // ⚠️ IMPORTAMOS EL NUEVO SERVICIO
-import { ejecutarProcesamientoAsistente } from '../../services/apis_SW/asistente_recomendacion_api';
+import { ejecutarProcesamientoAsistente, apiObtenerWhatsapp  } from '../../services/apis_SW/asistente_recomendacion_api';
 
 export interface ManejadorAsistenteParams {
   form: SWAstistenteFormModel;
@@ -44,17 +44,46 @@ export const handleComenzarAnalisis = async (params: ManejadorAsistenteParams) =
   }
 };
 
-// ... (funciones de WhatsApp se mantienen igual)
-export const generarEnlaceWhatsAppIndividual = (producto: SWProductoRecomendadoDTO, telefonoBackend: string = '59178008122'): string => {
-  const mensaje = `Hola, me interesa conseguir el celular ${producto.marca} ${producto.modelo} (${producto.almacenamiento}GB / ${producto.ram}GB RAM) a un precio de ${producto.precio} BS. ¿Tienen stock disponible?`;
-  return `https://wa.me/${telefonoBackend}?text=${encodeURIComponent(mensaje)}`;
+
+
+// ============================================================================
+// GENERACIÓN DE ENLACES DE WHATSAPP (AHORA CONSULTAN AL BACKEND)
+// ============================================================================
+
+// Función auxiliar para obtener el número del backend
+const obtenerNumeroWhatsApp = async (): Promise<string> => {
+  try {
+    const data = await apiObtenerWhatsapp();
+    // Si viene un número, lo usamos. Si no, usamos uno por defecto.
+    return data.whatsapp || '59100000000';
+  } catch (error) {
+    console.error('Error al obtener el WhatsApp:', error);
+    return '59100000000'; // Fallback en caso de error
+  }
 };
 
-export const generarEnlaceWhatsAppGeneral = (productos: SWProductoRecomendadoDTO[], telefonoBackend: string = '59178008122'): string => {
+// Enlace individual (para el botón "Consíguelo AHORA")
+export const generarEnlaceWhatsAppIndividual = async (
+  producto: SWProductoRecomendadoDTO
+): Promise<string> => {
+  const telefono = await obtenerNumeroWhatsApp();
+  
+  const mensaje = `Hola, me interesa conseguir el celular ${producto.marca} ${producto.modelo} (${producto.almacenamiento}GB / ${producto.ram}GB RAM) con el precio de ${producto.precio} BS. ¿Tienen stock disponible?`;
+  
+  return `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
+};
+
+// Enlace general (para el botón "Escríbenos AHORA")
+export const generarEnlaceWhatsAppGeneral = async (
+  productos: SWProductoRecomendadoDTO[]
+): Promise<string> => {
+  const telefono = await obtenerNumeroWhatsApp();
+  
   let mensaje = 'Hola, he revisado las recomendaciones del asistente ARP y me interesan los siguientes modelos:\n';
   productos.forEach((p, idx) => {
     mensaje += `${idx + 1}. ${p.marca} ${p.modelo} - ${p.almacenamiento}GB/${p.ram}GB - ${p.precio} BS\n`;
   });
   mensaje += '¿Siguen disponibles?';
-  return `https://wa.me/${telefonoBackend}?text=${encodeURIComponent(mensaje)}`;
+  
+  return `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
 };
