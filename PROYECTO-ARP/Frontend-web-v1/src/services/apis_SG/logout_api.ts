@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000/api';
+const API_BASE_URL = import.meta.env.API_URL ?? 'http://localhost:3000/api';
 
 export interface LogoutApiResult {
   ok: boolean;
@@ -16,7 +16,7 @@ export interface LogoutApiResult {
  */
 export async function logoutApi(): Promise<LogoutApiResult> {
   try {
-    const res = await fetch(`${API_URL}/auth/logout`, {
+    const res = await fetch(`${API_BASE_URL}/auth/logout`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include', // 👈 imprescindible para enviar/recibir cookies

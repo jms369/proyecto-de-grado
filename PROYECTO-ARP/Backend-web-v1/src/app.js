@@ -62,4 +62,19 @@ app.get('/api/health', (req, res) => {
 // Manejador global de errores (Siempre al final)
 app.use(errorHandler);
 
+
+// ... (importaciones existentes)
+const pdfRoutes = require('./modules/pdf/pdf.routes'); //  NUEVO
+
+// ... 
+
+// 7. Rutas de la API
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/site', siteRoutes);
+app.use('/api/pdf', pdfRoutes); //  NUEVO: Registrar ruta de PDFs
+
+// ...
+
 module.exports = app;

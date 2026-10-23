@@ -1,6 +1,6 @@
 import type { ResetPasswordRequest } from '../../types/sg-reestablecer-contrasena-i-m';
 
-const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000/api';
+const API_BASE_URL = import.meta.env.API_URL ?? 'http://localhost:3000/api';
 
 export interface ResetPasswordApiResult {
   ok: boolean;
@@ -11,7 +11,7 @@ export interface ResetPasswordApiResult {
 
 export async function reestablecerContrasenaApi(payload: ResetPasswordRequest): Promise<ResetPasswordApiResult> {
   try {
-    const res = await fetch(`${API_URL}/auth/reestablecer`, {
+    const res = await fetch(`${API_BASE_URL}/auth/reestablecer`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),

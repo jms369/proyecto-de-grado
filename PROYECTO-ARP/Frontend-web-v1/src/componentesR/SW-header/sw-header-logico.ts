@@ -3,6 +3,8 @@
 import { createSignal, onMount } from 'solid-js';
 import { apiObtenerLogo } from './header_api';
 
+const BACKEND_HOST = import.meta.env.BACKEND_URL || 'http://localhost:3000';
+
 export const handleNavigation = (
   navigate: (to: string) => void,
   path: string,
@@ -22,7 +24,7 @@ export const useHeaderLogic = () => {
     try {
       const data = await apiObtenerLogo();
       if (data.logo_url_sw) {
-        setLogoUrl(`http://localhost:3000${data.logo_url_sw}`);
+        setLogoUrl(`${BACKEND_HOST}${data.logo_url_sw}`);
       }
     } catch (error) {
       console.error('Error al cargar el logo del header:', error);

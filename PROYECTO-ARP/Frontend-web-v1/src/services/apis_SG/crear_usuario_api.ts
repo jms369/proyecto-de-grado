@@ -1,16 +1,17 @@
 // src/services/apis_SG/crear_usuario_api.ts
 
 // Ajusta esta URL si tu backend corre en otro puerto (según docker-compose es el 3000)
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+const API_BASE_URL = import.meta.env.API_URL || 'http://localhost:3000/api';
 
 // Helper para manejar respuestas y errores de autenticación
 const handleResponse = async (response: Response) => {
   if (response.status === 401) {
-    alert('Su sesión ha expirado. Por favor, inicie sesión nuevamente.');
     window.location.href = '/inicioSG'; // Redirige al login del sistema de gestión
+    alert('Su sesión ha expirado. Por favor, inicie sesión nuevamente.');
     throw new Error('No autorizado');
   }
   if (response.status === 403) {
+    window.location.href = '/dashboard'; // Redirige al dashboard si no tiene permisos
     alert('No tiene permisos para realizar esta acción.');
     throw new Error('Prohibido');
   }

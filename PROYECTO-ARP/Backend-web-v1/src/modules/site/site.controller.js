@@ -151,6 +151,61 @@ async function obtenerSoloWhatsapp(req, res) {
 }
 
 
+// --- NUEVO: Imágenes de logos no usados ---
+
+// Listar imágenes de la carpeta img_logo, excluyendo la que está en la BD
+async function listarLogosNoUsados(req, res) {
+  try {
+    const dirPath = path.join(__dirname, '../../../Uploads/img_logo');
+    
+    if (!fs.existsSync(dirPath)) {
+      return res.json([]);
+    }
+
+    // 1. Obtenemos el logo actual de la BD
+    const [logoRows] = await pool.query('SELECT logo_url_sw FROM SITIO_WEB LIMIT 1');
+    const logoActual = logoRows[0]?.logo_url_sw;
+
+    // 2. Leemos todos los archivos de la carpeta
+    const files = fs.readdirSync(dirPath);
+    
+    // 3. Filtramos para excluir el logo actual
+    const logosNoUsados = files.filter(file => {
+      const fileUrl = `/uploads/img_logo/${file}`;
+      // Si el logo actual NO es igual a este archivo, lo incluimos
+      return fileUrl !== logoActual;
+    });
+
+    return res.json(logosNoUsados.map(file => `/uploads/img_logo/${file}`));
+  } catch (error) {
+    console.error('Error al listar logos no usados:', error);
+    return res.status(500).json({ error: 'Error al leer la carpeta de logos.' });
+  }
+}
+
+// Eliminar un logo físico de la carpeta
+async function eliminarLogoFisico(req, res) {
+  const { url } = req.body;
+  if (!url) return res.status(400).json({ error: 'URL requerida.' });
+
+  try {
+    // Limpiamos la URL para obtener solo el nombre del archivo
+    const filename = path.basename(url);
+    const filePath = path.join(__dirname, '../../../Uploads/img_logo', filename);
+
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+      return res.json({ mensaje: 'Logo eliminado correctamente.' });
+    } else {
+      return res.status(404).json({ error: 'El archivo no existe.' });
+    }
+  } catch (error) {
+    console.error('Error al eliminar logo físico:', error);
+    return res.status(500).json({ error: 'Error al eliminar el archivo.' });
+  }
+}
+
+
 module.exports = {
   obtenerLogo,
   obtenerFooter,
@@ -161,5 +216,7 @@ module.exports = {
   listarOfertas,
   crearOferta,
   eliminarOferta,
-  obtenerSoloWhatsapp
+  obtenerSoloWhatsapp,
+  listarLogosNoUsados,     // <-- NUEVO
+  eliminarLogoFisico       // <-- NUEVO
 };

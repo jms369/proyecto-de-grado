@@ -1,6 +1,6 @@
 import type { CodeVerificationRequest } from '../../types/sg-ingresar-codigo-i-m';
 
-const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000/api';
+const API_BASE_URL = import.meta.env.API_URL ?? 'http://localhost:3000/api';
 
 export interface CodeApiResult {
   ok: boolean;
@@ -13,7 +13,7 @@ export interface CodeApiResult {
 
 export async function verificarCodigoApi(payload: CodeVerificationRequest): Promise<CodeApiResult> {
   try {
-    const res = await fetch(`${API_URL}/auth/verificar-codigo`, {
+    const res = await fetch(`${API_BASE_URL}/auth/verificar-codigo`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),

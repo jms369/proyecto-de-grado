@@ -1,19 +1,26 @@
 // src/lógico.ts (o sg-editar-web-logico.ts)
 import { createSignal, onMount } from 'solid-js';
-import type { BaseImage, ProductImage, WebLinks, WebInfo } from '../../types/sg-editar-web-i-m';
+import type { BaseImage, WebLinks } from '../../types/sg-editar-web-i-m';
 import { validateImageFile } from '../../types/sg-editar-web-i-m';
 import {
   apiActualizarLogo, apiActualizarRedes, apiActualizarInfo,
   apiSubirLogo, apiSubirOferta, apiSubirImagenProducto,
   apiCrearOferta, apiEliminarOferta,
   apiObtenerLogo, apiObtenerFooter, apiObtenerDatosSitioCompletos,
-  apiObtenerArchivosProductos, apiEliminarArchivoProducto
+  apiObtenerArchivosProductos, apiEliminarArchivoProducto,
+  apiObtenerLogosNoUsados, apiEliminarLogoFisico
 } from '../../services/apis_SG/editar_web_api';
 
-const BACKEND_HOST = 'http://localhost:3000';
+const BACKEND_HOST = import.meta.env.BACKEND_URL || 'http://localhost:3000';
 
 export const useEditarWebLogic = (navigate: (to: string) => void) => {
-  // --- ESTADOS ---
+  
+  // ==========================================================================
+  // 1. DECLARACIÓN DE ESTADOS
+  // Aquí van TODOS los signals que usará el componente.
+  // Deben ir al principio, dentro de la función, pero ANTES del onMount.
+  // ==========================================================================
+  
   const [logoPreview, setLogoPreview] = createSignal<string | null>(null);
   const [links, setLinks] = createSignal<WebLinks>({ facebook: '', instagram: '', whatsapp: '', tiktok: '', ubicacion: '' });
   const [infoText, setInfoText] = createSignal<string>("Información por defecto de la empresa...");
@@ -27,19 +34,27 @@ export const useEditarWebLogic = (navigate: (to: string) => void) => {
   const [productImages, setProductImages] = createSignal<any[]>([]);
   const [selectedProductImages, setSelectedProductImages] = createSignal<Set<string>>(new Set());
   
+  // NUEVO: Estado para Logos no usados
+  const [logosNoUsados, setLogosNoUsados] = createSignal<string[]>([]);
+  const [selectedLogosNoUsados, setSelectedLogosNoUsados] = createSignal<Set<string>>(new Set());
+  
   // Estado para el Modal
   const [previewModalUrl, setPreviewModalUrl] = createSignal<string | null>(null);
 
-  // --- CARGA INICIAL DE DATOS ---
+  // ==========================================================================
+  // 2. CARGA INICIAL DE DATOS (onMount)
+  // Aquí va TODA la lógica asíncrona que se ejecuta al cargar la página.
+  // Por eso esta función lleva "async" y usamos "await" dentro de ella.
+  // ==========================================================================
   onMount(async () => {
     try {
-      // 1. Cargar Logo
+      // 2.1 Cargar Logo
       const logoData = await apiObtenerLogo();
       if (logoData && logoData.logo_url_sw) {
         setLogoPreview(`${BACKEND_HOST}${logoData.logo_url_sw}`);
       }
 
-      // 2. Cargar Redes y Contacto
+      // 2.2 Cargar Redes y Contacto
       const footerData = await apiObtenerFooter();
       if (footerData) {
         setLinks({
@@ -51,7 +66,7 @@ export const useEditarWebLogic = (navigate: (to: string) => void) => {
         });
       }
 
-      // 3. Cargar Info y Ofertas
+      // 2.3 Cargar Info y Ofertas
       const homeData = await apiObtenerDatosSitioCompletos();
       if (homeData) {
         if (homeData.masInformacion) setInfoText(homeData.masInformacion);
@@ -68,10 +83,10 @@ export const useEditarWebLogic = (navigate: (to: string) => void) => {
         }
       }
 
-      // 4. Cargar archivos físicos de la carpeta img_productos
+      // 2.4 Cargar archivos físicos de la carpeta img_productos
       const archivosFisicos = await apiObtenerArchivosProductos();
       const imagenesFisicas = archivosFisicos.map((url, index) => ({
-        id: `fisica-${index}`, // ID único temporal
+        id: `fisica-${index}`,
         nombreOriginal: url.split('/').pop() || 'Imagen',
         tamano: 0,
         tipoMime: 'image/jpeg',
@@ -79,10 +94,21 @@ export const useEditarWebLogic = (navigate: (to: string) => void) => {
       }));
       setProductImages(imagenesFisicas);
 
+      // 2.5 Cargar logos no usados (NUEVO)
+      const logosFisicos = await apiObtenerLogosNoUsados();
+      setLogosNoUsados(logosFisicos.map(url => `${BACKEND_HOST}${url}`));
+
     } catch (error) {
       console.error("Error cargando datos iniciales:", error);
     }
-  });
+  }); // <-- AQUÍ SE CIERRA EL onMount
+
+  // ==========================================================================
+  // 3. HANDLERS (Funciones de acción)
+  // Aquí van TODAS las funciones que se ejecutan cuando el usuario hace clic
+  // en un botón, sube un archivo, etc. No usan "await" suelto, sino dentro
+  // de funciones "async".
+  // ==========================================================================
 
   // --- HANDLERS LOGO ---
   const handleLogoUpload = async (e: Event) => {
@@ -132,7 +158,7 @@ export const useEditarWebLogic = (navigate: (to: string) => void) => {
     } catch (error) { console.error(error); }
   };
 
-  // --- HANDLERS GALERÍA ---
+  // --- HANDLERS GALERÍA (Ofertas y Productos) ---
   const toggleSelectImage = (id: number | string, isProduct: boolean) => {
     if (isProduct) {
       const newSet = new Set(selectedProductImages());
@@ -147,7 +173,6 @@ export const useEditarWebLogic = (navigate: (to: string) => void) => {
 
   const handleDeleteSelected = async (isProduct: boolean) => {
     if (isProduct) {
-      // Eliminar archivos físicos de la carpeta img_productos
       const urlsAEliminar = Array.from(selectedProductImages());
       for (const id of urlsAEliminar) {
         const img = productImages().find(p => p.id === id);
@@ -161,7 +186,6 @@ export const useEditarWebLogic = (navigate: (to: string) => void) => {
       setProductImages(prev => prev.filter(img => !selectedProductImages().has(img.id)));
       setSelectedProductImages(new Set<string>());
     } else {
-      // Eliminar ofertas de la BD
       const idsAEliminar = Array.from(selectedOfferImages());
       for (const id of idsAEliminar) {
         try { await apiEliminarOferta(id); } catch (error) { console.error(error); }
@@ -171,7 +195,6 @@ export const useEditarWebLogic = (navigate: (to: string) => void) => {
     }
   };
 
-  // Subir Ofertas
   const handleOfferUpload = async (e: Event) => {
     const target = e.target as HTMLInputElement;
     if (target.files && target.files.length > 0) {
@@ -183,7 +206,6 @@ export const useEditarWebLogic = (navigate: (to: string) => void) => {
           const url = await apiSubirOferta(file);
           await apiCrearOferta(url);
           
-          // Recargamos las ofertas para mostrar la nueva
           const homeData = await apiObtenerDatosSitioCompletos();
           if (homeData && homeData.ofertas) {
             setOfferImages(homeData.ofertas.map((o: any) => ({
@@ -202,7 +224,6 @@ export const useEditarWebLogic = (navigate: (to: string) => void) => {
     }
   };
 
-  // Subir Imágenes de Productos (Físicas)
   const handleProductUpload = async (e: Event) => {
     const target = e.target as HTMLInputElement;
     if (target.files && target.files.length > 0) {
@@ -213,7 +234,6 @@ export const useEditarWebLogic = (navigate: (to: string) => void) => {
         try {
           const url = await apiSubirImagenProducto(file);
           
-          // Añadimos la nueva imagen a la lista visual
           const nuevaImagen = {
             id: `fisica-${Date.now()}-${Math.random()}`,
             nombreOriginal: file.name,
@@ -231,6 +251,33 @@ export const useEditarWebLogic = (navigate: (to: string) => void) => {
     }
   };
 
+  // --- NUEVO: HANDLERS PARA LOGOS NO USADOS ---
+  const toggleSelectLogoNoUsado = (url: string) => {
+    const newSet = new Set(selectedLogosNoUsados());
+    newSet.has(url) ? newSet.delete(url) : newSet.add(url);
+    setSelectedLogosNoUsados(newSet);
+  };
+
+  const handleDeleteSelectedLogos = async () => {
+    const urlsAEliminar = Array.from(selectedLogosNoUsados());
+    for (const urlCompleta of urlsAEliminar) {
+      try {
+        const urlRelativa = urlCompleta.replace(BACKEND_HOST, '');
+        await apiEliminarLogoFisico(urlRelativa);
+      } catch (error) {
+        console.error('Error al eliminar logo:', error);
+      }
+    }
+    setLogosNoUsados(prev => prev.filter(url => !selectedLogosNoUsados().has(url)));
+    setSelectedLogosNoUsados(new Set<string>());
+    alert('Logos no usados eliminados correctamente.');
+  };
+
+  // ==========================================================================
+  // 4. RETURN
+  // Aquí devolvemos TODO lo que el componente .tsx necesita usar.
+  // Si algo no se devuelve aquí, el .tsx no podrá usarlo.
+  // ==========================================================================
   return {
     logoPreview, handleLogoUpload, handleDeleteLogo, handleSaveLogo,
     links, setLinks, handleSaveLinks,
@@ -238,7 +285,9 @@ export const useEditarWebLogic = (navigate: (to: string) => void) => {
     offerImages, selectedOfferImages,
     productImages, selectedProductImages,
     toggleSelectImage, handleDeleteSelected, 
-    handleOfferUpload, handleProductUpload, // <-- AHORA SÍ ESTÁ INCLUIDO
+    handleOfferUpload, handleProductUpload,
+    logosNoUsados, selectedLogosNoUsados,
+    toggleSelectLogoNoUsado, handleDeleteSelectedLogos,
     previewModalUrl, setPreviewModalUrl
   };
 };

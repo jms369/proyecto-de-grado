@@ -10,4 +10,7 @@ export default defineConfig({
       usePolling: true, // Requerido en entornos Docker para detectar cambios de archivos
     },
   },
+  build: {
+    sourcemap: false, // ⚠️ NUEVO: Desactiva los Source Maps en producción (ofusca el código)
+  },
 });

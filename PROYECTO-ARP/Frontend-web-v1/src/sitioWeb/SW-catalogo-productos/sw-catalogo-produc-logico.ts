@@ -4,6 +4,8 @@ import { createSignal, createResource } from 'solid-js';
 import { mapBackendToFrontendProductoVer } from '../../types/SW-types/sw-catalogo-productos-i-m';
 import { apiObtenerCatalogoPublico,  apiObtenerWhatsapp  } from '../../services/apis_SW/catalogo_productos_api';
 
+const BACKEND_HOST = import.meta.env.BACKEND_URL || 'http://localhost:3000';
+
 export const useCatalogoLogico = () => {
   // 1. Cargar productos desde el backend
   const [productosData] = createResource(async () => {
@@ -15,7 +17,7 @@ export const useCatalogoLogico = () => {
         const modelo = mapBackendToFrontendProductoVer(dto);
         // Si la imagen es una ruta relativa (/uploads/...), le agregamos el host
         if (modelo.imagenUrl && modelo.imagenUrl.startsWith('/')) {
-          modelo.imagenUrl = `http://localhost:3000${modelo.imagenUrl}`;
+          modelo.imagenUrl = `${BACKEND_HOST}${modelo.imagenUrl}`;
         }
         return modelo;
       });

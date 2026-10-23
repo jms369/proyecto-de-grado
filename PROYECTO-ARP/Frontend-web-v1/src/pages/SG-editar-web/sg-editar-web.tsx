@@ -24,7 +24,7 @@ const SGEditarWeb: Component = () => {
   return (
     <div class="sg-editar-web-wrapper" id="sg-editar-web-main">
       <Header />
-      
+
       <main class="content-container">
         <h1 class="main-title">Editar Sitio Web</h1>
 
@@ -37,17 +37,17 @@ const SGEditarWeb: Component = () => {
               <img src={logic.logoPreview()!} alt="Previsualización de Logo" />
             </Show>
           </div>
-          
+
           <div class="button-group">
             {/* Input oculto para subir - CORREGIDO: Agregado webp */}
-            <input 
-              type="file" 
-              id="logo-upload" 
-              accept="image/png, image/jpeg, image/webp" 
-              style="display: none;" 
-              onChange={logic.handleLogoUpload} 
+            <input
+              type="file"
+              id="logo-upload"
+              accept="image/png, image/jpeg, image/webp"
+              style="display: none;"
+              onChange={logic.handleLogoUpload}
             />
-            
+
             <button class="btn-action btn-blue" onClick={() => document.getElementById('logo-upload')?.click()}>
               <div class="svg-wrapper-1"><div class="svg-wrapper">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z"></path></svg>
@@ -71,46 +71,79 @@ const SGEditarWeb: Component = () => {
           </div>
         </div>
 
+        {/* 1.5 SECCIÓN: LOGOS NO USADOS */}
+        <Show when={logic.logosNoUsados().length > 0}>
+          <div class="section-card">
+            <h2 class="section-title">Imágenes de logotipos no usados</h2>
+            <p> (recomendamos eliminarlos)</p>
+            <div class="gallery-grid">
+              <For each={logic.logosNoUsados()}>
+                {(url) => (
+                  <div class="gallery-item">
+                    <input
+                      type="checkbox"
+                      class="gallery-checkbox"
+                      checked={logic.selectedLogosNoUsados().has(url)}
+                      onChange={() => logic.toggleSelectLogoNoUsado(url)}
+                    />
+                    <img src={url} alt="Logo no usado" onClick={() => logic.setPreviewModalUrl(url)} />
+                  </div>
+                )}
+              </For>
+            </div>
+            <Show when={logic.selectedLogosNoUsados().size > 0}>
+              <div class="button-group">
+                <button class="btn-delete-prompt noselect" onClick={logic.handleDeleteSelectedLogos}>
+                  <span class="text">Eliminar Seleccionados</span>
+                  <span class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"></path></svg>
+                  </span>
+                </button>
+              </div>
+            </Show>
+          </div>
+        </Show>
+
         {/* 2. SECCIÓN ENLACES */}
         <div class="section-card">
           <h2 class="section-title">Enlaces</h2>
-          
+
           <div class="input-group">
-            <input type="text" id="enlace-fb" class="input-field" placeholder=" " 
-              value={logic.links().facebook} onInput={(e) => logic.setLinks({...logic.links(), facebook: sanitizeUrlInput(e.currentTarget.value)})} />
+            <input type="text" id="enlace-fb" class="input-field" placeholder=" "
+              value={logic.links().facebook} onInput={(e) => logic.setLinks({ ...logic.links(), facebook: sanitizeUrlInput(e.currentTarget.value) })} />
             <label for="enlace-fb" class="floating-label">URL Facebook</label>
           </div>
-            
+
           <div class="input-group">
-            <input type="text" id="enlace-ig" class="input-field" placeholder=" " 
-              value={logic.links().instagram} onInput={(e) => logic.setLinks({...logic.links(), instagram: sanitizeUrlInput(e.currentTarget.value)})} />
+            <input type="text" id="enlace-ig" class="input-field" placeholder=" "
+              value={logic.links().instagram} onInput={(e) => logic.setLinks({ ...logic.links(), instagram: sanitizeUrlInput(e.currentTarget.value) })} />
             <label for="enlace-ig" class="floating-label">URL Instagram</label>
           </div>
-            
+
           <div class="input-group">
-            <input type="text" id="enlace-wa" class="input-field" placeholder=" " 
-              value={logic.links().whatsapp} onInput={(e) => logic.setLinks({...logic.links(), whatsapp: sanitizeWhatsappInput(e.currentTarget.value)})} />
+            <input type="text" id="enlace-wa" class="input-field" placeholder=" "
+              value={logic.links().whatsapp} onInput={(e) => logic.setLinks({ ...logic.links(), whatsapp: sanitizeWhatsappInput(e.currentTarget.value) })} />
             <label for="enlace-wa" class="floating-label">Número WhatsApp, ejemplo: 591XXXXXXXX</label>
           </div>
-            
+
           <div class="input-group">
-            <input type="text" id="enlace-tk" class="input-field" placeholder=" " 
-              value={logic.links().tiktok} onInput={(e) => logic.setLinks({...logic.links(), tiktok: sanitizeUrlInput(e.currentTarget.value)})} />
+            <input type="text" id="enlace-tk" class="input-field" placeholder=" "
+              value={logic.links().tiktok} onInput={(e) => logic.setLinks({ ...logic.links(), tiktok: sanitizeUrlInput(e.currentTarget.value) })} />
             <label for="enlace-tk" class="floating-label">URL TikTok</label>
           </div>
-            
+
           <div class="input-group">
-            <input type="text" id="enlace-ub" class="input-field" placeholder=" " 
-              value={logic.links().ubicacion} onInput={(e) => logic.setLinks({...logic.links(), ubicacion: sanitizeUrlInput(e.currentTarget.value)})} />
+            <input type="text" id="enlace-ub" class="input-field" placeholder=" "
+              value={logic.links().ubicacion} onInput={(e) => logic.setLinks({ ...logic.links(), ubicacion: sanitizeUrlInput(e.currentTarget.value) })} />
             <label for="enlace-ub" class="floating-label">URL de Ubicación (Google Maps)</label>
           </div>
-            
+
           <div class="button-group">
             <button class="btn-action btn-green" onClick={logic.handleSaveLinks}>
-               <div class="svg-wrapper-1"><div class="svg-wrapper">
-                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M22,15.04C22,17.23 20.24,19 18.07,19H5.93C3.76,19 2,17.23 2,15.04C2,13.07 3.43,11.44 5.31,11.14C5.28,11 5.27,10.86 5.27,10.71C5.27,9.33 6.38,8.2 7.76,8.2C8.37,8.2 8.94,8.43 9.37,8.8C10.14,7.05 11.13,5.44 13.91,5.44C17.28,5.44 18.87,8.06 18.87,10.83C18.87,10.94 18.87,11.06 18.86,11.17C20.65,11.54 22,13.13 22,15.04Z"></path></svg>
-               </div></div>
-               <span>Guardar Cambios</span>
+              <div class="svg-wrapper-1"><div class="svg-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M22,15.04C22,17.23 20.24,19 18.07,19H5.93C3.76,19 2,17.23 2,15.04C2,13.07 3.43,11.44 5.31,11.14C5.28,11 5.27,10.86 5.27,10.71C5.27,9.33 6.38,8.2 7.76,8.2C8.37,8.2 8.94,8.43 9.37,8.8C10.14,7.05 11.13,5.44 13.91,5.44C17.28,5.44 18.87,8.06 18.87,10.83C18.87,10.94 18.87,11.06 18.86,11.17C20.65,11.54 22,13.13 22,15.04Z"></path></svg>
+              </div></div>
+              <span>Guardar Cambios</span>
             </button>
           </div>
         </div>
@@ -127,10 +160,10 @@ const SGEditarWeb: Component = () => {
           </Show>
           <div class="button-group">
             <button class="btn-action btn-green" onClick={logic.handleSaveInfo}>
-               <div class="svg-wrapper-1"><div class="svg-wrapper">
-                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M22,15.04C22,17.23 20.24,19 18.07,19H5.93C3.76,19 2,17.23 2,15.04C2,13.07 3.43,11.44 5.31,11.14C5.28,11 5.27,10.86 5.27,10.71C5.27,9.33 6.38,8.2 7.76,8.2C8.37,8.2 8.94,8.43 9.37,8.8C10.14,7.05 11.13,5.44 13.91,5.44C17.28,5.44 18.87,8.06 18.87,10.83C18.87,10.94 18.87,11.06 18.86,11.17C20.65,11.54 22,13.13 22,15.04Z"></path></svg>
-               </div></div>
-               <span>Guardar Cambios</span>
+              <div class="svg-wrapper-1"><div class="svg-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M22,15.04C22,17.23 20.24,19 18.07,19H5.93C3.76,19 2,17.23 2,15.04C2,13.07 3.43,11.44 5.31,11.14C5.28,11 5.27,10.86 5.27,10.71C5.27,9.33 6.38,8.2 7.76,8.2C8.37,8.2 8.94,8.43 9.37,8.8C10.14,7.05 11.13,5.44 13.91,5.44C17.28,5.44 18.87,8.06 18.87,10.83C18.87,10.94 18.87,11.06 18.86,11.17C20.65,11.54 22,13.13 22,15.04Z"></path></svg>
+              </div></div>
+              <span>Guardar Cambios</span>
             </button>
           </div>
         </div>
@@ -150,13 +183,13 @@ const SGEditarWeb: Component = () => {
           </div>
           <div class="button-group">
             {/* CORREGIDO: Agregado webp y onChange */}
-            <input 
-              type="file" 
-              id="offer-upload" 
-              accept="image/png, image/jpeg, image/webp" 
-              multiple 
-              style="display: none;" 
-              onChange={logic.handleOfferUpload} 
+            <input
+              type="file"
+              id="offer-upload"
+              accept="image/png, image/jpeg, image/webp"
+              multiple
+              style="display: none;"
+              onChange={logic.handleOfferUpload}
             />
             <button class="btn-action btn-blue" onClick={() => document.getElementById('offer-upload')?.click()}>
               <div class="svg-wrapper-1"><div class="svg-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z"></path></svg></div></div>
@@ -186,13 +219,13 @@ const SGEditarWeb: Component = () => {
           </div>
           <div class="button-group">
             {/* CORREGIDO: Agregado webp y onChange */}
-            <input 
-              type="file" 
-              id="product-upload" 
-              accept="image/png, image/jpeg, image/webp" 
-              multiple 
-              style="display: none;" 
-              onChange={logic.handleProductUpload} 
+            <input
+              type="file"
+              id="product-upload"
+              accept="image/png, image/jpeg, image/webp"
+              multiple
+              style="display: none;"
+              onChange={logic.handleProductUpload}
             />
             {/*<button class="btn-action btn-blue" onClick={() => document.getElementById('product-upload')?.click()}>
                <div class="svg-wrapper-1"><div class="svg-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z"></path></svg></div></div>
@@ -207,7 +240,7 @@ const SGEditarWeb: Component = () => {
           </div>
         </div>
       </main>
-      
+
       <Footer />
 
       {/* Modal Lightbox */}

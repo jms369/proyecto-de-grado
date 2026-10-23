@@ -471,3 +471,173 @@ body, html {
     flex: 1 1 100%;
   }
 }
+
+/* ============================================================================ */
+/* ESTILOS PARA LA BARRA DE FILTROS DE PRODUCTOS (Encapsulados)                */
+/* ============================================================================ */
+
+/* 
+  Encapsulamiento: Todos los estilos empiezan con .sg-filtros-container
+  para evitar que Vite los mezcle con otros CSS de la app.
+*/
+
+.sg-filtros-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  background-color: #1c2541; /* Mismo fondo que las tarjetas */
+  padding: 1.5rem;
+  border-radius: 12px; /* Mismo radio que las tarjetas */
+  border: 1px solid #3a506b; /* Mismo borde que las tarjetas */
+  margin-bottom: 2.5rem;
+  align-items: flex-end;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); /* Misma sombra */
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+/* Efecto hover opcional en el contenedor (similar a las tarjetas) */
+.sg-filtros-container:hover {
+  border-color: #5bc0be;
+}
+
+/* --- Grupo de cada filtro --- */
+.sg-filtros-container .sg-filtro-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 180px; /* Crece, se encoge, base 180px */
+  min-width: 140px;
+}
+
+/* --- Etiquetas (Labels) --- */
+.sg-filtros-container .sg-filtro-group label {
+  font-size: 0.82rem;
+  color: #a0aec0; /* Mismo color de labels que las tarjetas */
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.5px;
+}
+
+/* --- Inputs y Selects --- */
+.sg-filtros-container .sg-filtro-group select,
+.sg-filtros-container .sg-filtro-group input {
+  background: #0b132b; /* Mismo fondo oscuro que los inputs de tarjetas */
+  border: 1px solid #3a506b;
+  border-radius: 6px;
+  padding: 0.6rem;
+  color: #ffffff;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Efecto focus (igual que en el modal y tarjetas) */
+.sg-filtros-container .sg-filtro-group select:focus,
+.sg-filtros-container .sg-filtro-group input:focus {
+  border-color: #00e5ff;
+  box-shadow: 0 0 8px rgba(0, 229, 255, 0.2);
+}
+
+/* --- Botón Limpiar --- */
+.sg-filtros-container .sg-btn-limpiar-filtros {
+  background-color: #ff1744; /* Rojo brillante (igual que .sg-btn-eliminar) */
+  color: #ffffff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  height: 42px;
+  white-space: nowrap;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 10px rgba(255, 23, 68, 0.3);
+}
+
+.sg-filtros-container .sg-btn-limpiar-filtros:hover {
+  background-color: #d50000;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(255, 23, 68, 0.5);
+}
+
+.sg-filtros-container .sg-btn-limpiar-filtros:active {
+  transform: translateY(0);
+  filter: brightness(0.8);
+}
+
+/* --- Mensaje de "Sin resultados" --- */
+.sg-sin-resultados {
+  text-align: center;
+  color: #a0aec0;
+  font-size: 1.1rem;
+  padding: 3rem 1rem;
+  background-color: #1c2541;
+  border-radius: 12px;
+  border: 1px dashed #3a506b;
+  width: 100%;
+  grid-column: 1 / -1; /* Ocupa todo el ancho del grid */
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* ============================================================================ */
+/* RESPONSIVE                                                                   */
+/* ============================================================================ */
+
+/* Tablets y pantallas medianas */
+@media (max-width: 1024px) {
+  .sg-filtros-container {
+    gap: 0.8rem;
+    padding: 1.2rem;
+  }
+  
+  .sg-filtros-container .sg-filtro-group {
+    flex: 1 1 160px;
+  }
+}
+
+/* Móviles y pantallas pequeñas */
+@media (max-width: 768px) {
+  .sg-filtros-container {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1rem;
+    gap: 0.8rem;
+  }
+
+  .sg-filtros-container .sg-filtro-group {
+    flex: 1 1 100%;
+    min-width: 100%;
+  }
+
+  .sg-filtros-container .sg-btn-limpiar-filtros {
+    width: 100%;
+    margin-top: 0.5rem;
+    height: 46px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Pantallas muy pequeñas */
+@media (max-width: 480px) {
+  .sg-filtros-container {
+    padding: 0.8rem;
+    border-radius: 8px;
+  }
+
+  .sg-filtros-container .sg-filtro-group label {
+    font-size: 0.75rem;
+  }
+
+  .sg-filtros-container .sg-filtro-group select,
+  .sg-filtros-container .sg-filtro-group input {
+    font-size: 0.85rem;
+    padding: 0.5rem;
+  }
+}

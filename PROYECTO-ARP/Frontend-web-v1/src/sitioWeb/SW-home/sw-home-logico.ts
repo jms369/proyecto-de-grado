@@ -5,6 +5,8 @@ import type { CarouselImage, HomeInfo } from '../../types/SW-types/sw-home-i-m';
 import { apiObtenerHomeInfo, apiObtenerLogo } from '../../services/apis_SW/home_api';
 import { mapCarouselImagesToFrontend, mapInfoToFrontend } from '../../types/SW-types/sw-home-i-m';
 
+const BACKEND_HOST = import.meta.env.BACKEND_URL || 'http://localhost:3000';
+
 export const useHomeLogic = (navigate: (to: string) => void) => {
   const [images, setImages] = createSignal<CarouselImage[]>([]);
   const [homeInfo, setHomeInfo] = createSignal<HomeInfo | null>(null);
@@ -57,7 +59,7 @@ export const useHomeLogic = (navigate: (to: string) => void) => {
 
       const logoData = await apiObtenerLogo();
       if (logoData && logoData.logo_url_sw) {
-        setLogoUrl(`http://localhost:3000${logoData.logo_url_sw}`);
+        setLogoUrl(`${BACKEND_HOST}${logoData.logo_url_sw}`);
       }
 
       if (images().length > 0) startCarousel();

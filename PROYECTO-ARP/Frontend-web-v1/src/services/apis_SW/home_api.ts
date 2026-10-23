@@ -1,6 +1,6 @@
 // src/services/apis_SW/home_api.ts
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+const API_BASE_URL = import.meta.env.API_URL || 'http://localhost:3000/api';
 
 // 1. Obtener ofertas y ubicación (datos del Home)
 export const apiObtenerHomeInfo = async (): Promise<any> => {

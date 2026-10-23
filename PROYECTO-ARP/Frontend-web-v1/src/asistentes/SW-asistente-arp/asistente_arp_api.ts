@@ -6,7 +6,7 @@
 import type { SWAstistenteProductoDTO } from './sw-asistente-arp-i-m';
 
 // URL base del backend (ajústala según tu docker-compose, usualmente puerto 3000)
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+const API_BASE_URL = import.meta.env.API_URL || 'http://localhost:3000/api';
 
 // ============================================================================
 // FUNCIÓN PRINCIPAL: OBTENER PRODUCTOS PARA EL ASISTENTE

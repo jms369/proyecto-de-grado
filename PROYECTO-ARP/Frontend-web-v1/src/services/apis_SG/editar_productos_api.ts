@@ -2,17 +2,18 @@
 import type { SGProductoDTO } from '../../types/sg-editar-productos-i-m';
 
 // Ajusta esta URL si tu backend corre en otro puerto
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+const API_BASE_URL = import.meta.env.API_URL || 'http://localhost:3000/api';
 
 // Helper para manejar respuestas y errores de autenticación
 const handleResponse = async (response: Response) => {
   if (response.status === 401) {
+    window.location.href = '/inicioSG'; // Ajusta a tu ruta de login real
     alert('Su sesión ha expirado o no es válida. Por favor, inicie sesión nuevamente.');
-    window.location.href = '/login'; // Ajusta a tu ruta de login real
     throw new Error('No autorizado');
   }
   if (response.status === 403) {
     alert('No tiene permisos suficientes para realizar esta acción.');
+    window.location.href = '/dashboard'; // Redirige al dashboard si no tiene permisos
     throw new Error('Prohibido');
   }
   if (!response.ok) {

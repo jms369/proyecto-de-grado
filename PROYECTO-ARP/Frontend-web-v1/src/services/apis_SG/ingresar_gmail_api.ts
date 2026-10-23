@@ -1,6 +1,6 @@
 import type { RecoveryEmailRequest } from '../../types/sg-ingresar-gmail-i-m';
 
-const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000/api';
+const API_BASE_URL = import.meta.env.API_URL ?? 'http://localhost:3000/api';
 
 export interface RecoveryApiResult {
   ok: boolean;
@@ -14,7 +14,7 @@ export interface RecoveryApiResult {
  */
 export async function solicitarRecuperacionApi(payload: RecoveryEmailRequest): Promise<RecoveryApiResult> {
   try {
-    const res = await fetch(`${API_URL}/auth/recuperar`, {
+    const res = await fetch(`${API_BASE_URL}/auth/recuperar`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       // No usamos credentials: 'include' porque para recuperar contraseña no hay sesión activa aún

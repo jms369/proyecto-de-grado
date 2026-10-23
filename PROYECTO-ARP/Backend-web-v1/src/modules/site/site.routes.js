@@ -25,7 +25,9 @@ const {
   listarOfertas,
   crearOferta,
   eliminarOferta,
-  obtenerSoloWhatsapp 
+  obtenerSoloWhatsapp,
+  listarLogosNoUsados,     // <-- NUEVO
+  eliminarLogoFisico       // <-- NUEVO
 } = require('./site.controller');
 
 // ==========================================
@@ -113,5 +115,8 @@ router.put('/redes', verificarAutenticacion(['ADMINISTRADOR']), validate(validar
 router.put('/info', verificarAutenticacion(['ADMINISTRADOR']), asyncHandler(actualizarTextoInformativo));
 router.post('/ofertas', verificarAutenticacion(['ADMINISTRADOR']), asyncHandler(crearOferta));
 router.delete('/ofertas/:id', verificarAutenticacion(['ADMINISTRADOR']), asyncHandler(eliminarOferta));
+// Rutas para logos no usados
+router.get('/logos-no-usados', verificarAutenticacion(['ADMINISTRADOR']), asyncHandler(listarLogosNoUsados));
+router.delete('/logos-no-usados', verificarAutenticacion(['ADMINISTRADOR']), asyncHandler(eliminarLogoFisico));
 
 module.exports = router;

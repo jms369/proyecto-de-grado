@@ -1,6 +1,6 @@
 import type { LoginRequest, LoginResponse } from '../../types/sg-login-i-m';
 
-const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000/api';
+const API_BASE_URL = import.meta.env.API_URL ?? 'http://localhost:3000/api';
 
 export interface LoginApiResult {
   ok: boolean;
@@ -15,7 +15,7 @@ export interface LoginApiResult {
  */
 export async function loginApi(payload: LoginRequest): Promise<LoginApiResult> {
   try {
-    const res = await fetch(`${API_URL}/auth/login`, {
+    const res = await fetch(`${API_BASE_URL}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include', // 👈 imprescindible para la cookie de sesión

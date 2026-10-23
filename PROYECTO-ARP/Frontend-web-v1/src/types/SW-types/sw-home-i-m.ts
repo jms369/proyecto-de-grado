@@ -1,5 +1,7 @@
 // src/types/SW-types/sw-home-i-m.ts
 
+const BACKEND_HOST = import.meta.env.BACKEND_URL || 'http://localhost:3000';
+
 // ============================================================================
 // 1. DTO (Lo que viene del Backend)
 // ============================================================================
@@ -34,7 +36,7 @@ export interface HomeInfo {
 export const mapCarouselImagesToFrontend = (data: CarouselImageBackendDTO[]): CarouselImage[] => {
   return data.map((item, index) => ({
     id: item.id_oferta,
-    url: `http://localhost:3000${item.url_oferta_sw}`,
+    url: `${BACKEND_HOST}${item.url_oferta_sw}`,
     alt: `Oferta ${index + 1}`
   }));
 };

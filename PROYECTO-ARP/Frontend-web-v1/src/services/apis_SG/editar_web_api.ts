@@ -1,14 +1,15 @@
 // src/services/apis_SG/editar_web_api.ts
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+const API_BASE_URL = import.meta.env.API_URL || 'http://localhost:3000/api';
 
 const handleResponse = async (response: Response) => {
   if (response.status === 401) {
-    alert('Su sesión ha expirado. Por favor, inicie sesión nuevamente.');
     window.location.href = '/inicioSG';
+    alert('Su sesión ha expirado. Por favor, inicie sesión nuevamente.');
     throw new Error('No autorizado');
   }
   if (response.status === 403) {
+    window.location.href = '/dashboard'; // Redirige al dashboard si no tiene permisos
     alert('No tiene permisos para realizar esta acción.');
     throw new Error('Prohibido');
   }
@@ -178,6 +179,28 @@ export const apiObtenerArchivosProductos = async (): Promise<string[]> => {
 // 15. Eliminar archivo físico de img_productos
 export const apiEliminarArchivoProducto = async (url: string): Promise<void> => {
   const response = await fetch(`${API_BASE_URL}/site/productos-imagenes-fisicas`, {
+    method: 'DELETE',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ url }),
+  });
+  await handleResponse(response);
+};
+
+
+// 16. Listar logos no usados (físicos en la carpeta que no están en la BD)
+export const apiObtenerLogosNoUsados = async (): Promise<string[]> => {
+  const response = await fetch(`${API_BASE_URL}/site/logos-no-usados`, {
+    method: 'GET',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+  });
+  return handleResponse(response);
+};
+
+// 17. Eliminar un logo físico de la carpeta
+export const apiEliminarLogoFisico = async (url: string): Promise<void> => {
+  const response = await fetch(`${API_BASE_URL}/site/logos-no-usados`, {
     method: 'DELETE',
     credentials: 'include',
     headers: { 'Content-Type': 'application/json' },

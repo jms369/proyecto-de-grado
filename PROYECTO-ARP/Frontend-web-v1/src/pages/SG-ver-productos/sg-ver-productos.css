@@ -188,3 +188,212 @@
   color: #ff1744;
   border: 1px solid rgba(255, 23, 68, 0.4);
 }
+
+/* ============================================================================ */
+/* ESTILOS PARA LA BARRA DE FILTROS - MÓDULO VER PRODUCTOS                     */
+/* Encapsulamiento estricto: Todos los selectores empiezan con                 */
+/* .sg-ver-productos-container para no chocar con otros CSS.                   */
+/* ============================================================================ */
+
+.sg-ver-productos-container .sg-filtros-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  background: #1c2541;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid #3a506b;
+  margin-bottom: 2.5rem;
+  align-items: flex-end;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transition: border-color 0.3s ease;
+}
+
+.sg-ver-productos-container .sg-filtros-container:hover {
+  border-color: #5bc0be;
+}
+
+.sg-ver-productos-container .sg-filtro-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 180px;
+  min-width: 140px;
+}
+
+.sg-ver-productos-container .sg-filtro-group label {
+  font-size: 0.82rem;
+  color: #a0aec0;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.5px;
+}
+
+.sg-ver-productos-container .sg-filtro-group select,
+.sg-ver-productos-container .sg-filtro-group input {
+  background: #0b132b;
+  border: 1px solid #3a506b;
+  border-radius: 6px;
+  padding: 0.6rem;
+  color: #ffffff;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.sg-ver-productos-container .sg-filtro-group select:focus,
+.sg-ver-productos-container .sg-filtro-group input:focus {
+  border-color: #00e5ff;
+  box-shadow: 0 0 8px rgba(0, 229, 255, 0.2);
+}
+
+.sg-ver-productos-container .sg-btn-limpiar-filtros {
+  background-color: #ff1744;
+  color: #ffffff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  height: 42px;
+  white-space: nowrap;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 10px rgba(255, 23, 68, 0.3);
+}
+
+.sg-ver-productos-container .sg-btn-limpiar-filtros:hover {
+  background-color: #d50000;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(255, 23, 68, 0.5);
+}
+
+.sg-ver-productos-container .sg-btn-limpiar-filtros:active {
+  transform: translateY(0);
+  filter: brightness(0.8);
+}
+
+.sg-ver-productos-container .sg-sin-resultados {
+  text-align: center;
+  color: #a0aec0;
+  font-size: 1.1rem;
+  padding: 3rem 1rem;
+  background-color: #1c2541;
+  border-radius: 12px;
+  border: 1px dashed #3a506b;
+  width: 100%;
+  grid-column: 1 / -1;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* ============================================================================ */
+/* RESPONSIVE                                                                   */
+/* ============================================================================ */
+
+@media (max-width: 1024px) {
+  .sg-ver-productos-container .sg-filtros-container {
+    gap: 0.8rem;
+    padding: 1.2rem;
+  }
+  .sg-ver-productos-container .sg-filtro-group {
+    flex: 1 1 160px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sg-ver-productos-container .sg-filtros-container {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1rem;
+    gap: 0.8rem;
+  }
+  .sg-ver-productos-container .sg-filtro-group {
+    flex: 1 1 100%;
+    min-width: 100%;
+  }
+  .sg-ver-productos-container .sg-btn-limpiar-filtros {
+    width: 100%;
+    margin-top: 0.5rem;
+    height: 46px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sg-ver-productos-container .sg-filtros-container {
+    padding: 0.8rem;
+    border-radius: 8px;
+  }
+  .sg-ver-productos-container .sg-filtro-group label {
+    font-size: 0.75rem;
+  }
+  .sg-ver-productos-container .sg-filtro-group select,
+  .sg-ver-productos-container .sg-filtro-group input {
+    font-size: 0.85rem;
+    padding: 0.5rem;
+  }
+}
+
+/* ============================================================================ */
+/* BARRA DE ACCIONES (Descargar PDF)                                            */
+/* ============================================================================ */
+
+.sg-ver-productos-container .sg-acciones-container {
+  display: flex;
+  justify-content: flex-end; /* Alinea el botón a la derecha */
+  margin-bottom: 1.5rem;
+  padding: 0 0.5rem;
+}
+
+.sg-ver-productos-container .sg-btn-descargar-pdf {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #00a650; /* Verde descarga */
+  color: #ffffff;
+  border: none;
+  padding: 0.7rem 1.4rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-family: 'Montserrat', sans-serif;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 166, 80, 0.3);
+  transition: all 0.3s ease;
+}
+
+.sg-ver-productos-container .sg-btn-descargar-pdf:hover:not(:disabled) {
+  background-color: #008f45;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 166, 80, 0.5);
+}
+
+.sg-ver-productos-container .sg-btn-descargar-pdf:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.sg-ver-productos-container .sg-btn-descargar-pdf:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+  opacity: 0.7;
+  box-shadow: none;
+}
+
+/* Adaptabilidad Responsive */
+@media (max-width: 768px) {
+  .sg-ver-productos-container .sg-acciones-container {
+    justify-content: center; /* Centra el botón en móviles */
+  }
+  
+  .sg-ver-productos-container .sg-btn-descargar-pdf {
+    width: 100%;
+    justify-content: center;
+  }
+}

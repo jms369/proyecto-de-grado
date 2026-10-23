@@ -132,7 +132,7 @@
   align-items: center;
   background: #e62222;
   border: none;
-  border-radius: 5px;
+  border-radius: 15px;
   box-shadow: 0 0 10px #e62222;
   position: relative;
   overflow: hidden;
@@ -142,7 +142,7 @@
   transition: 200ms;
 }
 .sg-editar-web-wrapper .btn-delete-prompt .text {
-  transform: translateX(25px);
+  transform: translateX(3px);
   color: white;
   font-weight: bold;
 }
